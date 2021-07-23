@@ -281,7 +281,10 @@ frappe.ui.form.Toolbar = class Toolbar {
 		if(in_list(frappe.boot.user.can_create, me.frm.doctype) && !me.frm.meta.allow_copy) {
 			this.page.add_menu_item(__("Duplicate"), function() {
 				me.frm.copy_doc();
-			}, true);
+			}, true, {
+				shortcut: 'Shift+C',
+				condition: () => !this.frm.is_new()
+			});
 		}
 
 		// copy doc to clipboard
@@ -307,7 +310,7 @@ frappe.ui.form.Toolbar = class Toolbar {
 			this.page.add_menu_item(__("Delete"), function() {
 				me.frm.savetrash();
 			}, true, {
-				shortcut: 'Shift+Ctrl+D',
+				shortcut: 'Shift+D',
 				condition: () => !this.frm.is_new()
 			});
 		}
@@ -326,7 +329,7 @@ frappe.ui.form.Toolbar = class Toolbar {
 			this.page.add_menu_item(__("New {0}", [__(me.frm.doctype)]), function() {
 				frappe.new_doc(me.frm.doctype, true);
 			}, true, {
-				shortcut: 'Ctrl+B',
+				shortcut: 'Shift+N',
 				condition: () => !this.frm.is_new()
 			});
 		}
