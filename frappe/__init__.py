@@ -467,6 +467,17 @@ def get_user():
 	if not local.user_perms:
 		local.user_perms = UserPermissions(local.session.user)
 	return local.user_perms
+	
+def get_company(sender):
+	
+	if "<" in sender:
+		import re
+		result = re.findall(r"\<([A-Za-z0-9_@.]+)\>", sender)
+		sender = result[0]
+	if sender is not None:
+		company =  cache().get(sender+"company")
+		return company.decode("utf-8")
+	return ""
 
 def get_roles(username=None):
 	"""Returns roles of current user."""

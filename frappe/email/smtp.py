@@ -64,6 +64,7 @@ def get_outgoing_email_account(raise_exception_not_set=True, append_to=None, sen
 				"enable_outgoing": 1,
 				"enable_incoming": 1,
 				"append_to": append_to,
+				"company": frappe.get_company(sender)
 			}, cache=True)
 
 			if email_accounts:
@@ -73,13 +74,14 @@ def get_outgoing_email_account(raise_exception_not_set=True, append_to=None, sen
 				email_account = _get_email_account({
 					"enable_outgoing": 1,
 					"enable_incoming": 1,
-					"append_to": append_to
+					"append_to": append_to,
+					"company": frappe.get_company(sender)
 				})
 
 		if not email_account:
 			# sender don't have the outging email account
 			sender_email_id = None
-			email_account = get_default_outgoing_email_account(raise_exception_not_set=raise_exception_not_set)
+			email_account = get_default_outgoing_email_account(raise_exception_not_set=raise_exception_not_set, sender=sender)
 
 		if not email_account and _email_account:
 			# if default email account is not configured then setup first email account based on append to
@@ -103,7 +105,7 @@ def get_outgoing_email_account(raise_exception_not_set=True, append_to=None, sen
 		or frappe.local.outgoing_email_account.get(sender_email_id) \
 		or frappe.local.outgoing_email_account.get("default")
 
-def get_default_outgoing_email_account(raise_exception_not_set=True):
+def get_default_outgoing_email_account(raise_exception_not_set=True, sender=None):
 	'''conf should be like:
 		{
 		 "mail_server": "smtp.example.com",
@@ -117,7 +119,7 @@ def get_default_outgoing_email_account(raise_exception_not_set=True):
 		 "always_use_account_name_as_sender_name": 0
 		}
 	'''
-	email_account = _get_email_account({"enable_outgoing": 1, "default_outgoing": 1})
+	email_account = _get_email_account({"enable_outgoing": 1, "default_outgoing": 1, "company": frappe.get_company(sender)})
 	if email_account:
 		email_account.password = email_account.get_password(raise_exception=False)
 
