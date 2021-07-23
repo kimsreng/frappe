@@ -244,6 +244,9 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 				},
 				"add"
 			);
+			let me = this;
+			let shortcut_obj = this.page.prepare_shortcut_obj("Shift+N", ()=> me.make_new_doc(), `${__("Add")} ${frappe.router.doctype_layout || __(this.doctype)}`);
+			frappe.ui.keys.add_shortcut(shortcut_obj);
 		} else {
 			this.page.clear_primary_action();
 		}
