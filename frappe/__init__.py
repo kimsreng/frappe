@@ -481,6 +481,20 @@ def get_company(sender):
 	else:
 		return ""
 
+def company_get_single_value(doctype, field):
+	company = get_company(local.session.user)
+	if company:
+		return get_value("Company "+doctype, company, field)
+	else:
+		return db.get_singles_value(doctype, field)
+
+def company_get_single(doctype):
+	company = get_company(local.session.user)
+	if company:
+		return get_cached_doc("Company "+doctype, company)
+	else:
+		return get_single(doctype)
+		
 def get_roles(username=None):
 	"""Returns roles of current user."""
 	if not local.session:
