@@ -19,7 +19,6 @@ frappe.ui.form.on("Customize Form", {
 			return {
 				translate_values: false,
 				filters: [
-					["DocType", "issingle", "=", 0],
 					["DocType", "custom", "=", 0],
 					[
 						"DocType",
