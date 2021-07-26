@@ -468,18 +468,14 @@ def get_user():
 		local.user_perms = UserPermissions(local.session.user)
 	return local.user_perms
 	
-def get_company(sender):
-	if sender is None or sender == "Administrator":
+def get_company(user):
+	if user is None or user == "Administrator":
 		return ""
-	if "<" in sender:
+	if "<" in user:
 		import re
-		result = re.findall(r"\<([A-Za-z0-9_@.]+)\>", sender)
-		sender = result[0]
-	company =  cache().get(sender+"company")
-	if company:
-		return company.decode("utf-8")
-	else:
-		return ""
+		result = re.findall(r"\<([A-Za-z0-9_@.]+)\>", user)
+		user = result[0]
+	return get_value("User", user, "company", cache=True)
 
 def company_get_single_value(doctype, field):
 	company = get_company(local.session.user)
