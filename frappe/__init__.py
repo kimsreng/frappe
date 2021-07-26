@@ -482,7 +482,14 @@ def company_get_single_value(doctype, field):
 	if company:
 		return get_value("Company "+doctype, company, field)
 	else:
-		return db.get_singles_value(doctype, field)
+		return db.get_single_value(doctype, field)
+
+def company_set_value(doctype, field, value):
+	company = get_company(local.session.user)
+	if company:
+		return db.set_value("Company "+doctype, company, field, value)
+	else:
+		return db.set_value(doctype, None, field, value)
 
 def company_get_single(doctype):
 	company = get_company(local.session.user)
