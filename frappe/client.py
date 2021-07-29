@@ -121,6 +121,16 @@ def get_single_value(doctype, field):
 	value = frappe.db.get_single_value(doctype, field)
 	return value
 
+@frappe.whitelist()
+def get_company_single_value(doctype, field):
+	company = frappe.get_company(frappe.session.user)
+	if company:
+		if not frappe.has_permission("Company "+doctype):
+			frappe.throw(_("No permission for {0}").format(doctype), frappe.PermissionError)
+		value = frappe.company_get_single_value(doctype, field)
+		return value
+	return get_single_value(doctype, field)
+
 @frappe.whitelist(methods=['POST', 'PUT'])
 def set_value(doctype, name, fieldname, value=None):
 	'''Set a value using get_doc, group of values

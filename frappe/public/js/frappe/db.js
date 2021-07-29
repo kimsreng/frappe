@@ -55,6 +55,15 @@ frappe.db = {
 			}).then(r => resolve(r ? r.message : null));
 		});
 	},
+	get_company_single_value: (doctype, field) => {
+		return new Promise(resolve => {
+			frappe.call({
+				method: 'frappe.client.get_company_single_value',
+				args: { doctype, field },
+				type: 'GET',
+			}).then(r => resolve(r ? r.message : null));
+		});
+	},
 	set_value: function(doctype, docname, fieldname, value, callback) {
 		return frappe.call({
 			method: "frappe.client.set_value",
