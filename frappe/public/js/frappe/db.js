@@ -64,6 +64,19 @@ frappe.db = {
 			}).then(r => resolve(r ? r.message : null));
 		});
 	},
+	get_company_single_doc: function(doctype) {
+		return new Promise((resolve, reject) => {
+			frappe.call({
+				method: "frappe.client.get_company_single_doc",
+				type: 'GET',
+				args: { doctype },
+				callback: r => {
+					frappe.model.sync(r.message);
+					resolve(r.message);
+				}
+			}).fail(reject);
+		});
+	},
 	set_value: function(doctype, docname, fieldname, value, callback) {
 		return frappe.call({
 			method: "frappe.client.set_value",

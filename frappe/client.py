@@ -73,6 +73,14 @@ def get(doctype, name=None, filters=None, parent=None):
 	return frappe.get_doc(doctype, name).as_dict()
 
 @frappe.whitelist()
+def get_company_single_doc(doctype):
+	doc = frappe.company_get_single(doctype)
+	if not doc.has_permission("read"):
+		raise frappe.PermissionError
+
+	return doc.as_dict()
+
+@frappe.whitelist()
 def get_value(doctype, fieldname, filters=None, as_dict=True, debug=False, parent=None):
 	'''Returns a value form a document
 
