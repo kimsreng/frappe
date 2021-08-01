@@ -56,6 +56,9 @@ def set_user_and_static_default_values(doc):
 	defaults = frappe.defaults.get_defaults()
 
 	for df in doc.meta.get("fields"):
+		#skip company field in user doctype
+		if doc.doctype == "User" and df.fieldname == "company": continue
+		
 		if df.fieldtype in data_fieldtypes:
 			# user permissions for link options
 			doctype_user_permissions = user_permissions.get(df.options, [])
