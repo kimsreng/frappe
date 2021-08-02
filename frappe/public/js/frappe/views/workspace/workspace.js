@@ -84,6 +84,14 @@ frappe.views.Workspace = class Workspace {
 				this.build_sidebar_section(category, this.workspaces[category]);
 			}
 		});
+
+		//Hide side bar after click on each item
+		//It is akward to have it blocking the view of the page when the scree is small
+		const me = this;
+		const toggle_side_bar=function(e){
+			me.page.sidebar.find(".close-sidebar").trigger("click");
+		}
+		this.page.sidebar.find(".desk-sidebar-item").on("click", toggle_side_bar)
 	}
 
 	build_sidebar_section(title, items) {
