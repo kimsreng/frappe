@@ -33,10 +33,13 @@ def getdoc(doctype, name, user=None):
 	try:
 		doc = frappe.get_doc(doctype, name)
 		run_onload(doc)
-
-		if not doc.has_permission("read"):
-			frappe.flags.error_message = _('Insufficient Permission for {0}').format(frappe.bold(doctype + ' ' + name))
-			raise frappe.PermissionError(("read", doctype, name))
+		#There is a conflict between View the real page/report and page/report doctype
+		#Report and page will be checked on the page load
+		#TODO: find better ways to handle bug
+		if name != doctype and doctype not in  ["Report", "Page"]:
+			if not doc.has_permission("read"):
+				 frappe.flags.error_message = _('Insufficient Permission for {0}').format(frappe.bold(doctype + ' ' + name))
+				 raise frappe.PermissionError(("read", doctype, name))
 
 		doc.apply_fieldlevel_read_permissions()
 
