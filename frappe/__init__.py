@@ -477,6 +477,12 @@ def get_company(user):
 		user = result[0]
 	return get_value("User", user, "company", cache=True)
 
+def get_company_condition():
+	company = get_company(local.session.user)
+	if company:
+		return " and company = '{0}'".format(company)
+	return ""
+
 def company_get_single_value(doctype, field):
 	company = get_company(local.session.user)
 	if company:
