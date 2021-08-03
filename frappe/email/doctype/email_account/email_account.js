@@ -138,7 +138,7 @@ frappe.ui.form.on("Email Account", {
 	},
 
 	update_domain: function(frm){
-		if (!frm.doc.email_id && !frm.doc.service){
+		if (frm.doc.service){
 			return;
 		}
 
