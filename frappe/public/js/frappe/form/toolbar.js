@@ -452,7 +452,12 @@ frappe.ui.form.Toolbar = class Toolbar {
 			if (!this.frm.save_disabled) {
 				//Show the save button if there is no workflow or if there is a workflow and there are changes
 				if (this.has_workflow() ? this.frm.doc.__unsaved : true) {
-					status = "Save";
+					if(this.frm.doc.__islocal){
+						status ="Create"
+					}else{
+						status = "Save";
+					}
+					
 				}
 			}
 		} else if (this.can_update()) {
@@ -498,6 +503,9 @@ frappe.ui.form.Toolbar = class Toolbar {
 			}
 		} else {
 			var click = {
+				"Create": function() {
+					return me.frm.save('Save', null, this);
+				},
 				"Save": function() {
 					return me.frm.save('Save', null, this);
 				},
