@@ -523,8 +523,8 @@ frappe.ui.form.Toolbar = class Toolbar {
 			var icon = {
 				"Update": "edit",
 			}[status];
-
-			this.page.set_primary_action(__(status), click, icon);
+			var label = status == "Create" ? "Save" : status;
+			this.page.set_primary_action(__(label), click, icon);
 		}
 
 		this.current_status = status;
