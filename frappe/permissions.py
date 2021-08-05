@@ -343,7 +343,7 @@ def get_all_perms(role):
 			custom_perms.append(p)
 	return custom_perms
 
-def get_roles(user=None, with_standard=True):
+def get_roles(user=None, with_standard=False):
 	"""get roles of current user"""
 	if not user:
 		user = frappe.session.user
@@ -356,13 +356,13 @@ def get_roles(user=None, with_standard=True):
 			return [r[0] for r in frappe.db.sql("select name from `tabRole`")] # return all available roles
 		else:
 			return [r[0] for r in frappe.db.sql("""select role from `tabHas Role`
-				where parent=%s and role not in ('All', 'Guest')""", (user,))] + ['All', 'Guest']
+				where parent=%s and role not in ('All', 'Guest')""", (user,))] + ["Desk User"]
 
 	roles = frappe.cache().hget("roles", user, get)
 
 	# filter standard if required
 	if not with_standard:
-		roles = filter(lambda x: x not in ['All', 'Guest', 'Administrator'], roles)
+		roles = list(filter(lambda x: x not in ['All', 'Guest', 'Administrator'], roles))
 
 	return roles
 
