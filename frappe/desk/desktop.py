@@ -73,7 +73,7 @@ class Workspace:
 				return item.restrict_to_domain in frappe.get_active_domains()
 
 		for item in shortcuts:
-			if self.is_item_allowed(item.link_to, item.type) and _in_active_domains(item):
+			if self.is_item_allowed(item.link_to, item.type, item.doc_view) and _in_active_domains(item):
 				return True
 
 		return False
@@ -164,13 +164,16 @@ class Workspace:
 			self.extended_charts = self.extended_charts + page.charts
 			self.extended_shortcuts = self.extended_shortcuts + page.shortcuts
 
-	def is_item_allowed(self, name, item_type):
+	def is_item_allowed(self, name, item_type, doc_view=None):
 		if frappe.session.user == "Administrator":
 			return True
 
 		item_type = item_type.lower()
 
 		if item_type == "doctype":
+			if doc_view == "New":
+				return (frappe.has_permission(name, ptype="create") or [] and name in self.restricted_doctypes or [])
+			#TODO: Check user permission in count filter
 			return (name in self.can_read or [] and name in self.restricted_doctypes or [])
 		if item_type == "page":
 			return (name in self.allowed_pages and name in self.restricted_pages)
@@ -319,7 +322,7 @@ class Workspace:
 
 		for item in shortcuts:
 			new_item = item.as_dict().copy()
-			if self.is_item_allowed(item.link_to, item.type) and _in_active_domains(item):
+			if self.is_item_allowed(item.link_to, item.type, item.doc_view) and _in_active_domains(item):
 				if item.type == "Report":
 					report = self.allowed_reports.get(item.link_to, {})
 					if report.get("report_type") in ["Query Report", "Script Report", "Custom Report"]:
