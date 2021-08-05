@@ -181,8 +181,15 @@ $.extend(frappe.perm, {
 
 		// permission
 		if (p) {
-			if ((p.write || p.create) && !df.disabled) {
-				status = "Write";
+			if (!df.disabled) {
+				if ((!doc || doc.__islocal) && p.create){
+					status = "Write";
+				}else if(p.write && (doc && !doc.__islocal)){
+					status = "Write";
+				}else if (p.read) {
+					status = "Read";
+				}
+				
 			} else if (p.read) {
 				status = "Read";
 			}
