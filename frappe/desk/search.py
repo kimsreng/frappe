@@ -77,6 +77,12 @@ def search_widget(doctype, txt, query=None, searchfield=None, start=0,
 		# by method
 		try:
 			is_whitelisted(frappe.get_attr(query))
+			##allow query override by hook
+			for hook in frappe.get_hooks("override_whitelisted_methods", {}).get(query, []):
+				# override using the first hook
+				query = hook
+				break
+			
 			frappe.response["values"] = frappe.call(query, doctype, txt,
 				searchfield, start, page_length, filters, as_dict=as_dict)
 		except frappe.exceptions.PermissionError as e:
