@@ -17,9 +17,9 @@
 				</a>
 				<span class="flex" v-else>
 					<span class="file-name">{{ file.name | file_name }}</span>
-					<button class="ml-2 btn-reset" @click="$emit('toggle_private')" :title="__('Toggle Public/Private')">
+					<!-- <button class="ml-2 btn-reset" @click="$emit('toggle_private')" :title="__('Toggle Public/Private')">
 						<div v-html="private_icon"></div>
-					</button>
+					</button> -->
 				</span>
 			</div>
 
