@@ -16,7 +16,7 @@ def get_leaderboards():
 
 @frappe.whitelist()
 def get_energy_point_leaderboard(date_range, company = None, field = None, limit = None):
-	all_users = frappe.db.get_all('User',
+	all_users = frappe.db.get_list('User',
 		filters = {
 			'name': ['not in', ['Administrator', 'Guest']],
 			'enabled': 1,
@@ -32,7 +32,7 @@ def get_energy_point_leaderboard(date_range, company = None, field = None, limit
 	if date_range:
 		date_range = frappe.parse_json(date_range)
 		filters.append(['creation', 'between', [date_range[0], date_range[1]]])
-	energy_point_users = frappe.db.get_all('Energy Point Log',
+	energy_point_users = frappe.db.get_list('Energy Point Log',
 		fields = ['user as name', 'sum(points) as value'],
 		filters = filters,
 		group_by = 'user',

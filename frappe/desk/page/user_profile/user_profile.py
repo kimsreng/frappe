@@ -22,7 +22,7 @@ def get_energy_points_heatmap_data(user, date):
 
 @frappe.whitelist()
 def get_energy_points_percentage_chart_data(user, field):
-	result = frappe.db.get_all('Energy Point Log',
+	result = frappe.db.get_list('Energy Point Log',
 		filters = {'user': user, 'type': ['!=', 'Review']},
 		group_by = field,
 		order_by = field,
@@ -39,14 +39,14 @@ def get_energy_points_percentage_chart_data(user, field):
 @frappe.whitelist()
 def get_user_rank(user):
 	month_start = datetime.today().replace(day=1)
-	monthly_rank = frappe.db.get_all('Energy Point Log',
+	monthly_rank = frappe.db.get_list('Energy Point Log',
 		group_by = 'user',
 		filters = {'creation': ['>', month_start], 'type' : ['!=', 'Review']},
 		fields = ['user', 'sum(points)'],
 		order_by = 'sum(points) desc',
 		as_list = True)
 
-	all_time_rank = frappe.db.get_all('Energy Point Log',
+	all_time_rank = frappe.db.get_list('Energy Point Log',
 		group_by = 'user',
 		filters = {'type' : ['!=', 'Review']},
 		fields = ['user', 'sum(points)'],
