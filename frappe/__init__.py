@@ -468,7 +468,9 @@ def get_user():
 		local.user_perms = UserPermissions(local.session.user)
 	return local.user_perms
 	
-def get_company(user):
+def get_company(user=None):
+	if user is None:
+		user = local.session.user
 	if user is None or user == "Administrator":
 		return ""
 	if "<" in user:
