@@ -44,10 +44,14 @@ def _toggle_like(doctype, name, add, user=None):
 				liked_by.append(user)
 				add_comment(doctype, name)
 				follow_document(doctype, name, user)
+				for hook in frappe.get_hooks("after_doc_liked", []):
+					frappe.call(hook, doctype, name)
 		else:
 			if user in liked_by:
 				liked_by.remove(user)
 				remove_like(doctype, name)
+				for hook in frappe.get_hooks("after_doc_unliked", []):
+					frappe.call(hook, doctype, name)
 
 		frappe.db.set_value(doctype, name, "_liked_by", json.dumps(liked_by), update_modified=False)
 
