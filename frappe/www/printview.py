@@ -72,7 +72,7 @@ def get_rendered_template(doc, name=None, print_format=None, meta=None,
 	no_letterhead=None, letterhead=None, trigger_print=False,
 	settings=None):
 
-	print_settings = frappe.get_single("Print Settings").as_dict()
+	print_settings = frappe.company_get_single("Print Settings").as_dict()
 	print_settings.update(settings or {})
 
 	if isinstance(no_letterhead, string_types):
@@ -394,7 +394,7 @@ def has_value(df, doc):
 	return True
 
 def get_print_style(style=None, print_format=None, for_legacy=False):
-	print_settings = frappe.get_doc("Print Settings")
+	print_settings = frappe.company_get_single("Print Settings")
 
 	if not style:
 		style = print_settings.print_style or ''

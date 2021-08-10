@@ -321,7 +321,7 @@ def get_context(context):
 		if not self.attach_print:
 			return None
 
-		print_settings = frappe.get_doc("Print Settings", "Print Settings")
+		print_settings = frappe.company_get_single("Print Settings")
 		if (doc.docstatus == 0 and not print_settings.allow_print_for_draft) or \
 			(doc.docstatus == 2 and not print_settings.allow_print_for_cancelled):
 

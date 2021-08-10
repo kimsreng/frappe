@@ -46,7 +46,7 @@ frappe.ui.form.PrintView = class {
 
 		this.print_settings = frappe.model.get_doc(
 			':Print Settings',
-			'Print Settings'
+			(frappe.boot.company?  frappe.boot.company: 'Print Settings')
 		);
 		this.setup_toolbar();
 		this.setup_menu();
@@ -162,11 +162,15 @@ frappe.ui.form.PrintView = class {
 		this.page.clear_menu();
 
 		this.page.add_menu_item(__('Print Settings'), () => {
-			frappe.set_route('Form', 'Print Settings');
+			if (frappe.boot.company){
+				frappe.set_route('Form', 'Company Print Settings', frappe.boot.company);
+			}else{
+				frappe.set_route('Form', 'Print Settings');
+			}
 		});
 
 		if (
-			frappe.model.get_doc(':Print Settings', 'Print Settings')
+			frappe.model.get_doc(':Print Settings',  (frappe.boot.company?  frappe.boot.company: 'Print Settings'))
 				.enable_raw_printing == '1'
 		) {
 			this.page.add_menu_item(__('Raw Printing Setting'), () => {

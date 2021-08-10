@@ -1557,7 +1557,7 @@ def attach_print(doctype, name, file_name=None, print_format=None,
 	if not file_name: file_name = name
 	file_name = file_name.replace(' ','').replace('/','-')
 
-	print_settings = db.get_singles_dict("Print Settings")
+	print_settings = company_get_single("Print Settings").as_dict()
 
 	_lang = local.lang
 

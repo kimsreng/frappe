@@ -4,7 +4,7 @@ frappe.ui.get_print_settings = function(
 	letter_head,
 	pick_columns
 ) {
-	var print_settings = locals[":Print Settings"]["Print Settings"];
+	var print_settings = locals[":Print Settings"][(frappe.boot.company?  frappe.boot.company: 'Print Settings')];
 
 	var default_letter_head =
 		locals[":Company"] && frappe.defaults.get_default("company")
