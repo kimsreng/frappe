@@ -176,14 +176,14 @@ def get_role_permissions(doctype_meta, user=None, is_owner=None):
 
 		roles = frappe.get_roles(user)
 
-		def is_perm_applicable(perm):
-			return perm.role in roles and cint(perm.permlevel)==0
+		applicable_permissions = get_doctype_permissions_for_roles(doctype_meta.name, roles)
+		
+		has_if_owner_enabled = any(p.get('if_owner', 0) for p in applicable_permissions)
+
+		perms['has_if_owner_enabled'] = has_if_owner_enabled
 
 		def has_permission_without_if_owner_enabled(ptype):
 			return any(p.get(ptype, 0) and not p.get('if_owner', 0) for p in applicable_permissions)
-
-		applicable_permissions = list(filter(is_perm_applicable, getattr(doctype_meta, 'permissions', [])))
-		has_if_owner_enabled = any(p.get('if_owner', 0) for p in applicable_permissions)
 
 		perms['has_if_owner_enabled'] = has_if_owner_enabled
 
@@ -343,6 +343,18 @@ def get_all_perms(role):
 			custom_perms.append(p)
 	return custom_perms
 
+def get_doctype_permissions_for_roles(doctype, roles):
+	filters = {"role": ["in", roles], "parent": doctype}
+	perms = frappe.get_all('DocPerm', fields='*', filters=filters)
+	custom_perms = frappe.get_all('Custom DocPerm', fields='*', filters=filters)
+	doctypes_with_custom_perms = frappe.db.sql_list("""select distinct parent
+		from `tabCustom DocPerm`""")
+
+	for p in perms:
+		if p.parent not in doctypes_with_custom_perms:
+			custom_perms.append(p)
+	return custom_perms
+
 def get_roles(user=None, with_standard=False):
 	"""get roles of current user"""
 	if not user:
@@ -359,11 +371,11 @@ def get_roles(user=None, with_standard=False):
 				where parent=%s and role not in ('Desk User', 'Company Select List')""", (user,))] + ["Desk User", "Company Select List"]
 
 	roles = frappe.cache().hget("roles", user, get)
-
+	if frappe.flags.sudo_roles:
+		roles = roles + frappe.flags.sudo_roles
 	# filter standard if required
 	# if not with_standard:
 	# 	roles = list(filter(lambda x: x not in ['All', 'Guest', 'Administrator'], roles))
-
 	return roles
 
 def get_doctype_roles(doctype, access_type="read"):
