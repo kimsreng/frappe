@@ -201,6 +201,17 @@ def make_form_dict(request):
 		frappe.local.form_dict.pop("_")
 
 def handle_exception(e):
+	# allow hooks for exception handling
+	hooks = [h for h in frappe.get_hooks("exception_handler")]
+	response_from_hooks = None
+	if len(hooks):
+		for h in hooks:
+			inner_response = frappe.call(h, e)
+			if inner_response is not None:
+				response_from_hooks = inner_response
+	if response_from_hooks is not None:
+		return response_from_hooks
+		
 	response = None
 	http_status_code = getattr(e, "http_status_code", 500)
 	return_as_message = False
