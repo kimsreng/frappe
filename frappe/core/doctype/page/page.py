@@ -36,7 +36,7 @@ class Page(Document):
 	def validate(self):
 		validate_route_conflict(self.doctype, self.name)
 
-		if self.is_new() and not getattr(conf,'developer_mode', 0):
+		if self.is_new() and not getattr(conf,'developer_mode', 0) and  frappe.session.user!="Administrator":
 			frappe.throw(_("Not in Developer Mode"))
 
 		#setting ignore_permissions via update_setup_wizard_access (setup_wizard.py)
