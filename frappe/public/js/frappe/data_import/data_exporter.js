@@ -67,7 +67,7 @@ frappe.data_import.DataExporter = class DataExporter {
 					on_change: () => this.update_primary_action(),
 					options: this.get_multicheck_options(this.doctype)
 				},
-				...frappe.meta.get_table_fields(this.doctype).map(df => {
+				...frappe.meta.get_table_fields(this.doctype).filter(df=> df.hidden == 0).map(df => {
 					let doctype = df.options;
 					let child_fieldname = df.fieldname;
 					let label = df.reqd
@@ -289,7 +289,7 @@ frappe.data_import.DataExporter = class DataExporter {
 
 		return fields
 			.filter(df => {
-				if (autoname_field && df.fieldname === 'name') {
+				if (autoname_field && df.fieldname === 'name' || df.hidden == 1) {
 					return false;
 				}
 				return true;
