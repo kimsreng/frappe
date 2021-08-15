@@ -317,13 +317,7 @@ def _format_autoname(autoname, doc):
 	first_colon_index = autoname.find(":")
 	autoname_value = autoname[first_colon_index + 1:]
 
-	def get_param_value_for_match(match):
-		param = match.group()
-		# trim braces
-		trimmed_param = param[1:-1]
-		return parse_naming_series([trimmed_param], doc=doc)
-
-	# Replace braced params with their parsed value
-	name = re.sub(r"(\{[\w | #]+\})", get_param_value_for_match, autoname_value)
+	autoname_value = autoname_value.replace("{", ".").replace("}", ".")
+	name = parse_naming_series(autoname_value, doc=doc)
 
 	return name
