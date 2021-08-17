@@ -172,9 +172,10 @@ class FormMeta(Meta):
 					pass
 
 	def load_print_formats(self):
-		print_formats = frappe.db.sql("""select * FROM `tabPrint Format`
-			WHERE doc_type=%s AND docstatus<2 and disabled=0""", (self.name,), as_dict=1,
-			update={"doctype":"Print Format"})
+		# print_formats = frappe.db.sql("""select * FROM `tabPrint Format`
+		# 	WHERE doc_type=%s AND docstatus<2 and disabled=0""", (self.name,), as_dict=1,
+		# 	update={"doctype":"Print Format"})
+		print_formats = frappe.get_list("Print Format", fields="*", update={"doctype":"Print Format"})
 
 		self.set("__print_formats", print_formats, as_value=True)
 
