@@ -200,13 +200,13 @@ class CustomizeForm(Document):
 					.format(df.idx))
 				return False
 
-		elif prop == "reqd" and \
-			((frappe.db.get_value("DocField",
-				{"parent":self.doc_type,"fieldname":df.fieldname}, "reqd") == 1) \
-				and (df.get(prop) == 0)):
-			frappe.msgprint(_("Row {0}: Not allowed to disable Mandatory for standard fields")\
-					.format(df.idx))
-			return False
+		# elif prop == "reqd" and \
+		# 	((frappe.db.get_value("DocField",
+		# 		{"parent":self.doc_type,"fieldname":df.fieldname}, "reqd") == 1) \
+		# 		and (df.get(prop) == 0)):
+		# 	frappe.msgprint(_("Row {0}: Not allowed to disable Mandatory for standard fields")\
+		# 			.format(df.idx))
+		# 	return False
 
 		elif prop == "in_list_view" and df.get(prop) \
 			and df.fieldtype!="Attach Image" and df.fieldtype in no_value_fields:
