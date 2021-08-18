@@ -43,6 +43,7 @@ def get_context(context):
 	style_urls = hooks["app_include_css"]
 
 	context.update({
+		"app_name": frappe.get_system_settings("app_name") or _("Frappe"),
 		"no_cache": 1,
 		"build_version": frappe.utils.get_build_version(),
 		"include_js": hooks["app_include_js"],
