@@ -335,7 +335,7 @@ export default class ChartWidget extends Widget {
 			});
 		} else if (this.chart_doc.chart_type === "Report") {
 			actions.push({
-				label: __("{0} Report", [this.chart_doc.report_name]),
+				label: __("{0} Report", [__(this.chart_doc.report_name)]),
 				action: "action-list",
 				handler: () => {
 					frappe.set_route(

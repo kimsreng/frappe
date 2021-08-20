@@ -188,17 +188,17 @@ class Workspace:
 
 	def build_workspace(self):
 		self.cards = {
-			'label': _(self.doc.cards_label),
+			'label': self.doc.cards_label,
 			'items': self.get_links()
 		}
 
 		self.charts = {
-			'label': _(self.doc.charts_label),
+			'label': self.doc.charts_label,
 			'items': self.get_charts()
 		}
 
 		self.shortcuts = {
-			'label': _(self.doc.shortcuts_label),
+			'label': self.doc.shortcuts_label,
 			'items': self.get_shortcuts()
 		}
 
@@ -244,7 +244,7 @@ class Workspace:
 				item["count"] = count
 
 		# Translate label
-		item["label"] = _(item.label) if item.label else _(item.name)
+		item["label"] = item.label if item.label else item.name
 
 		return item
 
@@ -285,7 +285,7 @@ class Workspace:
 				else:
 					new_card = card.as_dict().copy()
 				new_card["links"] = new_items
-				new_card["label"] = _(new_card["label"])
+				new_card["label"] = new_card["label"]
 				new_data.append(new_card)
 
 		return new_data
@@ -301,7 +301,7 @@ class Workspace:
 			for chart in charts:
 				if frappe.has_permission('Dashboard Chart', doc=chart.chart_name):
 					# Translate label
-					chart.label = _(chart.label) if chart.label else _(chart.chart_name)
+					chart.label = chart.label if chart.label else chart.chart_name
 					all_charts.append(chart)
 
 		return all_charts
@@ -331,7 +331,7 @@ class Workspace:
 						new_item['ref_doctype'] = report.get('ref_doctype')
 
 				# Translate label
-				new_item["label"] = _(item.label) if item.label else _(item.link_to)
+				new_item["label"] = item.label if item.label else item.link_to
 
 				items.append(new_item)
 
@@ -439,7 +439,7 @@ def get_custom_doctype_list(module):
 			"type": "Link",
 			"link_type": "doctype",
 			"link_to": d.name,
-			"label": _(d.name)
+			"label": d.name
 		})
 
 	return out
@@ -459,7 +459,7 @@ def get_custom_report_list(module):
 			"doctype": r.ref_doctype,
 			"dependencies": r.ref_doctype,
 			"is_query_report": 1 if r.report_type in ("Query Report", "Script Report", "Custom Report") else 0,
-			"label": _(r.name),
+			"label": r.name,
 			"link_to": r.name,
 		})
 

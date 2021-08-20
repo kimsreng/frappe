@@ -114,7 +114,7 @@ export default class Widget {
 	}
 
 	set_title(max_chars) {
-		let base = this.label || this.name;
+		let base = __(this.label || this.name, null, this.translation_context);
 		let title = max_chars ? frappe.ellipsis(base, max_chars) : base;
 
 		if (this.icon) {
@@ -123,7 +123,7 @@ export default class Widget {
 		} else {
 			this.title_field[0].innerHTML = title;
 			if (max_chars) {
-				this.title_field[0].setAttribute('title', this.label);
+				this.title_field[0].setAttribute('title',  base);
 			}
 		}
 		this.subtitle && this.subtitle_field.html(this.subtitle);

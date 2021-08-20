@@ -109,7 +109,7 @@ frappe.views.Workspace = class Workspace {
 					class="desk-sidebar-item standard-sidebar-item ${item.selected ? "selected" : ""}"
 				>
 					<span>${frappe.utils.icon(item.icon || "folder-normal", "md")}</span>
-					<span class="sidebar-item-label">${item.label || item.name}<span>
+					<span class="sidebar-item-label">${__(item.label, null, item.translation_context) || __(item.name, null, item.translation_context)}<span>
 				</a>
 			`);
 		};

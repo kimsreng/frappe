@@ -41,7 +41,7 @@ export default class LinksWidget extends Widget {
 		const get_link_for_item = item => {
 			if (is_link_disabled(item)) {
 				return `<span class="link-content ellipsis disabled-link">${
-					item.label ? item.label : item.name
+					item.label ? __(item.label, null, item.tanslation_context) : __(item.name, null, item.tanslation_context)
 				}</span>
 					<div class="module-link-popover popover fade top in" role="tooltip" style="display: none;">
 						<div class="arrow"></div>
@@ -57,7 +57,7 @@ export default class LinksWidget extends Widget {
 				return `<span class="link-content help-video-link ellipsis" data-youtubeid="${item.youtube_id}">
 						${item.label ? item.label : item.name}</span>`;
 
-			return `<span class="link-content ellipsis">${item.label ? item.label : item.name}</span>`;
+			return `<span class="link-content ellipsis">${item.label ? __(item.label, null, item.tanslation_context) : __(item.name, null, item.tanslation_context)}</span>`;
 		};
 
 		this.link_list = this.links.map(item => {
