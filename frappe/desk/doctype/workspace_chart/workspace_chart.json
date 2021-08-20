@@ -6,7 +6,8 @@
  "engine": "InnoDB",
  "field_order": [
   "chart_name",
-  "label"
+  "label",
+  "translation_context"
  ],
  "fields": [
   {
@@ -22,11 +23,16 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Label"
+  },
+  {
+   "fieldname": "translation_context",
+   "fieldtype": "Data",
+   "label": "Translation Context"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-01-12 13:13:25.781925",
+ "modified": "2021-08-20 14:37:16.156766",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Workspace Chart",

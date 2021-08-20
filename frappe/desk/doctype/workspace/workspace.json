@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "label",
+  "translation_context",
   "for_user",
   "extends",
   "module",
@@ -209,16 +210,21 @@
    "options": "Workspace Link"
   },
   {
-    "default": "0",
-    "depends_on": "extends_another_page",
-    "description": "Sets the current page as default for all users",
-    "fieldname": "is_default",
-    "fieldtype": "Check",
-    "label": "Is Default"
-   }
+   "default": "0",
+   "depends_on": "extends_another_page",
+   "description": "Sets the current page as default for all users",
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "label": "Is Default"
+  },
+  {
+   "fieldname": "translation_context",
+   "fieldtype": "Data",
+   "label": "Translation Context"
+  }
  ],
  "links": [],
- "modified": "2021-01-21 12:09:36.156614",
+ "modified": "2021-08-20 14:36:05.980256",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Workspace",
