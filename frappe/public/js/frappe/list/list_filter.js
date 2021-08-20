@@ -18,7 +18,7 @@ export default class ListFilter {
 		this.wrapper.html(`
 			<li class="input-area"></li>
 			<li class="sidebar-action">
-				<a class="saved-filters-preview">${__('Show Saved')}</a>
+				<a class="saved-filters-preview">${__('Show Saved', null, "Filter")}</a>
 			</li>
 			<div class="saved-filters"></div>
 		`);
@@ -80,12 +80,12 @@ export default class ListFilter {
 		});
 	}
 
-	toggle_saved_filters(show) {
-		this.$saved_filters.toggle(show);
-		const label = show ? __('Hide Saved') : __('Show Saved');
-		this.wrapper.find('.saved-filters-preview').text(label);
-		this.saved_filters_hidden = !this.saved_filters_hidden;
-	}
+    toggle_saved_filters(show) {
+        this.$saved_filters.toggle(show);
+        const label = show ? __('Hide Saved', null, "Filter") : __('Show Saved', null, "Filter");
+        this.wrapper.find('.saved-filters-preview').text(label);
+        this.saved_filters_hidden = !this.saved_filters_hidden;
+    }
 
 	bind_click_filter() {
 		this.wrapper.on('click', '.filter-pill .filter-name', (e) => {
