@@ -175,7 +175,12 @@ class FormMeta(Meta):
 		# print_formats = frappe.db.sql("""select * FROM `tabPrint Format`
 		# 	WHERE doc_type=%s AND docstatus<2 and disabled=0""", (self.name,), as_dict=1,
 		# 	update={"doctype":"Print Format"})
+
+		# Allow everyone to access Print format
+		# but limit by user permission
+		frappe.flags.sudo_roles = (frappe.flags.sudo_roles  or []) +["System Manager"]
 		print_formats = frappe.get_list("Print Format", fields="*", update={"doctype":"Print Format"})
+		frappe.flags.sudo_roles.remove("System Manager")
 
 		self.set("__print_formats", print_formats, as_value=True)
 
