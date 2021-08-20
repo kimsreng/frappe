@@ -60,7 +60,7 @@ frappe.data_import.DataExporter = class DataExporter {
 					fieldname: 'select_all_buttons'
 				},
 				{
-					label: __(this.doctype),
+					label: __(this.doctype, null, frappe.trans_context("Doctype", this.doctype)),
 					fieldname: this.doctype,
 					fieldtype: 'MultiCheck',
 					columns: 2,

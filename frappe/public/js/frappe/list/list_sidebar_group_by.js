@@ -157,7 +157,7 @@ frappe.views.ListGroupBy = class ListGroupBy {
 			['Select', 'Link', 'Data', 'Int', 'Check'].includes(f.fieldtype)
 		);
 		group_by_fields.push({
-			label: __(this.doctype),
+			label: __(this.doctype, null, frappe.trans_context("Doctype", this.doctype)),
 			fieldname: 'group_by_fields',
 			fieldtype: 'MultiCheck',
 			columns: 2,

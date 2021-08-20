@@ -16,6 +16,7 @@
   "is_tree",
   "editable_grid",
   "quick_entry",
+  "translation_context",
   "cb01",
   "track_changes",
   "track_seen",
@@ -547,6 +548,11 @@
   {
    "fieldname": "column_break_51",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "translation_context",
+   "fieldtype": "Data",
+   "label": "Translation Context"
   }
  ],
  "icon": "fa fa-bolt",
@@ -628,7 +634,7 @@
    "link_fieldname": "reference_doctype"
   }
  ],
- "modified": "2021-03-22 12:26:41.031135",
+ "modified": "2021-08-19 20:03:45.869463",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "DocType",

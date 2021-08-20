@@ -1318,7 +1318,7 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 					}
 
 					frappe.ui.get_print_settings(false, (print_settings) => {
-						var title =  this.report_name || __(this.doctype);
+						var title =  this.report_name || __(this.doctype, null, frappe.trans_context("Doctype", this.doctype));
 						frappe.render_grid({
 							title: title,
 							subtitle: this.get_filters_html_for_print(),
@@ -1408,7 +1408,7 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 					}
 
 					const d = new frappe.ui.Dialog({
-						title: __("Export Report: {0}",[__(this.doctype)]),
+						title: __("Export Report: {0}",[__(this.doctype, null, frappe.trans_context("Doctype", this.doctype))]),
 						fields: fields,
 						primary_action_label: __('Download'),
 						primary_action: (data) => {

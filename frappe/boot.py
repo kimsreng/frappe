@@ -223,6 +223,10 @@ def load_translations(bootinfo):
 	messages = {k:v for k, v in iteritems(messages) if k!=v}
 
 	bootinfo["__messages"] = messages
+	
+	doctype_context = frappe.db.sql("select 'Doctype' as type, name as item_name, translation_context as context from tabDocType where translation_context != ''", as_dict=True)
+	doctype_context.extend(frappe.db.sql("select 'Doctype' as type, doc_type as item_name , value as context from `tabProperty Setter` where doctype_or_field = 'DocType' and property='translation_context'", as_dict=True))
+	bootinfo.trans_context = doctype_context
 
 def get_user_info():
 	user_info = frappe.db.get_all('User', fields=['`name`', 'full_name as fullname', 'user_image as image',

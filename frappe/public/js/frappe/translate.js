@@ -41,3 +41,13 @@ frappe.get_languages = function() {
 	}
 	return frappe.languages;
 };
+
+frappe.trans_context = function(type, name) {
+    var contexts = frappe.boot.trans_context;
+    for (var i = 0; i < contexts.length; i++) {
+        if (contexts[i].type == type && contexts[i].item_name == name) {
+            return contexts[i].context;
+        }
+    }
+    return "";
+}

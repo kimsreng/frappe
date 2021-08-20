@@ -117,11 +117,15 @@ def get_dict(fortype, name=None):
 			messages += get_messages_from_navbar()
 			messages += get_messages_from_include_files()
 			messages += frappe.db.sql("select 'Print Format:', name from `tabPrint Format`")
-			messages += frappe.db.sql("select 'DocType:', name from tabDocType")
+			messages += frappe.db.sql("select 'DocType:', name, translation_context from tabDocType")
+			messages += frappe.db.sql("select 'DocType', doc_type , value from `tabProperty Setter` where doctype_or_field = 'DocType' and property='translation_context'")
 			messages += frappe.db.sql("select 'Role:', name from tabRole")
 			messages += frappe.db.sql("select 'Module:', name from `tabModule Def`")
 			messages += frappe.db.sql("select '', format from `tabWorkspace Shortcut` where format is not null")
 			messages += frappe.db.sql("select '', title from `tabOnboarding Step`")
+			messages += frappe.db.sql("select '', if(label != '', label, link_to), translation_context from `tabWorkspace Link`")
+			messages += frappe.db.sql("select '', if (label != '', label, link_to), translation_context from `tabWorkspace Shortcut`")
+			messages += frappe.db.sql("select '', if (label != '', label, chart_name), translation_context from `tabWorkspace Chart`")
 
 		messages = deduplicate_messages(messages)
 		message_dict = make_dict_from_messages(messages, load_user_translation=False)
@@ -341,30 +345,33 @@ def get_messages_from_doctype(name):
 	Javascript code, html templates"""
 	messages = []
 	meta = frappe.get_meta(name)
-
-	messages = [meta.name, meta.module]
+	doc_key = 'DocType: ' + name
+	messages = [(doc_key, meta.name, meta.translation_context), (doc_key, meta.module)]
 
 	if meta.description:
-		messages.append(meta.description)
+		messages.append((doc_key,meta.description))
 
 	# translations of field labels, description and options
 	for d in meta.get("fields"):
-		messages.extend([d.label, d.description])
+		if d.label:
+			messages.append((doc_key, d.label, d.translation_context))
+		if d.description:
+			messages.append((doc_key, d.description))
 
 		if d.fieldtype=='Select' and d.options:
 			options = d.options.split('\n')
 			if not "icon" in options[0]:
-				messages.extend(options)
+				for option in options:
+					messages.append((doc_key,option))
+
 		if d.fieldtype=='HTML' and d.options:
-			messages.append(d.options)
+			messages.append((doc_key,d.options))
 
 	# translations of roles
 	for d in meta.get("permissions"):
 		if d.role:
-			messages.append(d.role)
+			messages.append((doc_key,d.role))
 
-	messages = [message for message in messages if message]
-	messages = [('DocType: ' + name, message) for message in messages if is_translatable(message)]
 
 	# extract from js, py files
 	if not meta.custom:
@@ -770,7 +777,10 @@ def send_translations(translation_dict):
 
 def deduplicate_messages(messages):
 	ret = []
-	op = operator.itemgetter(1)
+	def op(message):
+		if len(message) > 2 and message[2]:
+			return "{0}:{1}".format(message[1], message[2])
+		return message[1]
 	messages = sorted(messages, key=op)
 	for k, g in itertools.groupby(messages, op):
 		ret.append(next(g))

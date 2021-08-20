@@ -253,7 +253,7 @@ frappe.ui.form.Form = class FrappeForm {
 
 			// check permissions
 			if(!this.has_read_permission()) {
-				frappe.show_not_permitted(__(this.doctype) + " " + __(this.docname));
+				frappe.show_not_permitted(__(this.doctype, null, frappe.trans_context("Doctype", this.doctype)) + " " + __(this.docname));
 				return;
 			}
 

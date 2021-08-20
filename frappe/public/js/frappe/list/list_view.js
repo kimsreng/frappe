@@ -234,7 +234,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 	set_primary_action() {
 		if (this.can_create) {
 			this.page.set_primary_action(
-				`${__("Add")} ${frappe.router.doctype_layout || __(this.doctype)}`,
+				`${__("Add")} ${frappe.router.doctype_layout || __(this.doctype, null, frappe.trans_context("Doctype", this.doctype))}`,
 				() => {
 					if (this.settings.primary_action) {
 						this.settings.primary_action();
@@ -245,7 +245,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 				"add"
 			);
 			let me = this;
-			let shortcut_obj = this.page.prepare_shortcut_obj("Shift+N", ()=> me.make_new_doc(), `${__("Add")} ${frappe.router.doctype_layout || __(this.doctype)}`);
+			let shortcut_obj = this.page.prepare_shortcut_obj("Shift+N", ()=> me.make_new_doc(), `${__("Add")} ${frappe.router.doctype_layout || __(this.doctype, null, frappe.trans_context("Doctype", this.doctype))}`);
 			frappe.ui.keys.add_shortcut(shortcut_obj);
 		} else {
 			this.page.clear_primary_action();
@@ -424,11 +424,11 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 		let help_link = this.get_documentation_link();
 		let filters = this.filter_area && this.filter_area.get();
 		let no_result_message = filters && filters.length
-			? __("No {0} found", [__(this.doctype)])
-			: __("You haven't created a {0} yet", [__(this.doctype)]);
+			? __("No {0} found", [__(this.doctype, null, frappe.trans_context("Doctype", this.doctype))])
+			: __("You haven't created a {0} yet", [__(this.doctype, null, frappe.trans_context("Doctype", this.doctype))]);
 		let new_button_label = filters && filters.length
-			? __("Create a new {0}", [__(this.doctype)])
-			: __("Create your first {0}", [__(this.doctype)]);
+			? __("Create a new {0}", [__(this.doctype, null, frappe.trans_context("Doctype", this.doctype))])
+			: __("Create your first {0}", [__(this.doctype, null, frappe.trans_context("Doctype", this.doctype))]);
 		let empty_state_image =
 			this.settings.empty_state_image ||
 			"/assets/frappe/images/ui-states/list-empty-state.svg";

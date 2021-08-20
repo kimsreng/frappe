@@ -495,7 +495,8 @@ doctype_properties = {
 	'email_append_to': 'Check',
 	'subject_field': 'Data',
 	'sender_field': 'Data',
-	'autoname': 'Data'
+	'autoname': 'Data',
+	'translation_context': "Data"
 }
 
 docfield_properties = {
@@ -540,7 +541,8 @@ docfield_properties = {
 	'allow_in_quick_entry': 'Check',
 	'hide_border': 'Check',
 	'hide_days': 'Check',
-	'hide_seconds': 'Check'
+	'hide_seconds': 'Check',
+	'translation_context': "Data"
 }
 
 doctype_link_properties = {

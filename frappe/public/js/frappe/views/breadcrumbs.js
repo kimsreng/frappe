@@ -140,7 +140,7 @@ frappe.breadcrumbs = {
 			} else {
 				route = doctype_route;
 			}
-			$(`<li><a href="/app/${route}">${__(doctype)}</a></li>`)
+			$(`<li><a href="/app/${route}">${__(doctype, null, frappe.trans_context("Doctype", doctype))}</a></li>`)
 				.appendTo(this.$breadcrumbs);
 		}
 	},

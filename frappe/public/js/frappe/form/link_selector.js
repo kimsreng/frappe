@@ -20,7 +20,7 @@ frappe.ui.form.LinkSelector = Class.extend({
 
 		this.start = 0;
 		this.dialog = new frappe.ui.Dialog({
-			title: __("Select {0}", [(this.doctype == '[Select]') ? __("value") : __(this.doctype)]),
+			title: __("Select {0}", [(this.doctype == '[Select]') ? __("value") : __(this.doctype, null, frappe.trans_context("Doctype", this.doctype))]),
 			fields: [
 				{
 					fieldtype: "Data", fieldname: "txt", label: __("Beginning with"),
