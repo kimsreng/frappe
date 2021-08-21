@@ -115,6 +115,11 @@ class ChartDialog extends WidgetDialog {
 				fieldname: "label",
 				label: "Label",
 			},
+			{
+				fieldtype: "Data",
+				fieldname: "translation_context",
+				label: "Translation Context",
+			},
 		];
 	}
 

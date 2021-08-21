@@ -14,6 +14,7 @@ export default class LinksWidget extends Widget {
 			links: JSON.stringify(this.links),
 			label: this.label,
 			hidden: this.hidden,
+			translation_context: this.translation_context,
 		};
 	}
 

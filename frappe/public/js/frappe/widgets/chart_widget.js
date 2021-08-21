@@ -18,6 +18,7 @@ export default class ChartWidget extends Widget {
 			label: this.label,
 			hidden: this.hidden,
 			width: this.width,
+			translation_context: this.translation_context,
 		};
 	}
 
