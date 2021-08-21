@@ -168,6 +168,11 @@ class ShortcutDialog extends WidgetDialog {
 				label: "Label",
 			},
 			{
+				fieldtype: "Data",
+				fieldname: "translation_context",
+				label: "Translation Context",
+			},
+			{
 				fieldtype: "Column Break",
 				fieldname: "column_break_4",
 			},

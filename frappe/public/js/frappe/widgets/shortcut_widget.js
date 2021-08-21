@@ -13,13 +13,14 @@ export default class ShortcutWidget extends Widget {
 			name: this.name,
 			icon: this.icon,
 			label: this.label,
+			translation_context: this.translation_context,
 			format: this.format,
 			link_to: this.link_to,
 			doc_view: this.doc_view,
 			color: this.color,
 			restrict_to_domain: this.restrict_to_domain,
 			stats_filter: this.stats_filter,
-			type: this.type,
+			type: this.type
 		};
 	}
 
@@ -71,7 +72,7 @@ export default class ShortcutWidget extends Widget {
 	set_count(count) {
 		const get_label = () => {
 			if (this.format) {
-				return __(this.format).replace(/{}/g, count);
+				return __(this.format, null, this.translation_context).replace(/{}/g, count);
 			}
 			return count;
 		};

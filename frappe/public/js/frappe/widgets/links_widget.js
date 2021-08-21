@@ -56,8 +56,8 @@ export default class LinksWidget extends Widget {
 			if (item.youtube_id)
 				return `<span class="link-content help-video-link ellipsis" data-youtubeid="${item.youtube_id}">
 						${item.label ? item.label : item.name}</span>`;
-
-			return `<span class="link-content ellipsis">${item.label ? __(item.label, null, item.tanslation_context) : __(item.name, null, item.tanslation_context)}</span>`;
+	
+			return `<span class="link-content ellipsis">${item.label ? __(item.label, null, item.translation_context) : __(item.name, null, item.translation_context)}</span>`;
 		};
 
 		this.link_list = this.links.map(item => {
