@@ -126,6 +126,7 @@ def get_dict(fortype, name=None):
 			messages += frappe.db.sql("select '', if(label != '', label, link_to), translation_context from `tabWorkspace Link`")
 			messages += frappe.db.sql("select '', if (label != '', label, link_to), translation_context from `tabWorkspace Shortcut`")
 			messages += frappe.db.sql("select '', if (label != '', label, chart_name), translation_context from `tabWorkspace Chart`")
+			messages += frappe.db.sql("select '', format, translation_context from `tabWorkspace Shortcut` where format != ''")
 
 		messages = deduplicate_messages(messages)
 		message_dict = make_dict_from_messages(messages, load_user_translation=False)
