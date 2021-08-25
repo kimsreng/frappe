@@ -114,16 +114,25 @@ frappe.ui.form.on('User', {
 				frm.toggle_display(['sb1', 'sb3', 'modules_access'], true);
 			}
 
-			frm.add_custom_button(__("Reset Password"), function() {
-				frappe.call({
-					method: "frappe.core.doctype.user.user.reset_password",
-					args: {
-						"user": frm.doc.name
-					}
-				});
-			}, __("Password"));
+
 
 			if (frappe.user.has_role("System Manager")) {
+				frm.add_custom_button(__("Reset Password"), function() {
+					frappe.call({
+						method: "frappe.core.doctype.user.user.reset_password",
+						args: {
+							"user": frm.doc.name
+						}
+					});
+				}, __("Password"));
+				frm.add_custom_button(__("Reset OTP Secret"), function() {
+					frappe.call({
+						method: "frappe.core.doctype.user.user.reset_otp_secret",
+						args: {
+							"user": frm.doc.name
+						}
+					});
+				}, __("Password"));
 				frappe.db.get_single_value("LDAP Settings", "enabled").then((value) => {
 					if (value === 1 && frm.doc.name != "Administrator") {
 						frm.add_custom_button(__("Reset LDAP Password"), function() {
@@ -167,14 +176,7 @@ frappe.ui.form.on('User', {
 				});
 			}
 
-			frm.add_custom_button(__("Reset OTP Secret"), function() {
-				frappe.call({
-					method: "frappe.core.doctype.user.user.reset_otp_secret",
-					args: {
-						"user": frm.doc.name
-					}
-				});
-			}, __("Password"));
+
 
 			frm.trigger('enabled');
 
@@ -192,7 +194,7 @@ frappe.ui.form.on('User', {
 				}
 			}
 		}
-		if (frm.doc.user_emails){
+		if (frm.doc.user_emails && frappe.boot.user.can_create.includes("Email Account")){
 			var found =0;
 			for (var i = 0;i<frm.doc.user_emails.length;i++){
 				if (frm.doc.email==frm.doc.user_emails[i].email_id){
