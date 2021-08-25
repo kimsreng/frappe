@@ -14,7 +14,7 @@ class NavbarSettings(Document):
 	def validate_standard_navbar_items(self):
 		doc_before_save = self.get_doc_before_save()
 
-		before_save_items = [item for item in \
+		before_save_items = [] if doc_before_save is None else [item for item in \
 			doc_before_save.help_dropdown + doc_before_save.settings_dropdown if item.is_standard]
 
 		after_save_items = [item for item in \
