@@ -14,6 +14,11 @@ def execute(filters=None):
 	if not validate(user, doctype): return [], []
 
 	columns, fields = get_columns_and_fields(doctype)
+	
+	all_users = frappe.get_list("User", pluck="name")
+	if user not in all_users:
+		frappe.throw(_("You have no permission for the user {0}").format(user))
+
 	data = frappe.get_list(doctype, fields=fields, as_list=True, user=user)
 
 	if show_permissions:
