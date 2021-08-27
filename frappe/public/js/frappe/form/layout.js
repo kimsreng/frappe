@@ -610,7 +610,7 @@ frappe.ui.form.Section = Class.extend({
 
 	make_head: function () {
 		this.head = $(`<div class="section-head">
-			${__(this.df.label)}
+			${__(this.df.label, null, this.df.translation_context)}
 			<span class="ml-2 collapse-indicator mb-1">
 			</span>
 		</div>`);
@@ -702,7 +702,7 @@ frappe.ui.form.Column = Class.extend({
 			});
 
 		if (this.df.label) {
-			$('<label class="control-label">' + __(this.df.label)
+			$('<label class="control-label">' + __(this.df.label, null, this.df.translation_context)
 				+ '</label>').appendTo(this.wrapper);
 		}
 	},

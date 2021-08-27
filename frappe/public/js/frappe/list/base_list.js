@@ -740,7 +740,7 @@ class FilterArea {
 					}
 					return {
 						fieldtype: fieldtype,
-						label: __(df.label),
+						label: __(df.label, null, df.translation_context),
 						options: options,
 						fieldname: df.fieldname,
 						condition: condition,

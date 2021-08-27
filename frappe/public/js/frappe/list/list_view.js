@@ -592,7 +592,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 			<span class="level-item list-liked-by-me">
 				<span title="${__("Likes")}">${frappe.utils.icon('heart', 'sm', 'like-icon')}</span>
 			</span>
-			<span class="level-item">${__(subject_field.label)}</span>
+			<span class="level-item">${__(subject_field.label, null, subject_field.translation_context)}</span>
 		`;
 		const $columns = this.columns
 			.map(col => {
@@ -602,11 +602,11 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 					col.type == "Tag" ? "tag-col hide": "",
 					frappe.model.is_numeric_field(col.df) ? "text-right" : "",
 				].join(" ");
-
+		
 				return `
 				<div class="${classes}">
 					${col.type === "Subject" ? subject_html : `
-						<span>${__((col.df && col.df.label) || col.type)}</span>`}
+						<span>${__((col.df && col.df.label) || col.type, null, col.df && col.df.translation_context)}</span>`}
 				</div>
 			`;
 			})
