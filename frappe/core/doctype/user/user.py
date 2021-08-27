@@ -122,6 +122,7 @@ class User(Document):
 			'frappe.core.doctype.user.user.create_contact',
 			user=self,
 			ignore_mandatory=True,
+			enqueue_after_commit=True,
 			now=now
 		)
 		if self.name not in ('Administrator', 'Guest') and not self.user_image:
