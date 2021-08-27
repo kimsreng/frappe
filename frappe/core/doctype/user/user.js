@@ -62,13 +62,16 @@ frappe.ui.form.on('User', {
 	onload: function(frm) {
 		frm.can_edit_roles = has_access_to_edit_user();
 
-		if (frm.can_edit_roles && !frm.is_new() && in_list(['System User', 'Website User'], frm.doc.user_type)) {
+		if (frm.can_edit_roles && in_list(['System User', 'Website User'], frm.doc.user_type)) {
+			if(frm.is_new()){
+				frm.doc.roles = [];
+			}
 			if (!frm.roles_editor) {
 				const role_area = $('<div class="role-editor">')
 					.appendTo(frm.fields_dict.roles_html.wrapper);
 
 				frm.roles_editor = new frappe.RoleEditor(role_area, frm, frm.doc.role_profile_name ? 1 : 0);
-
+				frm.roles_editor.show();
 				if (frm.doc.user_type == 'System User') {
 					var module_area = $('<div>')
 						.appendTo(frm.fields_dict.modules_html.wrapper);
@@ -95,7 +98,6 @@ frappe.ui.form.on('User', {
 			window.location.reload();
 		}
 
-		frm.toggle_display(['sb1', 'sb3', 'modules_access'], false);
 
 		if(!frm.is_new()) {
 			if(has_access_to_edit_user()) {

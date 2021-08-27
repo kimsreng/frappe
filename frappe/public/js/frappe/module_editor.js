@@ -6,12 +6,24 @@ frappe.ModuleEditor = Class.extend({
 	},
 	make: function() {
 		var me = this;
-		this.frm.doc.__onload.all_modules.forEach(function(m) {
+		var render = ()=>{
+			this.frm.doc.__onload.all_modules.forEach(function(m) {
 			$(repl('<div class="col-sm-6"><div class="checkbox">\
 				<label><input type="checkbox" class="block-module-check" data-module="%(module)s">\
 				%(module)s</label></div></div>', {module: m})).appendTo(me.wrapper);
-		});
-		this.bind();
+			});
+			this.bind();
+		}
+		if(this.frm.doc.__onload != undefined){
+			render();
+		}else{
+			frappe.call("frappe.core.doctype.user.user.get_all_modules").then(r => {
+				this.frm.doc.__onload = {};
+				this.frm.doc.__onload.all_modules = r.message;
+				render();
+			});
+		}
+		
 	},
 	refresh: function() {
 		var me = this;

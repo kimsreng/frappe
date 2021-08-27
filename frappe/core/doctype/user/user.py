@@ -1156,6 +1156,11 @@ def get_role_profile(role_profile):
 def get_module_profile(module_profile):
 	module_profile = frappe.get_doc('Module Profile', {'module_profile_name': module_profile})
 	return module_profile.get('block_modules')
+	
+@frappe.whitelist()
+def get_all_modules():
+	from frappe.config import get_modules_from_all_apps
+	return [m.get("module_name") for m in get_modules_from_all_apps()]
 
 def update_roles(role_profile):
 	users = frappe.get_all('User', filters={'role_profile_name': role_profile})
