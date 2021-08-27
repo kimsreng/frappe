@@ -320,7 +320,7 @@ export default class NumberCardWidget extends Widget {
 				<a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				...
 				</a>
-				<ul class="dropdown-menu" style="max-height: 300px; overflow-y: auto;">
+				<ul class="dropdown-menu dropdown-menu-right" style="max-height: 300px; overflow-y: auto;">
 					${actions
 						.map(
 							action =>
