@@ -61,6 +61,13 @@ def get_permission_query_conditions(user):
 
 	return module_condition
 
+def has_permission_for_dashboard(dashboard_name):
+	charts = get_permitted_charts(dashboard_name)
+	if len(charts): return True
+	cards = get_permitted_cards(dashboard_name)
+	if len(cards): return True
+	return False
+
 @frappe.whitelist()
 def get_permitted_charts(dashboard_name):
 	permitted_charts = []

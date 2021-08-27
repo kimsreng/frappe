@@ -182,7 +182,8 @@ class Workspace:
 		if item_type == "help":
 			return True
 		if item_type == "dashboard":
-			return True
+			from frappe.desk.doctype.dashboard.dashboard import has_permission_for_dashboard
+			return has_permission_for_dashboard(name)
 
 		return False
 
