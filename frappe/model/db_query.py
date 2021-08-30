@@ -598,6 +598,11 @@ class DatabaseQuery(object):
 				user_permissions = frappe.permissions.get_user_permissions(self.user)
 				self.add_user_permissions(user_permissions)
 
+			# user can select but cannot read
+			# except for his own shared doctype
+			if not role_permissions.get("read") and self.shared:
+				self.conditions.append(self.get_share_condition())
+
 		if as_condition:
 			conditions = ""
 			if self.match_conditions:
