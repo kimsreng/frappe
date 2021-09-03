@@ -66,6 +66,7 @@ export default class WidgetGroup {
 
 	set_title() {
 		this.title_area[0].innerText = this.title;
+		console.log(this.title);
 	}
 
 	make_widgets() {
