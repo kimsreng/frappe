@@ -133,7 +133,7 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 				var d = this.get_item(item.value);
 				if(!d.label) {	d.label = d.value; }
 
-				var _label = (me.translate_values) ? __(d.label) : d.label;
+				var _label = (me.translate_values) ? __(d.label, null, me.df?me.df.translation_context:null) : d.label;
 				var html = d.html || "<strong>" + _label + "</strong>";
 				if(d.description && d.value!==d.description) {
 					html += '<br><span class="small">' + __(d.description) + '</span>';
