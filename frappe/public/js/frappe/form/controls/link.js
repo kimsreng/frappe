@@ -11,6 +11,7 @@ frappe.ui.form.recent_link_validations = {};
 frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 	trigger_change_on_input_event: false,
 	make_input: function() {
+		// console.log(this.df);
 		var me = this;
 		$(`<div class="link-field ui-front" style="position: relative;">
 			<input type="text" class="input-with-feedback form-control">
@@ -54,6 +55,35 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 		this.setup_awesomeplete();
 		this.bind_change_event();
 	},
+	bind_change_event: function() {
+		const change_handler = e => {
+			if (this.change) this.change(e);
+			else {
+				let value = this.get_input_value();
+				//block on change event 
+				//if the value is the translation
+				if(this.trans_value && value == this.trans_value){
+					return;
+				}
+				this.parse_validate_and_set_in_model(value, e);
+			}
+		};
+		this.$input.on("change", change_handler);
+		if (this.trigger_change_on_input_event && !this.in_grid()) {
+			// debounce to avoid repeated validations on value change
+			this.$input.on("input", frappe.utils.debounce(change_handler, 500));
+		}
+	},
+	set_input: function(value) {
+		this.last_value = this.value;
+		this.value = value;
+		//TODO: Remove company extension
+		this.trans_value = value==null ? "" : __(value, null, this.df?this.df.translation_context:null);
+		this.set_formatted_input(this.trans_value);
+		this.set_disp_area(value);
+		this.set_mandatory && this.set_mandatory(value);
+	},
+
 	get_options: function() {
 		return this.df.options;
 	},
@@ -231,16 +261,16 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 			});
 		}, 500));
 
-		this.$input.on("blur", function() {
-			if(me.selected) {
-				me.selected = false;
-				return;
-			}
-			var value = me.get_input_value();
-			if(value!==me.last_value) {
-				me.parse_validate_and_set_in_model(value);
-			}
-		});
+		// this.$input.on("blur", function() {
+		// 	if(me.selected) {
+		// 		me.selected = false;
+		// 		return;
+		// 	}
+		// 	var value = me.get_input_value();
+		// 	if(value!==me.last_value) {
+		// 		me.parse_validate_and_set_in_model(value);
+		// 	}
+		// });
 
 		this.$input.on("awesomplete-open", () => {
 			this.autocomplete_open = true;
@@ -277,7 +307,7 @@ frappe.ui.form.ControlLink = frappe.ui.form.ControlData.extend({
 				frappe.boot.user.last_selected_values[me.df.options] = item.value;
 			}
 
-			me.parse_validate_and_set_in_model(item.value);
+			// me.parse_validate_and_set_in_model(item.value);
 		});
 
 		this.$input.on("awesomplete-selectcomplete", function(e) {
