@@ -530,7 +530,7 @@ frappe.ui.form.Form = class FrappeForm {
 		// set title
 		// main title
 		if(!this.meta.in_dialog || this.in_form) {
-			frappe.utils.set_title(this.meta.issingle ? this.doctype : this.docname);
+			frappe.utils.set_title(this.meta.issingle ? this.doctype : frappe.remove_abbr(this.docname));
 		}
 
 		// show / hide buttons
@@ -722,7 +722,7 @@ frappe.ui.form.Form = class FrappeForm {
 		links_text = `<ul>${links_text}</ul>`;
 
 		let confirm_message = __('{0} {1} is linked with the following submitted documents: {2}',
-			[(me.doc.doctype).bold(), me.doc.name, links_text]);
+			[(me.doc.doctype).bold(), frappe.remove_abbr(me.doc.name), links_text]);
 
 		let can_cancel = links.every((link) => frappe.model.can_cancel(link.doctype));
 		if (can_cancel) {

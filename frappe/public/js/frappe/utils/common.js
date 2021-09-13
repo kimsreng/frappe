@@ -376,3 +376,12 @@ frappe.utils.get_page_view_count = function (route) {
 		path: route
 	});
 };
+frappe.remove_abbr = function(text){
+	const abbr = frappe.boot.abbr;
+	if(!abbr){
+		return text;
+	}
+	//remove suffix
+	text = text.replace(` - ${abbr}`, "");
+	return text.replace(`${abbr}-`, "");
+};

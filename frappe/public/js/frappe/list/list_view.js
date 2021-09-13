@@ -606,12 +606,12 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 				return `
 				<div class="${classes}">
 					${col.type === "Subject" ? subject_html : `
-						<span>${__((col.df && col.df.label) || col.type, null, col.df && col.df.translation_context)}</span>`}
+						<span>${__(frappe.remove_abbr((col.df && col.df.label) || col.type), null, col.df && col.df.translation_context)}</span>`}
 				</div>
 			`;
 			})
 			.join("");
-
+		
 		return this.get_header_html_skeleton(
 			$columns,
 			'<span class="list-count"></span>'
@@ -705,6 +705,9 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 						</div>
 					</div>`;
 			} else {
+				if (fieldname == "name"){
+					return __(frappe.remove_abbr(value));
+				}
 				return frappe.format(value, df, null, doc);
 			}
 		};
@@ -742,7 +745,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 			} else if (df.fieldtype === "Link") {
 				html = `<a class="filterable ellipsis"
 					data-filter="${fieldname},=,${value}">
-					${_value}
+					${__(frappe.remove_abbr(_value), null, df?df.translation_context:null)}
 				</a>`;
 			} else if (
 				["Text Editor", "Text", "Small Text", "HTML Editor", "Markdown Editor"].includes(
@@ -758,7 +761,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 					${format()}
 				</a>`;
 			}
-
+			
 			return `<span class="ellipsis"
 				title="${__(label)}: ${frappe.utils.escape_html(_value)}">
 				${html}
@@ -860,7 +863,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 				${this.get_indicator_dot(doc)}
 			</div>
 		`;
-
+		
 		return html;
 	}
 
@@ -926,7 +929,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 		if (!value) {
 			value = doc.name;
 		}
-		let subject = strip_html(value.toString());
+		let subject = __(frappe.remove_abbr(strip_html(value.toString())));
 		let escaped_subject = frappe.utils.escape_html(subject);
 
 		const seen = this.get_seen_class(doc);

@@ -51,7 +51,7 @@ frappe.ui.form.Toolbar = class Toolbar {
 		}
 
 		var me = this;
-		title = __(title);
+		title = __(frappe.remove_abbr(title));
 		this.page.set_title(title);
 		if(this.frm.meta.title_field) {
 			frappe.utils.set_title(title + " - " + this.frm.docname);
