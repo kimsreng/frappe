@@ -698,7 +698,13 @@ class DatabaseQuery(object):
 				c = frappe.call(frappe.get_attr(method), self.user)
 				if c:
 					conditions.append(c)
-
+		## allow wildcard permission_query_conditions
+		condition_methods = frappe.get_hooks("permission_query_conditions", {}).get("*", [])
+		if condition_methods:
+			for method in condition_methods:
+				c = frappe.call(frappe.get_attr(method), self.user, self.doctype)
+				if c:
+					conditions.append(c)		
 		permision_script_name = get_server_script_map().get("permission_query", {}).get(self.doctype)
 		if permision_script_name:
 			script = frappe.get_doc("Server Script", permision_script_name)
