@@ -55,19 +55,19 @@ frappe.db = {
 			}).then(r => resolve(r ? r.message : null));
 		});
 	},
-	get_company_single_value: (doctype, field) => {
+	get_agent_single_value: (doctype, field) => {
 		return new Promise(resolve => {
 			frappe.call({
-				method: 'frappe.client.get_company_single_value',
+				method: 'frappe.client.get_agent_single_value',
 				args: { doctype, field },
 				type: 'GET',
 			}).then(r => resolve(r ? r.message : null));
 		});
 	},
-	get_company_single_doc: function(doctype) {
+	get_agent_single_doc: function(doctype) {
 		return new Promise((resolve, reject) => {
 			frappe.call({
-				method: "frappe.client.get_company_single_doc",
+				method: "frappe.client.get_agent_single_doc",
 				type: 'GET',
 				args: { doctype },
 				callback: r => {

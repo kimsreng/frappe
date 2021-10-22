@@ -4,11 +4,11 @@ frappe.ui.get_print_settings = function(
 	letter_head,
 	pick_columns
 ) {
-	var print_settings = locals[":Print Settings"][(frappe.boot.company?  frappe.boot.company: 'Print Settings')];
+	var print_settings = locals[":Print Settings"][(frappe.boot.agent?  frappe.boot.agent: 'Print Settings')];
 
 	var default_letter_head =
-		locals[":Company"] && frappe.defaults.get_default("company")
-			? locals[":Company"][frappe.defaults.get_default("company")]["default_letter_head"]
+		locals[":Agent"] && frappe.defaults.get_default("agent")
+			? locals[":Agent"][frappe.defaults.get_default("agent")]["default_letter_head"]
 			: "";
 
 	var columns = [

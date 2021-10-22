@@ -4,8 +4,8 @@
 frappe.ui.form.on('Print Style', {
 	refresh: function(frm) {
 		frm.add_custom_button(__('Print Settings'), () => {
-			if (frappe.boot.company){
-				frappe.set_route('Form', 'Company Print Settings', frappe.boot.company);
+			if (frappe.boot.agent){
+				frappe.set_route('Form', 'Agent Print Settings', frappe.boot.agent);
 			}else{
 				frappe.set_route('Form', 'Print Settings');
 			}

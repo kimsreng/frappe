@@ -238,7 +238,7 @@ frappe.ui.form.Toolbar = class Toolbar {
 		const docstatus = cint(this.frm.doc.docstatus);
 		const is_submittable = frappe.model.is_submittable(this.frm.doc.doctype);
 
-		const print_settings = frappe.model.get_doc(":Print Settings", (frappe.boot.company?  frappe.boot.company: 'Print Settings')) || {};
+		const print_settings = frappe.model.get_doc(":Print Settings", (frappe.boot.agent?  frappe.boot.agent: 'Print Settings')) || {};
 		const allow_print_for_draft = cint(print_settings.allow_print_for_draft);
 		const allow_print_for_cancelled = cint(print_settings.allow_print_for_cancelled);
 

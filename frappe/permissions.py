@@ -17,7 +17,7 @@ rights = ("select", "read", "write", "create", "delete", "submit", "cancel", "am
 def check_admin_or_system_manager(user=None):
 	if not user: user = frappe.session.user
 	user_roles = frappe.get_roles(user)
-	if ("System Manager" not in user_roles  and "Company System Manager" not in user_roles ) and (user!="Administrator"):
+	if ("System Manager" not in user_roles  and "Agent System Manager" not in user_roles ) and (user!="Administrator"):
 		frappe.throw(_("Not permitted"), frappe.PermissionError)
 
 def print_has_permission_check_logs(func):

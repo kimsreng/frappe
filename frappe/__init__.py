@@ -467,8 +467,8 @@ def get_user():
 	if not local.user_perms:
 		local.user_perms = UserPermissions(local.session.user)
 	return local.user_perms
-	
-def get_company(user=None):
+
+def get_agent(user=None):
 	if user is None:
 		user = local.session.user
 	if user is None or user == "Administrator":
@@ -477,35 +477,35 @@ def get_company(user=None):
 		import re
 		result = re.findall(r"\<([A-Za-z0-9_@.]+)\>", user)
 		user = result[0]
-	return get_value("User", user, "company", cache=True)
+	return get_value("User", user, "agent", cache=True)
 
-def get_company_condition():
-	company = get_company(local.session.user)
-	if company:
-		return " and company = '{0}'".format(company)
+def get_agent_condition():
+	agent = get_agent(local.session.user)
+	if agent:
+		return " and agent = '{0}'".format(agent)
 	return ""
 
-def company_get_single_value(doctype, field):
-	company = get_company(local.session.user)
-	if company:
-		return get_value("Company "+doctype, company, field)
+def agent_get_single_value(doctype, field):
+	agent = get_agent(local.session.user)
+	if agent:
+		return get_value("Agent "+doctype, agent, field)
 	else:
 		return db.get_single_value(doctype, field)
 
-def company_set_value(doctype, field, value):
-	company = get_company(local.session.user)
-	if company:
-		return db.set_value("Company "+doctype, company, field, value)
+def agent_set_value(doctype, field, value):
+	agent = get_agent(local.session.user)
+	if agent:
+		return db.set_value("Agent "+doctype, agent, field, value)
 	else:
 		return db.set_value(doctype, None, field, value)
 
-def company_get_single(doctype):
-	company = get_company(local.session.user)
-	if company:
-		return get_cached_doc("Company "+doctype, company)
+def agent_get_single(doctype):
+	agent = get_agent(local.session.user)
+	if agent:
+		return get_cached_doc("Agent "+doctype, agent)
 	else:
 		return get_single(doctype)
-		
+			
 def get_roles(username=None):
 	"""Returns roles of current user."""
 	if not local.session:
@@ -911,7 +911,31 @@ def get_last_doc(doctype, filters=None, order_by="creation desc"):
 
 def get_single(doctype):
 	"""Return a `frappe.model.document.Document` object of the given Single doctype."""
+	agent = get_agent(local.session.user)
+	if agent:	
+		settings_doctypes = get_hooks("agent_setting_doctypes")
+		if doctype in settings_doctypes:
+			return get_cached_doc("Agent "+doctype, agent)
+
 	return get_doc(doctype, doctype)
+
+def get_single_value(doctype, fieldname, cache=False):
+	agent = get_agent(local.session.user)
+	if agent:	
+		settings_doctypes = get_hooks("agent_setting_doctypes")
+		if doctype in settings_doctypes:
+			return get_value("Agent "+doctype, agent, fieldname)
+
+	return db.get_single_value(doctype, fieldname, cache)
+
+def set_single_value(doctype, field, value):
+	agent = get_agent(local.session.user)
+	if agent:	
+		settings_doctypes = get_hooks("agent_setting_doctypes")
+		if doctype in settings_doctypes:
+			return db.set_value(f"Agent {doctype}", agent, field, value)
+	else:
+		return db.set_value(doctype, None, field, value)
 
 def get_meta(doctype, cached=True):
 	"""Get `frappe.model.meta.Meta` instance of given doctype name."""
@@ -1557,7 +1581,7 @@ def attach_print(doctype, name, file_name=None, print_format=None,
 	if not file_name: file_name = name
 	file_name = file_name.replace(' ','').replace('/','-')
 
-	print_settings = company_get_single("Print Settings").as_dict()
+	print_settings = get_single("Print Settings").as_dict()
 
 	_lang = local.lang
 

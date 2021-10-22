@@ -73,8 +73,8 @@ def get(doctype, name=None, filters=None, parent=None):
 	return frappe.get_doc(doctype, name).as_dict()
 
 @frappe.whitelist()
-def get_company_single_doc(doctype):
-	doc = frappe.company_get_single(doctype)
+def get_agent_single_doc(doctype):
+	doc = frappe.agent_get_single(doctype)
 	if not doc.has_permission("read"):
 		raise frappe.PermissionError
 
@@ -130,12 +130,12 @@ def get_single_value(doctype, field):
 	return value
 
 @frappe.whitelist()
-def get_company_single_value(doctype, field):
-	company = frappe.get_company(frappe.session.user)
-	if company:
-		if not frappe.has_permission("Company "+doctype):
+def get_agent_single_value(doctype, field):
+	agent = frappe.get_agent(frappe.session.user)
+	if agent:
+		if not frappe.has_permission("Agent "+doctype):
 			frappe.throw(_("No permission for {0}").format(doctype), frappe.PermissionError)
-		value = frappe.company_get_single_value(doctype, field)
+		value = frappe.agent_get_single_value(doctype, field)
 		return value
 	return get_single_value(doctype, field)
 

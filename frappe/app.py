@@ -202,7 +202,7 @@ def make_form_dict(request):
 
 def handle_exception(e):
 	# allow hooks for exception handling
-	hooks = [h for h in frappe.get_hooks("exception_handler")]
+	hooks = [h for h in frappe.get_hooks("exception_handler", [])]
 	response_from_hooks = None
 	if len(hooks):
 		for h in hooks:

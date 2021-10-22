@@ -64,7 +64,7 @@ def get_outgoing_email_account(raise_exception_not_set=True, append_to=None, sen
 				"enable_outgoing": 1,
 				"enable_incoming": 1,
 				"append_to": append_to,
-				"company": frappe.get_company(sender)
+				"agent": frappe.get_agent(sender)
 			}, cache=True)
 
 			if email_accounts:
@@ -75,7 +75,7 @@ def get_outgoing_email_account(raise_exception_not_set=True, append_to=None, sen
 					"enable_outgoing": 1,
 					"enable_incoming": 1,
 					"append_to": append_to,
-					"company": frappe.get_company(sender)
+					"agent": frappe.get_agent(sender)
 				})
 
 		if not email_account:
@@ -119,7 +119,7 @@ def get_default_outgoing_email_account(raise_exception_not_set=True, sender=None
 		 "always_use_account_name_as_sender_name": 0
 		}
 	'''
-	email_account = _get_email_account({"enable_outgoing": 1, "default_outgoing": 1, "company": frappe.get_company(sender)})
+	email_account = _get_email_account({"enable_outgoing": 1, "default_outgoing": 1, "agent": frappe.get_agent(sender)})
 	if email_account:
 		email_account.password = email_account.get_password(raise_exception=False)
 
