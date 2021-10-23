@@ -8,7 +8,7 @@
  "field_order": [
   "module_name",
   "roles",
-  "app"
+  "app_name"
  ],
  "fields": [
   {
@@ -27,16 +27,15 @@
    "reqd": 1
   },
   {
-   "fieldname": "app",
-   "fieldtype": "Link",
+   "fieldname": "app_name",
+   "fieldtype": "Select",
    "label": "App",
-   "options": "Installed Application",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-10-18 16:59:36.510590",
+ "modified": "2021-10-22 19:47:26.719685",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Agent Module",

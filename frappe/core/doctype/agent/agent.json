@@ -137,7 +137,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-10-18 17:20:04.617984",
+ "modified": "2021-10-23 20:26:48.713741",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Agent",
@@ -158,9 +158,8 @@
    "if_owner": 1,
    "print": 1,
    "read": 1,
-   "role": "Client Registrar",
-   "share": 1,
-   "write": 1
+   "role": "Agent Registrar",
+   "share": 1
   },
   {
    "create": 1,
@@ -170,7 +169,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Client Manager",
+   "role": "Agent Manager",
    "share": 1,
    "write": 1
   }
