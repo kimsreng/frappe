@@ -74,7 +74,7 @@ def get(doctype, name=None, filters=None, parent=None):
 
 @frappe.whitelist()
 def get_agent_single_doc(doctype):
-	doc = frappe.agent_get_single(doctype)
+	doc = frappe.get_single(doctype)
 	if not doc.has_permission("read"):
 		raise frappe.PermissionError
 
