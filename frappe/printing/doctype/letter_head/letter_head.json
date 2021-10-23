@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "allow_rename": 1,
  "autoname": "field:letter_head_name",
  "creation": "2012-11-22 17:45:46",
@@ -104,8 +105,9 @@
  ],
  "icon": "fa fa-font",
  "idx": 1,
+ "links": [],
  "max_attachments": 3,
- "modified": "2019-11-11 18:46:43.375120",
+ "modified": "2021-10-23 21:15:13.576982",
  "modified_by": "Administrator",
  "module": "Printing",
  "name": "Letter Head",
@@ -125,6 +127,15 @@
   {
    "read": 1,
    "role": "All"
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Desk User",
+   "share": 1
   }
  ],
  "sort_field": "modified",
