@@ -1,7 +1,7 @@
 frappe.ui.form.on('User', {
 	before_load: function(frm) {
 		if(!frappe.user.has_role("System Manager")){
-			frm.set_df_property("company", "hidden", 1);
+			frm.set_df_property("agent", "hidden", 1);
 		}
 		var update_tz_select = function(user_language) {
 			frm.set_df_property("time_zone", "options", [""].concat(frappe.all_timezones));

@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "enabled",
+  "agent",
   "section_break_3",
   "email",
   "last_name",
@@ -602,6 +603,12 @@
    "fieldtype": "Link",
    "label": "Module Profile",
    "options": "Module Profile"
+  },
+  {
+   "fieldname": "agent",
+   "fieldtype": "Link",
+   "label": "Agent",
+   "options": "Agent"
   }
  ],
  "icon": "fa fa-user",
@@ -670,7 +677,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2021-02-02 16:11:06.037543",
+ "modified": "2021-10-22 19:04:09.800048",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
