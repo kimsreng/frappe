@@ -36,12 +36,9 @@ class Workspace:
 		self.extended_shortcuts = []
 
 		self.user = frappe.get_user()
-		self.allowed_modules = self.get_cached('user_allowed_modules', self.get_allowed_modules)
+		# self.allowed_modules = self.get_cached('user_allowed_modules', self.get_allowed_modules)
 
 		self.doc = self.get_page_for_user()
-
-		if self.doc.module and self.doc.module not in self.allowed_modules:
-			raise frappe.PermissionError
 
 		self.can_read = self.get_cached('user_perm_can_read', self.get_can_read_items)
 
@@ -153,8 +150,7 @@ class Workspace:
 		pages = frappe.get_all("Workspace", filters={
 			"extends": self.page_name,
 			'restrict_to_domain': ['in', frappe.get_active_domains()],
-			'for_user': '',
-			'module': ['in', self.allowed_modules]
+			'for_user': ''
 		})
 
 		pages = [frappe.get_cached_doc("Workspace", page['name']) for page in pages]
