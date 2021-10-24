@@ -40,6 +40,12 @@ class Workspace:
 
 		self.doc = self.get_page_for_user()
 
+		# users should just be able to doctypes they are allowed to see
+
+		user = frappe.get_cached_doc("User", frappe.session.user)
+		if self.doc.module and self.doc.module in user.get_blocked_modules():
+			raise frappe.PermissionError
+
 		self.can_read = self.get_cached('user_perm_can_read', self.get_can_read_items)
 
 		self.allowed_pages = get_allowed_pages(cache=True)
