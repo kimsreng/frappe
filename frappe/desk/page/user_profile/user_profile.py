@@ -4,6 +4,7 @@ from frappe.utils import getdate
 
 @frappe.whitelist()
 def get_energy_points_heatmap_data(user, date):
+	can_read_user(user)
 	try:
 		date = getdate(date)
 	except Exception:
@@ -22,6 +23,7 @@ def get_energy_points_heatmap_data(user, date):
 
 @frappe.whitelist()
 def get_energy_points_percentage_chart_data(user, field):
+	can_read_user(user)
 	result = frappe.db.get_list('Energy Point Log',
 		filters = {'user': user, 'type': ['!=', 'Review']},
 		group_by = field,
@@ -38,6 +40,7 @@ def get_energy_points_percentage_chart_data(user, field):
 
 @frappe.whitelist()
 def get_user_rank(user):
+	can_read_user(user)
 	month_start = datetime.today().replace(day=1)
 	monthly_rank = frappe.db.get_list('Energy Point Log',
 		group_by = 'user',
@@ -75,6 +78,7 @@ def update_profile_info(profile_info):
 
 @frappe.whitelist()
 def get_energy_points_list(start, limit, user):
+	can_read_user(user)
 	return frappe.db.get_list('Energy Point Log',
 		filters = {'user': user, 'type': ['!=', 'Review']},
 		fields = ['name','user', 'points', 'reference_doctype', 'reference_name', 'reason',
@@ -82,3 +86,8 @@ def get_energy_points_list(start, limit, user):
 		start = start,
 		limit = limit,
 		order_by = 'creation desc')
+
+def can_read_user(user):
+	users = frappe.get_list("User", filters = {"name": user})
+	if not len(users):
+		raise frappe.PermissionError

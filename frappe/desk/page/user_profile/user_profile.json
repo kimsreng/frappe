@@ -4,7 +4,7 @@
  "docstatus": 0,
  "doctype": "Page",
  "idx": 0,
- "modified": "2020-03-02 15:17:13.041650",
+ "modified": "2021-10-23 21:47:06.199958",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "user-profile",
@@ -13,6 +13,9 @@
  "roles": [
   {
    "role": "All"
+  },
+  {
+   "role": "Desk User"
   }
  ],
  "script": null,
