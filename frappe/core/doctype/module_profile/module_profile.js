@@ -8,12 +8,8 @@ frappe.ui.form.on('Module Profile', {
 				let module_area = $('<div style="min-height: 300px">')
 					.appendTo(frm.fields_dict.module_html.wrapper);
 
-				frm.module_editor = new frappe.ModuleEditor(frm, module_area);
+				frm.module_editor = new frappe.ModuleEditor(module_area, frm, false);
 			}
-		}
-
-		if (frm.module_editor) {
-			frm.module_editor.refresh();
 		}
 	}
 });

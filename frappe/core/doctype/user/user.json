@@ -59,6 +59,7 @@
   "module_profile",
   "modules_html",
   "block_modules",
+  "allowed_modules",
   "home_settings",
   "sb2",
   "defaults",
@@ -609,6 +610,13 @@
    "fieldtype": "Link",
    "label": "Agent",
    "options": "Agent"
+  },
+  {
+   "fieldname": "allowed_modules",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Allowed Modules",
+   "options": "Block Module"
   }
  ],
  "icon": "fa fa-user",
@@ -677,7 +685,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2021-10-22 19:04:09.800048",
+ "modified": "2021-10-24 16:38:17.058716",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",

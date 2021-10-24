@@ -43,7 +43,7 @@ class Workspace:
 		# users should just be able to doctypes they are allowed to see
 
 		user = frappe.get_cached_doc("User", frappe.session.user)
-		if self.doc.module and self.doc.module in user.get_blocked_modules():
+		if self.doc.module and self.doc.module not in user.get_allowed_modules():
 			raise frappe.PermissionError
 
 		self.can_read = self.get_cached('user_perm_can_read', self.get_can_read_items)
@@ -384,13 +384,13 @@ def get_desk_sidebar_items():
 	"""Get list of sidebar items for desk"""
 
 	# don't get domain restricted pages
-	blocked_modules = frappe.get_doc('User', frappe.session.user).get_blocked_modules()
+	allowed_modules = frappe.get_doc('User', frappe.session.user).get_allowed_modules()
 
 	filters = {
 		'restrict_to_domain': ['in', frappe.get_active_domains()],
 		'extends_another_page': 0,
 		'for_user': '',
-		'module': ['not in', blocked_modules]
+		'module': ['in', allowed_modules]
 	}
 
 	if not frappe.local.conf.developer_mode:

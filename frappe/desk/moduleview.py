@@ -445,7 +445,7 @@ def get_options_for_global_modules():
 	from frappe.config import get_modules_from_all_apps
 	all_modules = get_modules_from_all_apps()
 
-	blocked_modules = frappe.get_doc('User', 'Administrator').get_blocked_modules()
+	allowed_modules = frappe.get_doc('User', 'Administrator').get_allowed_modules()
 
 	options = []
 	for module in all_modules:
@@ -454,7 +454,7 @@ def get_options_for_global_modules():
 			'category': module.category,
 			'label': module.label,
 			'value': module.module_name,
-			'checked': module.module_name not in blocked_modules
+			'checked': module.module_name not in allowed_modules
 		})
 
 	return options

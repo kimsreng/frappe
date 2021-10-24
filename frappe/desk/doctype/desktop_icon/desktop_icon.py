@@ -89,9 +89,9 @@ def get_desktop_icons(user=None):
 
 				user_icons.append(standard_icon)
 
-		user_blocked_modules = frappe.get_doc('User', user).get_blocked_modules()
+		user_allowed_modules = frappe.get_doc('User', user).get_allowed_modules()
 		for icon in user_icons:
-			if icon.module_name in user_blocked_modules:
+			if icon.module_name not in user_allowed_modules:
 				icon.hidden = 1
 
 		# sort by idx

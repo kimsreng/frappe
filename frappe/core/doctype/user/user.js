@@ -48,12 +48,12 @@ frappe.ui.form.on('User', {
 					module_profile: frm.doc.module_profile
 				},
 				callback: function(data) {
-					frm.set_value("block_modules", []);
+					frm.set_value("allowed_modules", []);
 					$.each(data.message || [], function(i, v) {
-						let d = frm.add_child("block_modules");
+						let d = frm.add_child("allowed_modules");
 						d.module = v.module;
 					});
-					frm.module_editor && frm.module_editor.refresh();
+					frm.module_editor && frm.module_editor.show();
 				}
 			});
 		}
@@ -75,10 +75,11 @@ frappe.ui.form.on('User', {
 				if (frm.doc.user_type == 'System User') {
 					var module_area = $('<div>')
 						.appendTo(frm.fields_dict.modules_html.wrapper);
-					frm.module_editor = new frappe.ModuleEditor(frm, module_area);
+					frm.module_editor = new frappe.ModuleEditor(module_area, frm);
 				}
 			} else {
 				frm.roles_editor.show();
+				frm.module_editor.show();
 			}
 		}
 	},
@@ -187,7 +188,7 @@ frappe.ui.form.on('User', {
 				frm.roles_editor.show();
 			}
 
-			frm.module_editor && frm.module_editor.refresh();
+			frm.module_editor && frm.module_editor.show();
 
 			if(frappe.session.user==doc.name) {
 				// update display settings
@@ -222,6 +223,9 @@ frappe.ui.form.on('User', {
 	validate: function(frm) {
 		if(frm.roles_editor) {
 			frm.roles_editor.set_roles_in_table();
+		}
+		if(frm.module_editor) {
+			frm.module_editor.set_modules_in_table();
 		}
 	},
 	enabled: function(frm) {

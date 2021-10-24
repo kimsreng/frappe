@@ -8,7 +8,8 @@
  "field_order": [
   "module_profile_name",
   "module_html",
-  "block_modules"
+  "block_modules",
+  "allowed_modules"
  ],
  "fields": [
   {
@@ -31,11 +32,18 @@
    "label": "Block Modules",
    "options": "Block Module",
    "read_only": 1
+  },
+  {
+   "fieldname": "allowed_modules",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Allowed Modules",
+   "options": "Block Module"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-01-03 15:36:52.622696",
+ "modified": "2021-10-24 16:42:05.039500",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Module Profile",

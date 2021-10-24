@@ -1,51 +1,69 @@
-frappe.ModuleEditor = Class.extend({
-	init: function(frm, wrapper) {
-		this.wrapper = $('<div class="row module-block-list"></div>').appendTo(wrapper);
+frappe.ModuleEditor =  class {
+	constructor(wrapper, frm, disable) {
 		this.frm = frm;
-		this.make();
-	},
-	make: function() {
-		var me = this;
-		var render = ()=>{
-			this.frm.doc.__onload.all_modules.forEach(function(m) {
-			$(repl('<div class="col-sm-6"><div class="checkbox">\
-				<label><input type="checkbox" class="block-module-check" data-module="%(module)s">\
-				%(module)s</label></div></div>', {module: m})).appendTo(me.wrapper);
-			});
-			this.bind();
-		}
-		if(this.frm.doc.__onload != undefined){
-			render();
-		}else{
-			frappe.call("frappe.core.doctype.user.user.get_all_modules").then(r => {
-				this.frm.doc.__onload = {};
-				this.frm.doc.__onload.all_modules = r.message;
-				render();
-			});
-		}
-		
-	},
-	refresh: function() {
-		var me = this;
-		this.wrapper.find(".block-module-check").prop("checked", true);
-		$.each(this.frm.doc.block_modules, function(i, d) {
-			me.wrapper.find(".block-module-check[data-module='"+ d.module +"']").prop("checked", false);
+		this.wrapper = wrapper;
+		this.disable = disable;
+		let user_modules = this.frm.doc.allowed_modules.map(a => a.module);
+		this.multicheck = frappe.ui.form.make_control({
+			parent: wrapper,
+			df: {
+				fieldname: "allowed_modules",
+				fieldtype: "MultiCheck",
+				select_all: true,
+				columns: 3,
+				get_data: () => {
+					return frappe.xcall('frappe.core.doctype.user.user.get_all_modules').then(modules => {
+						return modules.map(module => {
+							return {
+								label: __(module),
+								value: module,
+								checked: user_modules.includes(module)
+							};
+						});
+					});
+				},
+				on_change: () => {
+					this.set_modules_in_table();
+					this.frm.dirty();
+				}
+			},
+			render_input: true
 		});
-	},
-	bind: function() {
-		var me = this;
-		this.wrapper.on("change", ".block-module-check", function() {
-			var module = $(this).attr('data-module');
-			if ($(this).prop("checked")) {
-				// remove from block_modules
-				me.frm.doc.block_modules = $.map(me.frm.doc.block_modules || [], function(d) {
-					if (d.module != module) {
-						return d;
-					}
-				});
-			} else {
-				me.frm.add_child("block_modules", {"module": module});
+
+		let original_func = this.multicheck.make_checkboxes;
+		this.multicheck.make_checkboxes = () => {
+			original_func.call(this.multicheck);
+			
+		};
+	}
+	set_enable_disable() {
+		$(this.wrapper).find('input[type="checkbox"]').attr('disabled', this.disable ? true : false);
+	}
+	show() {
+		let user_modules = this.frm.doc.allowed_modules.map(a => a.module);
+		this.multicheck.selected_options = user_modules;
+		this.multicheck.refresh_input();
+		this.set_enable_disable();
+	}
+	set_modules_in_table() {
+		let modules = this.frm.doc.allowed_modules || [];
+		let checked_options = this.multicheck.get_checked_options();
+		modules.map(module_doc => {
+			if (!checked_options.includes(module_doc.module)) {
+				frappe.model.clear_doc(module_doc.doctype, module_doc.name);
+			}
+		});
+		checked_options.map(module => {
+			if (!modules.find(d => d.module === module)) {
+				let module_doc = frappe.model.add_child(this.frm.doc, "Block Module", "allowed_modules");
+				module_doc.module = module;
 			}
 		});
 	}
-});
+	get_modules() {
+		return {
+			checked_modules: this.multicheck.get_checked_options(),
+			unchecked_modules: this.multicheck.get_unchecked_options()
+		};
+	}
+};

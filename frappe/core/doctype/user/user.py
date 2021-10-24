@@ -536,9 +536,16 @@ class User(Document):
 	def username_exists(self, username=None):
 		return frappe.db.get_value("User", {"username": username or self.username, "name": ("!=", self.name)})
 
-	def get_blocked_modules(self):
-		"""Returns list of modules blocked for that user"""
-		return [d.module for d in self.block_modules] if self.block_modules else []
+	# def get_blocked_modules(self):
+	# 	"""Returns list of modules blocked for that user"""
+	# 	return [d.module for d in self.block_modules] if self.block_modules else []
+	
+	def get_allowed_modules(self):
+		"""Returns list of modules allowed for that user"""
+		# adminstrator is allowed for all modules
+		if self.name == "Administrator":
+			return get_all_modules()
+		return [d.module for d in self.allowed_modules] if self.allowed_modules else []
 
 	def validate_user_email_inbox(self):
 		""" check if same email account added in User Emails twice """
@@ -1155,12 +1162,14 @@ def get_role_profile(role_profile):
 @frappe.whitelist()
 def get_module_profile(module_profile):
 	module_profile = frappe.get_doc('Module Profile', {'module_profile_name': module_profile})
-	return module_profile.get('block_modules')
+	return module_profile.get('allowed_modules')
 	
 @frappe.whitelist()
 def get_all_modules():
 	from frappe.config import get_modules_from_all_apps
-	return [m.get("module_name") for m in get_modules_from_all_apps()]
+	modules = [m.get("module_name") for m in get_modules_from_all_apps()]
+	modules.sort()
+	return modules
 
 def update_roles(role_profile):
 	users = frappe.get_all('User', filters={'role_profile_name': role_profile})
