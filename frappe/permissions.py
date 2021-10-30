@@ -377,7 +377,7 @@ def get_roles(user=None, with_standard=False):
 			return [r[0] for r in frappe.db.sql("select name from `tabRole`")] # return all available roles
 		else:
 			return [r[0] for r in frappe.db.sql("""select role from `tabHas Role`
-				where parent=%s and role not in ('Desk User', 'Company Select List')""", (user,))] + ["Desk User", "Company Select List"]
+				where parent=%s and role not in ('Desk User', 'Agent Select List')""", (user,))] + ["Desk User", "Agent Select List"]
 
 	roles = frappe.cache().hget("roles", user, get)
 	if frappe.flags.sudo_roles:

@@ -909,10 +909,10 @@ def get_last_doc(doctype, filters=None, order_by="creation desc"):
 	else:
 		raise DoesNotExistError
 
-def get_single(doctype):
+def get_single(doctype, not_agent=False):
 	"""Return a `frappe.model.document.Document` object of the given Single doctype."""
 	agent = get_agent(local.session.user)
-	if agent:	
+	if agent and not_agent:	
 		settings_doctypes = get_hooks("agent_setting_doctypes")
 		if doctype in settings_doctypes:
 			return get_cached_doc("Agent "+doctype, agent)
