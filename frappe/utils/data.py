@@ -1221,6 +1221,12 @@ def get_absolute_url(doctype, name):
 	return "/app/{0}/{1}".format(quoted(slug(doctype)), quoted(name))
 
 def get_url_to_form(doctype, name):
+	agent = frappe.get_agent()
+	if agent:
+		settings_doctypes = frappe.get_hooks("agent_settings_doctype", [])
+		if doctype in settings_doctypes:
+			return get_url(uri = "/app/{0}/{1}".format(quoted(slug(f"Agent {doctype}")), quoted(agent)))
+	
 	return get_url(uri = "/app/{0}/{1}".format(quoted(slug(doctype)), quoted(name)))
 
 def get_url_to_list(doctype):

@@ -9,16 +9,16 @@ class Agent(Document):
 
 def get_name_with_abbr(name, agent):
 	agent_abbr = frappe.get_cached_value('Agent',  agent,  "abbr")
-	parts = name.split(" - ")
+	formatted_name = f"({agent_abbr})"
 
-	if parts[-1].lower() != agent_abbr.lower():
-		parts.append(agent_abbr)
+	if formatted_name in name:
+		return name
 
-	return " - ".join(parts)
+	return f"{name}{formatted_name}"
 
 def get_abbr_extension(agent):
 	agent_abbr = frappe.get_cached_value('Agent',  agent,  "abbr")
-	return " - {0}".format(agent_abbr)
+	return f"({agent_abbr})"
 
 def get_abbr_prefix(agent):
 	agent_abbr = frappe.get_cached_value('Agent',  agent,  "abbr")
