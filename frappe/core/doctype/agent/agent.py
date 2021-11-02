@@ -8,8 +8,7 @@ class Agent(Document):
 	pass
 
 def get_name_with_abbr(name, agent):
-	agent_abbr = frappe.get_cached_value('Agent',  agent,  "abbr")
-	formatted_name = f"({agent_abbr})"
+	formatted_name = get_abbr_extension(agent)
 
 	if formatted_name in name:
 		return name
