@@ -685,7 +685,7 @@
   }
  ],
  "max_attachments": 5,
- "modified": "2021-10-24 16:38:17.058716",
+ "modified": "2021-11-04 22:22:36.440526",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
@@ -709,6 +709,18 @@
    "permlevel": 1,
    "read": 1,
    "role": "System Manager",
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 2,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
    "write": 1
   }
  ],
