@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "agent_information_section",
+  "enabled",
   "agent_name",
   "abbr",
   "allowed_number_of_users",
@@ -133,11 +134,17 @@
    "fieldname": "generate_password",
    "fieldtype": "Button",
    "label": "Generate Password"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-10-23 20:26:48.713741",
+ "modified": "2021-11-10 02:20:16.127673",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Agent",
