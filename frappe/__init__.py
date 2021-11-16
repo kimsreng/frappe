@@ -951,8 +951,11 @@ def get_single_value(doctype, fieldname, cache=False):
 	if agent:	
 		settings_doctypes = get_hooks("agent_setting_doctypes")
 		if doctype in settings_doctypes:
+			if isinstance(fieldname, list):
+				return get_value("Agent "+doctype, filters={"name": agent}, fields = fieldname, cache=cache, as_dict=True)
 			return get_value("Agent "+doctype, agent, fieldname)
-
+	if isinstance(fieldname, list):
+		return db.get_value(doctype, doctype, fieldname, cache=cache, as_dict=True)
 	return db.get_single_value(doctype, fieldname, cache)
 
 def set_single_value(doctype, field, value):
