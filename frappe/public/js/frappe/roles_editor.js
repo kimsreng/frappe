@@ -14,8 +14,13 @@ frappe.RoleEditor = class {
 				get_data: () => {
 					return frappe.xcall('frappe.core.doctype.user.user.get_all_roles').then(roles => {
 						return roles.map(role => {
+							var label = role
+							if (frappe.boot.agent){
+								label = label.replace("Agent ", "");
+
+							}
 							return {
-								label: __(role),
+								label: __(label),
 								value: role,
 								checked: user_roles.includes(role)
 							};
