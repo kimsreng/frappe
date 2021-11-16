@@ -229,7 +229,7 @@ def has_user_permission(doc, user=None):
 
 	# STEP 1: ---------------------
 	# check user permissions on self
-	if doctype in user_permissions:
+	if doctype in user_permissions and not frappe.get_meta(doctype).ignore_user_permissions:
 		allowed_docs = get_allowed_docs_for_doctype(user_permissions.get(doctype, []), doctype)
 
 		# if allowed_docs is empty it states that there is no applicable permission under the current doctype

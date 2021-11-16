@@ -24,6 +24,7 @@
   "custom",
   "beta",
   "is_virtual",
+  "ignore_user_permissions",
   "fields_section_break",
   "fields",
   "sb1",
@@ -553,6 +554,12 @@
    "fieldname": "translation_context",
    "fieldtype": "Data",
    "label": "Translation Context"
+  },
+  {
+   "default": "0",
+   "fieldname": "ignore_user_permissions",
+   "fieldtype": "Check",
+   "label": "Ignore User Permissions"
   }
  ],
  "icon": "fa fa-bolt",
@@ -634,7 +641,7 @@
    "link_fieldname": "reference_doctype"
   }
  ],
- "modified": "2021-08-31 15:26:19.077164",
+ "modified": "2021-11-16 19:35:04.094950",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "DocType",

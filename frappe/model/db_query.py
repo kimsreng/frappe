@@ -634,10 +634,11 @@ class DatabaseQuery(object):
 		doctype_link_fields = meta.get_link_fields()
 
 		# append current doctype with fieldname as 'name' as first link field
-		doctype_link_fields.append(dict(
-			options=self.doctype,
-			fieldname='name',
-		))
+		if not meta.ignore_user_permissions:
+			doctype_link_fields.append(dict(
+				options=self.doctype,
+				fieldname='name',
+			))
 
 		match_filters = {}
 		match_conditions = []
