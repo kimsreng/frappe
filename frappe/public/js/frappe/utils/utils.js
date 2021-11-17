@@ -835,9 +835,9 @@ Object.assign(frappe.utils, {
 		display_text = display_text || name;
 		name = encodeURIComponent(name);
 		if(frappe.boot.agent && frappe.boot.setting_doctypes.includes(`Agent ${doctype}`)){
-			let route = `/app/${encodeURIComponent(`Agent ${doctype}`.toLowerCase().replace(/ /g, '-'))}/${frappe.boot.agent}`;
+			var route = `/app/${encodeURIComponent(`Agent ${doctype}`.toLowerCase().replace(/ /g, '-'))}/${frappe.boot.agent}`;
 		}else{
-			let route = `/app/${encodeURIComponent(doctype.toLowerCase().replace(/ /g, '-'))}/${name}`;
+			var route = `/app/${encodeURIComponent(doctype.toLowerCase().replace(/ /g, '-'))}/${name}`;
 		}
 		
 		if (query_params_obj) {
