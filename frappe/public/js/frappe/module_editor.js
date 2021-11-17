@@ -3,7 +3,7 @@ frappe.ModuleEditor =  class {
 		this.frm = frm;
 		this.wrapper = wrapper;
 		this.disable = disable;
-		let user_modules = this.frm.doc.allowed_modules.map(a => a.module);
+		let user_modules = this.frm.doc.allowed_modules?this.frm.doc.allowed_modules.map(a => a.module):[];
 		this.multicheck = frappe.ui.form.make_control({
 			parent: wrapper,
 			df: {
