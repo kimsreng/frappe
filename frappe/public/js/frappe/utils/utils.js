@@ -834,7 +834,12 @@ Object.assign(frappe.utils, {
 	get_form_link: function(doctype, name, html=false, display_text=null, query_params_obj=null) {
 		display_text = display_text || name;
 		name = encodeURIComponent(name);
-		let route = `/app/${encodeURIComponent(doctype.toLowerCase().replace(/ /g, '-'))}/${name}`;
+		if(frappe.boot.agent && frappe.boot.setting_doctypes.includes(`Agent ${doctype}`)){
+			let route = `/app/${encodeURIComponent(`Agent ${doctype}`.toLowerCase().replace(/ /g, '-'))}/${frappe.boot.agent}`;
+		}else{
+			let route = `/app/${encodeURIComponent(doctype.toLowerCase().replace(/ /g, '-'))}/${name}`;
+		}
+		
 		if (query_params_obj) {
 			route += frappe.utils.make_query_string(query_params_obj);
 		}
