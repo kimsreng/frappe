@@ -102,6 +102,7 @@ frappe.router = {
 
 		this.current_sub_path = sub_path;
 		this.current_route = this.parse();
+		this.trigger("before_change");
 		this.set_history(sub_path);
 		this.render();
 		this.set_title(sub_path);
