@@ -878,7 +878,12 @@ def setup_user_email_inbox(email_account, awaiting_password, email_id, enable_ou
 	if not all([email_account, email_id]):
 		return
 
-	user_names = frappe.db.get_values("User", {"email": email_id}, as_dict=True)
+	agent = frappe.get_agent()
+	if agent:
+		filters = {"email": email_id, "agent": agent}
+	else:
+		filters = {"email": email_id}
+	user_names = frappe.db.get_values("User", filters, as_dict=True)
 	if not user_names:
 		return
 
