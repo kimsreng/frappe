@@ -385,3 +385,6 @@ frappe.remove_abbr = function(text){
 	text = text.replace(`(${abbr})`, "");
 	return text.replace(`${abbr}-`, "");
 };
+frappe.is_doctype_agent_readonly = function(doctype){
+	return frappe.boot.agent && frappe.boot.agent_readonly_doctypes.includes(doctype);
+};

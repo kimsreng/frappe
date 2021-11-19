@@ -240,7 +240,7 @@ frappe.views.BaseList = class BaseList {
 	}
 
 	setup_side_bar() {
-		if (this.hide_sidebar || !frappe.boot.desk_settings.list_sidebar) return;
+		if (this.hide_sidebar || !frappe.boot.desk_settings.list_sidebar || frappe.is_doctype_agent_readonly(this.doctype)) return;
 		this.list_sidebar = new frappe.views.ListSidebar({
 			doctype: this.doctype,
 			stats: this.stats,

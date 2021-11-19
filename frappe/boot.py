@@ -30,6 +30,7 @@ def get_bootinfo():
 	hooks = frappe.get_hooks()
 	doclist = []
 
+	bootinfo.agent_readonly_doctypes = []
 	# user
 	get_user(bootinfo)
 
