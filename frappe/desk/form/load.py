@@ -160,7 +160,7 @@ def get_comments(doctype: str, name: str, comment_type : Union[str, List[str]] =
 	else:
 		comment_types = [comment_type]
 
-	comments = frappe.get_all("Comment",
+	comments = frappe.get_list("Comment",
 		fields=["name", "creation", "content", "owner", "comment_type"],
 		filters={
 			"reference_doctype": doctype,
@@ -187,7 +187,7 @@ def _get_communications(doctype, name, start=0, limit=20):
 	communications = get_communication_data(doctype, name, start, limit)
 	for c in communications:
 		if c.communication_type=="Communication":
-			c.attachments = json.dumps(frappe.get_all("File",
+			c.attachments = json.dumps(frappe.get_list("File",
 				fields=["file_url", "is_private"],
 				filters={"attached_to_doctype": "Communication",
 					"attached_to_name": c.name}
@@ -197,6 +197,8 @@ def _get_communications(doctype, name, start=0, limit=20):
 
 def get_communication_data(doctype, name, start=0, limit=20, after=None, fields=None,
 	group_by=None, as_dict=True):
+	from frappe.desk.reportview import get_match_cond
+	match_condition = get_match_cond("Communication").replace("tabCommunication", "C")
 	'''Returns list of communications for a given document'''
 	if not fields:
 		fields = '''
@@ -219,7 +221,7 @@ def get_communication_data(doctype, name, start=0, limit=20, after=None, fields=
 		conditions += '''
 			AND NOT (C.reference_doctype='User' AND C.communication_type='Communication')
 		'''
-
+	conditions += match_condition
 	# communications linked to reference_doctype
 	part1 = '''
 		SELECT {fields}
@@ -256,7 +258,7 @@ def get_communication_data(doctype, name, start=0, limit=20, after=None, fields=
 	return communications
 
 def get_assignments(dt, dn):
-	cl = frappe.get_all("ToDo",
+	cl = frappe.get_list("ToDo",
 		fields=['name', 'owner', 'description', 'status'],
 		filters={
 			'reference_type': dt,
@@ -295,7 +297,7 @@ def get_view_logs(doctype, docname):
 	return logs
 
 def get_tags(doctype, name):
-	tags = [tag.tag for tag in frappe.get_all("Tag Link", filters={
+	tags = [tag.tag for tag in frappe.get_list("Tag Link", filters={
 			"document_type": doctype,
 			"document_name": name
 		}, fields=["tag"])]
