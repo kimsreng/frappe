@@ -31,11 +31,9 @@ def get_permission_query_conditions(user):
 
 	doctype_condition = False
 	report_condition = False
-	module_condition = False
 
 	allowed_doctypes = [frappe.db.escape(doctype) for doctype in frappe.permissions.get_doctypes_with_read()]
 	allowed_reports = [frappe.db.escape(key) if type(key) == str else key.encode('UTF8') for key in get_allowed_reports()]
-	allowed_modules = [frappe.db.escape(module.get('module_name')) for module in get_modules_from_all_apps_for_user()]
 
 	if allowed_doctypes:
 		doctype_condition = '`tabDashboard Chart`.`document_type` in ({allowed_doctypes})'.format(
@@ -43,10 +41,6 @@ def get_permission_query_conditions(user):
 	if allowed_reports:
 		report_condition = '`tabDashboard Chart`.`report_name` in ({allowed_reports})'.format(
 			allowed_reports=','.join(allowed_reports))
-	if allowed_modules:
-		module_condition =  '''`tabDashboard Chart`.`module` in ({allowed_modules})
-			or `tabDashboard Chart`.`module` is NULL'''.format(
-				allowed_modules=','.join(allowed_modules))
 
 	return '''
 		((`tabDashboard Chart`.`chart_type` in ('Count', 'Sum', 'Average')
@@ -54,12 +48,9 @@ def get_permission_query_conditions(user):
 		or
 		(`tabDashboard Chart`.`chart_type` = 'Report'
 		and {report_condition}))
-		and
-		({module_condition})
 	'''.format(
 		doctype_condition=doctype_condition,
-		report_condition=report_condition,
-		module_condition=module_condition
+		report_condition=report_condition
 	)
 
 def has_permission(doc, ptype, user):

@@ -9,7 +9,9 @@ def get_modules_from_all_apps_for_user(user=None):
 	if not user:
 		user = frappe.session.user
 
-	allowed_modules_list =  frappe.get_doc('User', user).get_allowed_modules()
+	all_modules = get_modules_from_all_apps()
+	user_modules = frappe.get_doc('User', user).get_allowed_modules()
+	allowed_modules_list =  [m for m in all_modules if m.get("module_name") not in user_modules]
 
 	empty_tables_by_module = get_all_empty_tables_by_module()
 
