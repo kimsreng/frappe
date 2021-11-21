@@ -296,6 +296,8 @@ frappe.ui.form.Form = class FrappeForm {
 				.toggleClass('cancelled-form', this.doc.docstatus===2);
 
 			this.show_conflict_message();
+
+			$(document).trigger("form-refresh", [this]);
 		}
 	}
 
