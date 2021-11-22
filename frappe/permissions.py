@@ -312,25 +312,25 @@ def has_controller_permissions(doc, ptype, user=None):
 	return None
 
 def get_doctypes_with_read():
-	doctypes = frappe.cache().hget("read_doctypes", frappe.session.user)
+	doctypes = frappe.cache().hget(frappe.session.user, "read_doctypes")
 	if doctypes is None:
 		permissions = []
 		for p in get_valid_perms():
 			if p.read == 1:
 				permissions.append(p)
 		doctypes =  list(set([p.parent if type(p.parent) == str else p.parent.encode('UTF8') for p in permissions]))
-		frappe.cache().hset("read_doctypes", frappe.session.user, doctypes)
+		frappe.cache().hset(frappe.session.user, "read_doctypes", doctypes)
 	return doctypes
 	
 def get_doctypes_with_report():
-	doctypes = frappe.cache().hget("report_doctypes", frappe.session.user)
+	doctypes = frappe.cache().hget(frappe.session.user, "report_doctypes")
 	if doctypes is None:
 		permissions = []
 		for p in get_valid_perms():
 			if p.report == 1:
 				permissions.append(p)
 		doctypes =  list(set([p.parent if type(p.parent) == str else p.parent.encode('UTF8') for p in permissions]))
-		frappe.cache().hset("report_doctypes", frappe.session.user, doctypes)
+		frappe.cache().hset(frappe.session.user, "report_doctypes", doctypes)
 	return doctypes
 	
 def get_valid_perms(doctype=None, user=None):
