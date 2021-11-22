@@ -1525,6 +1525,34 @@ def get_all(doctype, *args, **kwargs):
 		kwargs["limit_page_length"] = 0
 	return get_list(doctype, *args, **kwargs)
 
+def get_all_with_user_permissions(doctype, *args, **kwargs):
+	"""List database query via `frappe.model.db_query`. Will **not** check for role permission but will apply user permissions
+	Parameters are same as `frappe.get_list`
+
+	:param doctype: DocType on which query is to be made.
+	:param fields: List of fields or `*`. Default is: `["name"]`.
+	:param filters: List of filters (see example).
+	:param order_by: Order By e.g. `modified desc`.
+	:param limit_start: Start results at record #. Default 0.
+	:param limit_page_length: No of records in the page. Default 20.
+
+	Example usage:
+
+		# simple dict filter
+		frappe.get_all_with_user_permissions("ToDo", fields=["name", "description"], filters = {"owner":"test@example.com"})
+
+		# filter as a list of lists
+		frappe.get_all_with_user_permissions("ToDo", fields=["*"], filters = [["modified", ">", "2014-01-01"]])
+
+		# filter as a list of dicts
+		frappe.get_all_with_user_permissions("ToDo", fields=["*"], filters = {"description": ("like", "test%")})
+	"""
+	kwargs["ignore_permissions"] = True
+	kwargs["ignore_user_permissions"] = False
+	if not "limit_page_length" in kwargs:
+		kwargs["limit_page_length"] = 0
+	return get_list(doctype, *args, **kwargs)
+
 def get_value(*args, **kwargs):
 	"""Returns a document property or list of properties.
 
