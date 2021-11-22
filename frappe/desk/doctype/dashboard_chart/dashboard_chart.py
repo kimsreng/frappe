@@ -53,7 +53,9 @@ def get_permission_query_conditions(user):
 		report_condition=report_condition
 	)
 
-def has_permission(doc, ptype, user):
+def has_permission(doc, user):
+	if not doc.has_permission("read"): return False
+	
 	roles = frappe.get_roles(user)
 	if "System Manager" in roles:
 		return True
@@ -64,7 +66,7 @@ def has_permission(doc, ptype, user):
 		if doc.report_name in allowed_reports:
 			return True
 	else:
-		allowed_doctypes = frappe.permissions.get_doctypes_with_read()
+		allowed_doctypes = frappe.permissions.get_doctypes_with_report()
 		if doc.document_type in allowed_doctypes:
 			return True
 
