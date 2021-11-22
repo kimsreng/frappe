@@ -641,7 +641,7 @@
    "link_fieldname": "reference_doctype"
   }
  ],
- "modified": "2021-11-16 19:35:04.094950",
+ "modified": "2021-11-22 11:57:32.181378",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "DocType",
@@ -667,6 +667,10 @@
    "role": "Administrator",
    "share": 1,
    "write": 1
+  },
+  {
+   "role": "Desk User",
+   "select": 1
   }
  ],
  "route": "doctype",
