@@ -55,7 +55,7 @@ def get_permission_query_conditions(user):
 	if "System Manager" in roles:
 		return None
 
-	allowed_modules = [frappe.db.escape(module.get('module_name')) for module in get_modules_from_all_apps_for_user()]
+	allowed_modules = [frappe.db.escape(m) for m in frappe.get_doc('User', user).get_allowed_modules()]
 	module_condition =  '`tabDashboard`.`module` in ({allowed_modules}) or `tabDashboard`.`module` is NULL'.format(
 		allowed_modules=','.join(allowed_modules))
 
@@ -67,6 +67,24 @@ def has_permission_for_dashboard(dashboard_name):
 	cards = get_permitted_cards(dashboard_name)
 	if len(cards): return True
 	return False
+
+@frappe.whitelist()
+def get_allowed_dashboards():
+	dashboards = frappe.cache().hget(frappe.session.user, "allowed_dashboards")
+	if dashboards:
+		return dashboards
+
+	dashboards = frappe.get_list("Dashboard", pluck="name")
+	allowed_modules = frappe.get_cached_doc("User", frappe.session.user).get_allowed_modules()
+	
+	allowed_dashboards = []
+	for d in dashboards:
+		dashbaord = frappe.get_cached_doc("Dashboard", d)
+		if dashbaord.module in allowed_modules and (get_permitted_charts(d) or get_permitted_cards(d)):
+			allowed_dashboards.append(d)
+	
+	frappe.cache().hset(frappe.session.user, "allowed_dashboards", allowed_dashboards)
+	return dashboards
 
 @frappe.whitelist()
 def get_permitted_charts(dashboard_name):
