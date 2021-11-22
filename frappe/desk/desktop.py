@@ -295,6 +295,7 @@ class Workspace:
 
 	@handle_not_exist
 	def get_charts(self):
+		from frappe.desk.doctype.dashboard_chart.dashboard_chart import has_permission
 		all_charts = []
 		if frappe.has_permission("Dashboard Chart", throw=False):
 			charts = self.doc.charts
@@ -302,7 +303,7 @@ class Workspace:
 				charts = charts + self.extended_charts
 
 			for chart in charts:
-				if frappe.has_permission('Dashboard Chart', doc=chart.chart_name):
+				if has_permission(frappe.get_cached_doc("Dashboard Chart", chart.chart_name), frappe.session.user):
 					# Translate label
 					chart.label = chart.label if chart.label else chart.chart_name
 					all_charts.append(chart)

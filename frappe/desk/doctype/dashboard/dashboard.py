@@ -70,10 +70,11 @@ def has_permission_for_dashboard(dashboard_name):
 
 @frappe.whitelist()
 def get_permitted_charts(dashboard_name):
+	from frappe.desk.doctype.dashboard_chart.dashboard_chart import has_permission
 	permitted_charts = []
 	dashboard = frappe.get_doc('Dashboard', dashboard_name)
 	for chart in dashboard.charts:
-		if frappe.has_permission('Dashboard Chart', doc=chart.chart):
+		if has_permission(frappe.get_cached_doc("Dashboard Chart", chart.chart), frappe.session.user):
 			chart_dict = frappe._dict()
 			chart_dict.update(chart.as_dict())
 
@@ -85,10 +86,11 @@ def get_permitted_charts(dashboard_name):
 
 @frappe.whitelist()
 def get_permitted_cards(dashboard_name):
+	from frappe.desk.doctype.number_card.number_card import has_permission
 	permitted_cards = []
 	dashboard = frappe.get_doc('Dashboard', dashboard_name)
 	for card in dashboard.cards:
-		if frappe.has_permission('Number Card', doc=card.card):
+		if has_permission(frappe.get_cached_doc("Number Card", card.card), frappe.session.user):
 			permitted_cards.append(card)
 	return permitted_cards
 
