@@ -35,7 +35,7 @@ class DatabaseQuery(object):
 	def execute(self, fields=None, filters=None, or_filters=None,
 		docstatus=None, group_by=None, order_by=None, limit_start=False,
 		limit_page_length=None, as_list=False, with_childnames=False, debug=False,
-		ignore_permissions=False, user=None, with_comment_count=False,
+		ignore_permissions=False, ignore_user_permissions=False, user=None, with_comment_count=False,
 		join='left join', distinct=False, start=None, page_length=None, limit=None,
 		ignore_ifnull=False, save_user_settings=False, save_user_settings_fields=False,
 		update=None, add_total_row=None, user_settings=None, reference_doctype=None,
@@ -85,6 +85,7 @@ class DatabaseQuery(object):
 		self.as_list = as_list
 		self.ignore_ifnull = ignore_ifnull
 		self.flags.ignore_permissions = ignore_permissions
+		self.flags.ignore_user_permissions = ignore_user_permissions
 		self.user = user or frappe.session.user
 		self.update = update
 		self.user_settings_fields = copy.deepcopy(self.fields)
@@ -378,7 +379,7 @@ class DatabaseQuery(object):
 		self.build_filter_conditions(self.or_filters, self.grouped_or_conditions)
 
 		# match conditions
-		if not self.flags.ignore_permissions:
+		if not self.flags.ignore_user_permissions:
 			match_conditions = self.build_match_conditions()
 			if match_conditions:
 				self.conditions.append("(" + match_conditions + ")")
@@ -564,11 +565,13 @@ class DatabaseQuery(object):
 
 		return condition
 
-	def build_match_conditions(self, as_condition=True):
+	def build_match_conditions(self, as_condition=True, ignore_user_permission=None):
 		"""add match conditions if applicable"""
 		self.match_filters = []
 		self.match_conditions = []
 		only_if_shared = False
+		if ignore_user_permission is not None:
+			self.flags.ignore_user_permissions = ignore_user_permission
 		if not self.user:
 			self.user = frappe.session.user
 
@@ -580,7 +583,7 @@ class DatabaseQuery(object):
 
 		if (not meta.istable and
 			not (role_permissions.get("select") or role_permissions.get("read")) and
-			not self.flags.ignore_permissions and
+			not self.flags.ignore_user_permissions and
 			not has_any_user_permission_for_doctype(self.doctype, self.user, self.reference_doctype)):
 			only_if_shared = True
 			if not self.shared:
