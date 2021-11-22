@@ -322,7 +322,17 @@ def get_doctypes_with_read():
 		frappe.cache().hset("read_doctypes", frappe.session.user, doctypes)
 	return doctypes
 	
-
+def get_doctypes_with_report():
+	doctypes = frappe.cache().hget("report_doctypes", frappe.session.user)
+	if doctypes is None:
+		permissions = []
+		for p in get_valid_perms():
+			if p.report == 1:
+				permissions.append(p)
+		doctypes =  list(set([p.parent if type(p.parent) == str else p.parent.encode('UTF8') for p in permissions]))
+		frappe.cache().hset("report_doctypes", frappe.session.user, doctypes)
+	return doctypes
+	
 def get_valid_perms(doctype=None, user=None):
 	'''Get valid permissions for the current user from DocPerm and Custom DocPerm'''
 	roles = get_roles(user)
