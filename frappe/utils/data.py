@@ -1196,6 +1196,10 @@ def get_host_name():
 
 def get_link_to_form(doctype, name, label=None):
 	if not label: label = name
+	agent = frappe.get_agent()
+	if agent and doctype in frappe.get_hooks("agent_setting_doctypes"):
+		doctype = f"Agent {doctype}"
+		name = agent
 
 	return """<a href="{0}">{1}</a>""".format(get_url_to_form(doctype, name), label)
 
