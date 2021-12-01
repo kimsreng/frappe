@@ -250,7 +250,7 @@ frappe.ui.Tree = class {
 		if(this.get_label) {
 			return this.get_label(node);
 		}
-		if (node.title && node.title != node.label) {
+		if (node.title && node.title != node.label && !frappe.boot.agent) {
 			return __(node.title) + ` <span class='text-muted'>(${node.label})</span>`;
 		} else {
 			return __(node.title || node.label);
