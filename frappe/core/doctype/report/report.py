@@ -12,7 +12,7 @@ from frappe.modules.export_file import export_to_files
 from frappe.modules import make_boilerplate
 from frappe.core.doctype.page.page import delete_custom_role
 from frappe.core.doctype.custom_role.custom_role import get_custom_allowed_roles
-from frappe.desk.reportview import append_totals_row
+from frappe.desk.reportview import append_totals_row, get_match_cond
 from six import iteritems
 from frappe.utils.safe_exec import safe_exec
 
@@ -108,7 +108,7 @@ class Report(Document):
 		if not self.query.lower().startswith("select"):
 			frappe.throw(_("Query must be a SELECT"), title=_('Report Document Error'))
 
-		result = [list(t) for t in frappe.db.sql(self.query, filters, debug=True)]
+		result = [list(t) for t in frappe.db.sql(self.query.format(permission_condition=get_match_cond(self.ref_doctype)), filters, debug=True)]
 		columns = self.get_columns() or [cstr(c[0]) for c in frappe.db.get_description()]
 
 		return [columns, result]
