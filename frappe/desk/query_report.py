@@ -207,8 +207,8 @@ def get_script(report_name):
 @frappe.read_only()
 def run(report_name, filters=None, user=None, ignore_prepared_report=False, custom_columns=None):
 	report = get_report_doc(report_name)
-	if not user:
-		user = frappe.session.user
+	# if not user:
+	user = frappe.session.user
 	if not frappe.has_permission(report.ref_doctype, "report"):
 		frappe.msgprint(
 			_("Must have report permission to access this report."),
