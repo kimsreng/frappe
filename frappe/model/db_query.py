@@ -565,13 +565,12 @@ class DatabaseQuery(object):
 
 		return condition
 
-	def build_match_conditions(self, as_condition=True, ignore_user_permission=None):
+	def build_match_conditions(self, as_condition=True, apply_role_permission=False):
 		"""add match conditions if applicable"""
 		self.match_filters = []
 		self.match_conditions = []
 		only_if_shared = False
-		if ignore_user_permission is not None:
-			self.flags.ignore_user_permissions = ignore_user_permission
+
 		if not self.user:
 			self.user = frappe.session.user
 
@@ -581,14 +580,14 @@ class DatabaseQuery(object):
 		role_permissions = frappe.permissions.get_role_permissions(meta, user=self.user)
 		self.shared = frappe.share.get_shared(self.doctype, self.user)
 
+		if apply_role_permission and not role_permissions.get("read"):
+			frappe.flags.error_message = _('Insufficient Permission for {0}').format(frappe.bold(self.doctype))
+			raise frappe.PermissionError(self.doctype)
+
 		if (not meta.istable and
-			not (role_permissions.get("select") or role_permissions.get("read")) and
-			not self.flags.ignore_user_permissions and
 			not has_any_user_permission_for_doctype(self.doctype, self.user, self.reference_doctype)):
 			only_if_shared = True
-			if not self.shared:
-				frappe.throw(_("No permission to read {0}").format(self.doctype), frappe.PermissionError)
-			else:
+			if self.shared:
 				self.conditions.append(self.get_share_condition())
 
 		else:

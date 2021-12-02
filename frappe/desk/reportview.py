@@ -539,8 +539,8 @@ def scrub_user_tags(tagcount):
 	return rlist
 
 # used in building query in queries.py
-def get_match_cond(doctype, alias=None, as_condition=True):
-	cond = DatabaseQuery(doctype).build_match_conditions(as_condition=as_condition, ignore_user_permission=False)
+def get_match_cond(doctype, alias=None, as_condition=True, apply_role_permission=False):
+	cond = DatabaseQuery(doctype).build_match_conditions(as_condition=as_condition, apply_role_permission=apply_role_permission)
 	if not as_condition:
 		return cond
 
@@ -549,8 +549,8 @@ def get_match_cond(doctype, alias=None, as_condition=True):
 		return cond.replace(f"`tab{doctype}`", alias)
 	return cond
 
-def build_match_conditions(doctype, user=None, as_condition=True):
-	match_conditions =  DatabaseQuery(doctype, user=user).build_match_conditions(as_condition=as_condition, ignore_user_permission=False)
+def build_match_conditions(doctype, user=None, as_condition=True, apply_role_permission=False):
+	match_conditions =  DatabaseQuery(doctype, user=user).build_match_conditions(as_condition=as_condition, apply_role_permission=apply_role_permission)
 	if as_condition:
 		return match_conditions.replace("%", "%%")
 	else:

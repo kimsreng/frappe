@@ -1468,10 +1468,10 @@ def redirect_to_message(title, html, http_status_code=None, context=None, indica
 	else:
 		return location
 
-def build_match_conditions(doctype, as_condition=True):
+def build_match_conditions(doctype, as_condition=True, apply_role_permission=False):
 	"""Return match (User permissions) for given doctype as list or SQL."""
 	import frappe.desk.reportview
-	return frappe.desk.reportview.build_match_conditions(doctype, as_condition=as_condition)
+	return frappe.desk.reportview.build_match_conditions(doctype, as_condition=as_condition, apply_role_permission=apply_role_permission)
 
 def get_list(doctype, *args, **kwargs):
 	"""List database query via `frappe.model.db_query`. Will also check for permissions.
