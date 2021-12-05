@@ -1549,6 +1549,7 @@ def get_all_with_user_permissions(doctype, *args, **kwargs):
 	"""
 	kwargs["ignore_permissions"] = True
 	kwargs["ignore_user_permissions"] = False
+	kwargs["apply_only_user_permission"] = True
 	if not "limit_page_length" in kwargs:
 		kwargs["limit_page_length"] = 0
 	return get_list(doctype, *args, **kwargs)
