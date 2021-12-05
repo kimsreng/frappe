@@ -35,7 +35,7 @@ class DatabaseQuery(object):
 	def execute(self, fields=None, filters=None, or_filters=None,
 		docstatus=None, group_by=None, order_by=None, limit_start=False,
 		limit_page_length=None, as_list=False, with_childnames=False, debug=False,
-		ignore_permissions=False, ignore_user_permissions=False, user=None, with_comment_count=False,
+		ignore_permissions=False, ignore_user_permissions=False, apply_only_user_permission = False, user=None, with_comment_count=False,
 		join='left join', distinct=False, start=None, page_length=None, limit=None,
 		ignore_ifnull=False, save_user_settings=False, save_user_settings_fields=False,
 		update=None, add_total_row=None, user_settings=None, reference_doctype=None,
@@ -86,6 +86,7 @@ class DatabaseQuery(object):
 		self.ignore_ifnull = ignore_ifnull
 		self.flags.ignore_permissions = ignore_permissions
 		self.flags.ignore_user_permissions = ignore_user_permissions
+		self.flags.apply_only_user_permission = apply_only_user_permission
 		self.user = user or frappe.session.user
 		self.update = update
 		self.user_settings_fields = copy.deepcopy(self.fields)
@@ -565,7 +566,7 @@ class DatabaseQuery(object):
 
 		return condition
 
-	def build_match_conditions(self, as_condition=True, apply_role_permission=False):
+	def build_match_conditions(self, as_condition=True, apply_only_user_permission=None):
 		"""add match conditions if applicable"""
 		self.match_filters = []
 		self.match_conditions = []
@@ -574,37 +575,42 @@ class DatabaseQuery(object):
 		if not self.user:
 			self.user = frappe.session.user
 
+		if apply_only_user_permission is not None:
+			self.flags.apply_only_user_permission = apply_only_user_permission
+
 		if not self.tables: self.extract_tables()
 
 		meta = frappe.get_meta(self.doctype)
 		role_permissions = frappe.permissions.get_role_permissions(meta, user=self.user)
 		self.shared = frappe.share.get_shared(self.doctype, self.user)
 
-		if apply_role_permission and not role_permissions.get("read"):
-			frappe.flags.error_message = _('Insufficient Permission for {0}').format(frappe.bold(self.doctype))
-			raise frappe.PermissionError(self.doctype)
-
-		if (not meta.istable and
-			not has_any_user_permission_for_doctype(self.doctype, self.user, self.reference_doctype)):
-			only_if_shared = True
-			if self.shared:
-				self.conditions.append(self.get_share_condition())
-
+		if self.flags.apply_only_user_permission:# this is useful for report filtering
+			user_permissions = frappe.permissions.get_user_permissions(self.user)
+			self.add_user_permissions(user_permissions)
 		else:
-			#if has if_owner permission skip user perm check
-			if role_permissions.get("has_if_owner_enabled") and role_permissions.get("if_owner", {}):
-				self.match_conditions.append("`tab{0}`.`owner` = {1}".format(self.doctype,
-					frappe.db.escape(self.user, percent=False)))
-			# add user permission only if role has read perm
-			elif role_permissions.get("read") or role_permissions.get("select"):
-				# get user permissions
-				user_permissions = frappe.permissions.get_user_permissions(self.user)
-				self.add_user_permissions(user_permissions)
+			if (not meta.istable and
+				not (role_permissions.get("select") or role_permissions.get("read")) and
+				not has_any_user_permission_for_doctype(self.doctype, self.user, self.reference_doctype)):
+				only_if_shared = True
+				if not self.shared:
+					frappe.throw(_("No permission to read {0}").format(self.doctype), frappe.PermissionError)
+				else:
+					self.conditions.append(self.get_share_condition())
+			else:
+				#if has if_owner permission skip user perm check
+				if role_permissions.get("has_if_owner_enabled") and role_permissions.get("if_owner", {}):
+					self.match_conditions.append("`tab{0}`.`owner` = {1}".format(self.doctype,
+						frappe.db.escape(self.user, percent=False)))
+				# add user permission only if role has read perm
+				elif role_permissions.get("read") or role_permissions.get("select"):
+					# get user permissions
+					user_permissions = frappe.permissions.get_user_permissions(self.user)
+					self.add_user_permissions(user_permissions)
 
-			# user can select but cannot read
-			# except for his own shared doctype
-			if not role_permissions.get("read") and self.shared:
-				self.conditions.append(self.get_share_condition())
+				# user can select but cannot read
+				# except for his own shared doctype
+				if not role_permissions.get("read") and self.shared:
+					self.conditions.append(self.get_share_condition())
 
 		if as_condition:
 			conditions = ""
