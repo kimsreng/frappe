@@ -539,8 +539,8 @@ def scrub_user_tags(tagcount):
 	return rlist
 
 # used in building query in queries.py
-def get_match_cond(doctype, alias=None, as_condition=True, apply_role_permission=False):
-	cond = DatabaseQuery(doctype).build_match_conditions(as_condition=as_condition, apply_role_permission=apply_role_permission)
+def get_match_cond(doctype, alias=None, as_condition=True):
+	cond = DatabaseQuery(doctype).build_match_conditions(as_condition=as_condition, apply_only_user_permission=False)
 	if not as_condition:
 		return cond
 
@@ -549,12 +549,22 @@ def get_match_cond(doctype, alias=None, as_condition=True, apply_role_permission
 		return cond.replace(f"`tab{doctype}`", alias)
 	return cond
 
-def build_match_conditions(doctype, user=None, as_condition=True, apply_role_permission=False):
-	match_conditions =  DatabaseQuery(doctype, user=user).build_match_conditions(as_condition=as_condition, apply_role_permission=apply_role_permission)
+def build_match_conditions(doctype, user=None, as_condition=True, apply_only_user_permission=True):
+	match_conditions =  DatabaseQuery(doctype, user=user).build_match_conditions(as_condition=as_condition, apply_only_user_permission=apply_only_user_permission)
 	if as_condition:
 		return match_conditions.replace("%", "%%")
 	else:
 		return match_conditions
+
+def get_match_cond_for_reports(doctype, alias=None, as_condition=True):
+	cond = DatabaseQuery(doctype).build_match_conditions(as_condition=as_condition, apply_only_user_permission=True)
+	if not as_condition:
+		return cond
+
+	cond = ((' and ' + cond) if cond else "").replace("%", "%%")
+	if cond and alias is not None:
+		return cond.replace(f"`tab{doctype}`", alias)
+	return cond
 
 def get_filters_cond(doctype, filters, conditions, ignore_permissions=None, with_match_conditions=False):
 	if isinstance(filters, string_types):
