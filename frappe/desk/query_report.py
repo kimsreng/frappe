@@ -510,7 +510,7 @@ def get_data_for_custom_field(doctype, fieldname, field=None):
 	else:
 		custom_field = fieldname
 
-	value_map = frappe._dict(frappe.get_all(doctype, fields=["name", custom_field], as_list=1))
+	value_map = frappe._dict(frappe.get_all_with_user_permissions(doctype, fields=["name", custom_field], as_list=1))
 
 	return value_map
 
