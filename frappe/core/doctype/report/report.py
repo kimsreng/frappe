@@ -108,7 +108,7 @@ class Report(Document):
 		if not self.query.lower().startswith("select"):
 			frappe.throw(_("Query must be a SELECT"), title=_('Report Document Error'))
 
-		result = [list(t) for t in frappe.db.sql(self.query.format(permission_condition=get_match_cond_for_reports(self.ref_doctype)), filters, debug=True)]
+		result = [list(t) for t in frappe.db.sql(self.query.format(permission_condition=get_match_cond_for_reports(self.ref_doctype, self.doctype_alias)), filters, debug=True)]
 		columns = self.get_columns() or [cstr(c[0]) for c in frappe.db.get_description()]
 
 		return [columns, result]
