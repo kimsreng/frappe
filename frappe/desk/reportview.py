@@ -562,7 +562,7 @@ def get_match_cond_for_reports(doctype, alias=None, as_condition=True):
 		return cond
 
 	cond = ((' and ' + cond) if cond else "").replace("%", "%%")
-	if cond and alias is not None:
+	if cond and alias:
 		return cond.replace(f"`tab{doctype}`", alias)
 	return cond
 
