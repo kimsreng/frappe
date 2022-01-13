@@ -172,16 +172,14 @@ class FormMeta(Meta):
 					pass
 
 	def load_print_formats(self):
-		# print_formats = frappe.db.sql("""select * FROM `tabPrint Format`
-		# 	WHERE doc_type=%s AND docstatus<2 and disabled=0""", (self.name,), as_dict=1,
-		# 	update={"doctype":"Print Format"})
-
 		# Allow everyone to access Print format
 		# but limit by user permission
-		frappe.flags.sudo_roles = (frappe.flags.sudo_roles  or []) +["System Manager"]
-		print_formats = frappe.get_list("Print Format", fields="*", update={"doctype":"Print Format"})
-		frappe.flags.sudo_roles.remove("System Manager")
-
+		filters = {"doc_type": self.name, "docstatus": ["<", 2], "disabled": 0}
+		print_formats = frappe.get_all_with_user_permissions("Print Format", filters=filters, fields="*", order_by="agent desc", update={"doctype":"Print Format"})
+		
+		# use additional format as default for agent
+		if len(print_formats) and frappe.get_agent():
+			self.default_print_format = print_formats[0].name
 		self.set("__print_formats", print_formats, as_value=True)
 
 	def load_workflows(self):
