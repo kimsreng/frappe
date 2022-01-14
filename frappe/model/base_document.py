@@ -563,16 +563,15 @@ class BaseDocument(object):
 				]
 				if not frappe.get_meta(doctype).get('is_virtual'):
 					if not fields_to_fetch:
-						# cache a single value type
-						values = frappe._dict(name=frappe.db.get_value(doctype, docname,
-							'name', cache=True))
+						data = frappe.get_all_with_user_permissions(doctype, filters={"name":docname}, pluck="name")
+						values = frappe._dict(name= data[0] if data else "")
+						
 					else:
 						values_to_fetch = ['name'] + [_df.fetch_from.split('.')[-1]
 							for _df in fields_to_fetch]
 
-						# don't cache if fetching other values too
-						values = frappe.db.get_value(doctype, docname,
-							values_to_fetch, as_dict=True)
+						data = frappe.get_all_with_user_permissions(doctype, filters={"name":docname}, fields=values_to_fetch)
+						values = data[0] if data else {}
 
 				if frappe.get_meta(doctype).issingle:
 					values.name = doctype
