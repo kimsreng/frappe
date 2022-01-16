@@ -14,6 +14,7 @@ from __future__ import unicode_literals
 
 import frappe
 from frappe import _
+from frappe.desk.reportview import get_match_cond
 from frappe.model.document import Document
 from frappe.utils import now
 
@@ -264,12 +265,13 @@ class NestedSet(Document):
 	def get_ancestors(self):
 		return get_ancestors_of(self.doctype, self.name)
 
-def get_root_of(doctype):
+def get_root_of(doctype, apply_user_permission=False):
 	"""Get root element of a DocType with a tree structure"""
 	result = frappe.db.sql("""select t1.name from `tab{0}` t1 where
 		(select count(*) from `tab{1}` t2 where
 			t2.lft < t1.lft and t2.rgt > t1.rgt) = 0
-		and t1.rgt > t1.lft""".format(doctype, doctype))
+		and t1.rgt > t1.lft {permission_conditions}
+		""".format(doctype, doctype, permission_conditions=get_match_cond(doctype, "t1") if apply_user_permission else ""))
 	return result[0][0] if result else None
 
 def get_ancestors_of(doctype, name, order_by="lft desc", limit=None):
