@@ -142,7 +142,7 @@ export default {
 			default: null
 		},
 		folder: {
-			default: frappe.boot.home_folder
+			default: frappe.boot?frappe.boot.home_folder : "Home"
 		},
 		method: {
 			default: null
