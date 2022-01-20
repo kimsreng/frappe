@@ -5,10 +5,11 @@ frappe.views.FileView = class FileView extends frappe.views.ListView {
 		const route = frappe.get_route();
 		if (route.length === 2) {
 			const view_user_settings = frappe.get_user_settings("File", "File");
+			const last_folder = view_user_settings.last_folder == "Home"? frappe.boot.home_folder : view_user_settings.last_folder;
 			frappe.set_route(
 				"List",
 				"File",
-				view_user_settings.last_folder || frappe.boot.home_folder
+				last_folder
 			);
 			return true;
 		}
@@ -61,11 +62,11 @@ frappe.views.FileView = class FileView extends frappe.views.ListView {
 		route.splice(-1);
 		const last_folder = route[route.length - 1];
 		if (last_folder === "File") return;
-
+		const home = frappe.boot.home_folder;
 		frappe.breadcrumbs.add({
 			type: "Custom",
 			label: __("Home"),
-			route: "/app/List/File/Home"
+			route: `/app/List/File/${home}`
 		});
 	}
 
@@ -497,7 +498,7 @@ function redirect_to_home_if_invalid_route() {
 	if (route[2] === "List") {
 		// if the user somehow redirects to List/File/List
 		// redirect back to Home
-		frappe.set_route("List", "File", "Home");
+		frappe.set_route("List", "File", frappe.boot.home_folder);
 		return true;
 	}
 	return false;
