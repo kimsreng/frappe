@@ -8,6 +8,8 @@ class Agent(Document):
 	pass
 
 def get_name_with_abbr(name, agent):
+	if not agent: return name
+	
 	formatted_name = get_abbr_extension(agent)
 
 	if formatted_name in name:
