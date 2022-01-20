@@ -385,6 +385,15 @@ frappe.remove_abbr = function(text){
 	text = text.replace(`(${abbr})`, "");
 	return text.replace(`${abbr}-`, "");
 };
+
+frappe.append_abbr = function(text){
+	const abbr = frappe.boot.abbr;
+	if(!abbr){
+		return text;
+	}
+	return `${text}(${abbr})`;
+}
+
 frappe.is_doctype_agent_readonly = function(doctype){
 	return frappe.boot.agent && frappe.boot.agent_readonly_doctypes.includes(doctype);
 };
