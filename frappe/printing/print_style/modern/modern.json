@@ -1,11 +1,11 @@
 {
  "creation": "2017-08-17 02:16:58.060374",
- "css": ".print-heading {\n\ttext-align: right;\n\ttext-transform: uppercase;\n\tcolor: #666;\n\tpadding-bottom: 20px;\n\tmargin-bottom: 20px;\n\tborder-bottom: 1px solid #d1d8dd;\n}\n\n.print-heading h2 {\n\tfont-size: 24px;\n}\n\n.print-format th {\n\tbackground-color: #eee !important;\n\tborder-bottom: 0px !important;\n}\n\n.print-format .primary.compact-item {\n    font-weight: bold;\n}\n\n/* modern format: for-test */",
+ "css": ".print-heading {\n\ttext-align: right;\n\ttext-transform: uppercase;\n\tcolor: #666;\n\tpadding-bottom: 20px;\n\tmargin-bottom: 20px;\n\tborder-bottom: 1px solid #d1d8dd;\n}\n\n.print-heading h2 {\n\tfont-size: 24px;\n}\n\n.print-format th {\n\tbackground-color: #eee !important;\n\tborder-bottom: 0px !important;\n}\n\n.print-format .primary.compact-item {\n    font-weight: bold;\n}\n@font-face {\n    font-family: 'Battambang';\n    font-style: normal;\n    font-weight: 400;\n    font-display: swap;\n    src: url(https://fonts.gstatic.com/s/battambang/v14/uk-mEGe7raEw-HjkzZabPnmp4g.woff2) format('woff2');\n    unicode-range: U+1780-17FF, U+200C, U+25CC, U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n\n.print-format:lang(km) {\n    font-family: Battambang;\n    /* font-weight: 400;\n    font-size: 16px; */\n    /* color: #383838; */\n    line-height: 1.8;\n}\n/* modern format: for-test */",
  "disabled": 0,
  "docstatus": 0,
  "doctype": "Print Style",
  "idx": 1,
- "modified": "2020-11-10 13:59:09.976381",
+ "modified": "2022-01-22 00:31:44.972550",
  "modified_by": "Administrator",
  "name": "Modern",
  "owner": "Administrator",
