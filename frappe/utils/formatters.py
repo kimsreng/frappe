@@ -43,13 +43,13 @@ def format_value(value, df=None, doc=None, currency=None, translated=False, form
 		return value
 
 	elif df.get("fieldtype")=="Date":
-		return formatdate(value)
+		return formatdate(value, format_string=format)
 
 	elif df.get("fieldtype")=="Datetime":
-		return format_datetime(value)
+		return format_datetime(value, format_string=format)
 
 	elif df.get("fieldtype")=="Time":
-		return format_time(value)
+		return format_time(value, format_string=format)
 
 	elif value==0 and df.get("fieldtype") in ("Int", "Float", "Currency", "Percent") and df.get("print_hide_if_no_value"):
 		# this is required to show 0 as blank in table columns
