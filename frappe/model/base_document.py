@@ -532,6 +532,15 @@ class BaseDocument(object):
 			else:
 				return "{}: {}".format(_(df.label), docname)
 
+		def is_user_permission_skipped_by_hook(option, value, parenttype):
+			hooks = frappe.get_hooks("user_permissions_link_validation", {})
+			if option in hooks:
+				fns = hooks[option]
+				for fn in fns:
+					result = frappe.call(fn, value, parenttype)
+					if result == True: return True
+			return False
+
 		invalid_links = []
 		cancelled_links = []
 
@@ -564,7 +573,7 @@ class BaseDocument(object):
 				if not frappe.get_meta(doctype).get('is_virtual'):
 					if not fields_to_fetch:
 						# cache a single value type
-						if self.flags.ignore_permissions or frappe.flags.ignore_user_permissions:
+						if self.flags.ignore_permissions or frappe.flags.ignore_user_permissions or is_user_permission_skipped_by_hook(df.options, docname, self.parenttype):
 							values = frappe._dict(name=frappe.db.get_value(doctype, docname,'name', cache=True))
 						else:
 							data = frappe.get_all_with_user_permissions(doctype, filters={"name":docname}, pluck="name")
@@ -572,7 +581,7 @@ class BaseDocument(object):
 					else:
 						values_to_fetch = ['name'] + [_df.fetch_from.split('.')[-1]
 							for _df in fields_to_fetch]
-						if self.flags.ignore_permissions or frappe.flags.ignore_user_permissions:
+						if self.flags.ignore_permissions or frappe.flags.ignore_user_permissions or is_user_permission_skipped_by_hook(df.options, docname, self.parenttype):
 							# don't cache if fetching other values too
 							values = frappe.db.get_value(doctype, docname,
 								values_to_fetch, as_dict=True)
