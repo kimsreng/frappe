@@ -55,7 +55,7 @@ frappe.ui.form.PrintView = class {
 	}
 
 	set_title() {
-		this.page.set_title(this.frm.docname);
+		this.page.set_title(frappe.remove_abbr(this.frm.docname));
 	}
 
 	setup_toolbar() {
