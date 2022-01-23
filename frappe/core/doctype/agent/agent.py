@@ -17,6 +17,16 @@ def get_name_with_abbr(name, agent):
 
 	return f"{name}{formatted_name}"
 
+def get_name_with_abbr_pefix(name, agent):
+	if not agent: return name
+	
+	formatted_name = get_abbr_prefix(agent)
+
+	if formatted_name in name:
+		return name
+
+	return f"{formatted_name}{name}"
+
 def get_abbr_extension(agent):
 	agent_abbr = frappe.get_cached_value('Agent',  agent,  "abbr")
 	return f"({agent_abbr})"
