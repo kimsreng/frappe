@@ -36,7 +36,7 @@ def set_new_name(doc):
 
 	doc.run_method("before_naming")
 
-	autoname = frappe.get_meta(doc.doctype).autoname or ""
+	autoname = _get_autoname_hook(doc.doctype, doc) or frappe.get_meta(doc.doctype).autoname or ""
 
 	if autoname.lower() != "prompt" and not frappe.flags.in_import:
 		doc.name = None
@@ -347,6 +347,19 @@ def _format_autoname(autoname, doc):
 	name = parse_naming_series(autoname_value, doc=doc)
 
 	return name
+
+def _get_autoname_hook(doctype, doc):
+	"""
+	Allow hook to determine autoname at runtime
+	"""
+	hooks = frappe.get_hooks("autoname_hook", [])
+	if hooks:
+		for hook in hooks:
+			autoname = frappe.call(hook, doctype, doc)
+			if autoname:
+				return autoname
+
+	return None
 
 class NameParser:
 	"""Parse document name and return parts of it.
