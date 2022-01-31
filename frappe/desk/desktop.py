@@ -482,7 +482,7 @@ def get_custom_workspace_for_user(page):
 		'extends': page,
 		'for_user': frappe.session.user
 	}
-	pages = frappe.get_list("Workspace", filters=filters)
+	pages = frappe.get_all("Workspace", filters=filters)
 	if pages:
 		return frappe.get_doc("Workspace", pages[0])
 	doc = frappe.new_doc("Workspace")
