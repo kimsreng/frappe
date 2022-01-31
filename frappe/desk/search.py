@@ -99,7 +99,7 @@ def search_widget(doctype, txt, query=None, searchfield=None, start=0,
 		search_widget(doctype, txt, standard_queries[doctype][0],
 			searchfield, start, page_length, filters)
 	else:
-		permform_query(doctype, txt, query, searchfield, start, page_length=20, filters=None, filter_fields=None, as_dict=False, reference_doctype=None, ignore_user_permissions=False)
+		frappe.response["values"] = permform_query(doctype, txt, query, searchfield, start, page_length=20, filters=None, filter_fields=None, as_dict=False, reference_doctype=None, ignore_user_permissions=False)
 
 def permform_query(doctype, txt, query=None, searchfield=None, start=0,
 	page_length=20, filters=None, filter_fields=None, as_dict=False, reference_doctype=None, ignore_user_permissions=False):
@@ -198,9 +198,9 @@ def permform_query(doctype, txt, query=None, searchfield=None, start=0,
 		if as_dict:
 			for r in values:
 				r.pop("_relevance")
-			frappe.response["values"] = values
+			return values
 		else:
-			frappe.response["values"] = [r[:-1] for r in values]
+			return [r[:-1] for r in values]
 
 def get_std_fields_list(meta, key):
 	# get additional search fields
