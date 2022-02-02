@@ -266,7 +266,7 @@ def handle_exception(e):
 	else:
 		traceback = "<pre>" + sanitize_html(frappe.get_traceback()) + "</pre>"
 		# disable traceback in production if flag is set
-		if (frappe.local.flags.disable_traceback or cint(frappe.db.get_system_setting('allow_error_traceback')))  and not frappe.local.dev_server:
+		if (frappe.local.flags.disable_traceback or not cint(frappe.db.get_system_setting('allow_error_traceback')))  and not frappe.local.dev_server:
 			traceback = _("There is a problem serving your request. Please contact your system developers to notify this issue.")
 
 		frappe.respond_as_web_page("Server Error",
