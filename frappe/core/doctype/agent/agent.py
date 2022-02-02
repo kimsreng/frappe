@@ -7,6 +7,10 @@ from frappe.model.document import Document
 class Agent(Document):
 	pass
 
+def remove_abbr(text):
+	agent = frappe.get_agent()
+	return remove_abbr_from_text(remove_abbr_from_code(text, agent), agent)
+	
 def get_name_with_abbr(name, agent):
 	if not agent: return name
 	
