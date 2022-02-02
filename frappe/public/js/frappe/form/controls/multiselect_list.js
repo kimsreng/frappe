@@ -208,8 +208,8 @@ frappe.ui.form.ControlMultiSelectList = frappe.ui.form.ControlData.extend({
 			let selected = this.values.includes(option.value) ? 'selected' : '';
 			return `<li class="selectable-item ${selected}" data-value="${encoded_value}">
 				<div>
-					<strong>${option.label}</strong>
-					<div class="small">${option.description}</div>
+					<strong>${frappe.remove_abbr(option.label)}</strong>
+					<div class="small">${frappe.remove_abbr(option.description)}</div>
 				</div>
 				<div class="multiselect-check">${frappe.utils.icon('tick', 'xs')}</div>
 			</li>`;
