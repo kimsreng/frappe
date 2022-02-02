@@ -89,7 +89,7 @@ frappe.ui.form.LinkSelector = Class.extend({
 							<span class="text-muted">%(values)s</span></div>\
 						</div>', {
 							name: frappe.remove_abbr(v[0]),
-							values: frappe.remove_abbr(v.splice(1).filter(item=>!!item).join(", "))
+							values: frappe.remove_abbr(v.splice(1).filter((value, index, self)=>!!value && self.indexOf(value) === index).join(", "))
 						})).appendTo(parent);
 
 					row.find("a")
