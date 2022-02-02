@@ -382,8 +382,8 @@ frappe.remove_abbr = function(text){
 		return text;
 	}
 	//remove suffix
-	text = text.replace(`(${abbr})`, "");
-	return text.replace(`${abbr}-`, "");
+	text = text.replaceAll(`(${abbr})`, "");
+	return text.replaceAll(`${abbr}-`, "");
 };
 
 frappe.append_abbr = function(text){
