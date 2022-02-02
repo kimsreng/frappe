@@ -136,7 +136,7 @@ frappe.form.formatters = {
 					href="/app/${encodeURIComponent(frappe.router.slug(doctype))}/${encodeURIComponent(original_value)}"
 					data-doctype="${doctype}"
 					data-name="${original_value}">
-					${__(options && options.label || value)}</a>`;
+					${__(options && options.label || frappe.remove_abbr(value))}</a>`;
 			} else {
 				return value;
 			}
