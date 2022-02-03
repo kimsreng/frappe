@@ -107,7 +107,12 @@ def make_logs(response = None):
 		response = frappe.local.response
 
 	if frappe.error_log:
-		response['exc'] = json.dumps([frappe.utils.cstr(d["exc"]) for d in frappe.local.error_log])
+		if cint(frappe.db.get_system_setting('allow_error_traceback')) or frappe.conf.developer_mode:
+			messages = [frappe.utils.cstr(d["exc"]) for d in frappe.local.error_log]
+		else:
+			messages= [_("There is a problem serving your request. Please contact your system developers to notify this issue.")]
+
+		response['exc'] = json.dumps(messages)
 
 	if frappe.local.message_log:
 		response['_server_messages'] = json.dumps([frappe.utils.cstr(d) for
