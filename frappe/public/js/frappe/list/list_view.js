@@ -707,7 +707,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 						</div>
 					</div>`;
 			} else {
-				if (fieldname == "name"){
+				if (fieldname == "name" || fieldname == this.autoname_field){
 					return __(frappe.remove_abbr(value));
 				}
 				return frappe.format(value, df, null, doc);
