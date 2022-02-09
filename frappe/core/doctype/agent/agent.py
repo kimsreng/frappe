@@ -40,9 +40,11 @@ def get_abbr_prefix(agent):
 	return "{0}-".format(agent_abbr)
 
 def remove_abbr_from_text(text, agent):
+	if not text: return text
 	text = text.replace(get_abbr_extension(agent), "")
 	return text
 
 def remove_abbr_from_code(text, agent):
+	if not text: return text
 	text = text.replace(get_abbr_prefix(agent), "")
 	return text
