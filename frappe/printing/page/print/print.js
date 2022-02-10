@@ -212,12 +212,30 @@ frappe.ui.form.PrintView = class {
 	setup_additional_settings() {
 		this.additional_settings = {};
 		this.sidebar_dynamic_section.empty();
+		let me = this;
 		frappe
 			.xcall('frappe.printing.page.print.print.get_print_settings_to_show', {
 				doctype: this.frm.doc.doctype,
 				docname: this.frm.doc.name
 			})
-			.then((settings) => this.add_settings_to_sidebar(settings));
+			.then((settings) => {
+				var table_fields_doctypes = []
+				for (let df of settings) {
+					if(["Table", "Table MultiSelect"].includes(df.fieldtype)){
+						table_fields_doctypes.push(df.options);
+					}
+				}
+				if(table_fields_doctypes.length){
+					var tasks =[];
+					for(let d of table_fields_doctypes){
+						tasks.push(()=> frappe.model.with_doctype(d));
+					}
+					frappe.run_serially(tasks).then(()=>me.add_settings_to_sidebar(settings));
+				}else{
+					me.add_settings_to_sidebar(settings);
+				}
+				
+			});
 	}
 
 	add_settings_to_sidebar(settings) {

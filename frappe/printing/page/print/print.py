@@ -13,7 +13,7 @@ def get_print_settings_to_show(doctype, docname):
 	print_settings_fields = []
 	for fieldname in fields:
 		df = print_settings.meta.get_field(fieldname)
-		df.default = print_settings.get(fieldname)
+		df.default = print_settings.get(fieldname) if df.fieldtype != "Table MultiSelect" else ""
 		print_settings_fields.append(df)
 
 	return print_settings_fields
