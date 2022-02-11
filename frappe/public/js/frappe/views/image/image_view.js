@@ -96,7 +96,7 @@ frappe.views.ImageView = class ImageView extends frappe.views.ListView {
 				${frappe.get_abbr(title)}
 			</span>`;
 
-		let details = this.item_details_html(item);
+		let details = frappe.remove_abbr(this.item_details_html(item));
 
 		const expand_button_html = item._image_url
 			? `<div class="zoom-view" data-name="${encoded_name}">
