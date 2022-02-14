@@ -99,7 +99,7 @@ def search_widget(doctype, txt, query=None, searchfield=None, start=0,
 		search_widget(doctype, txt, standard_queries[doctype][0],
 			searchfield, start, page_length, filters)
 	else:
-		frappe.response["values"] = permform_query(doctype, txt, query, searchfield, start, page_length=20, filters=None, filter_fields=None, as_dict=False, reference_doctype=None, ignore_user_permissions=False)
+		frappe.response["values"] = permform_query(doctype, txt, query, searchfield, start, page_length, filters, filter_fields, as_dict, reference_doctype, ignore_user_permissions)
 
 def permform_query(doctype, txt, query=None, searchfield=None, start=0,
 	page_length=20, filters=None, filter_fields=None, as_dict=False, reference_doctype=None, ignore_user_permissions=False):
