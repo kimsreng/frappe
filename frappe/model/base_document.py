@@ -614,6 +614,31 @@ class BaseDocument(object):
 						cancelled_links.append((df.fieldname, docname, get_msg(df, docname)))
 
 		return invalid_links, cancelled_links
+	
+	def fill_fetch_from_values(self):
+		
+		for df in (self.meta.get_link_fields()
+				+ self.meta.get("fields", {"fieldtype": ('=', "Dynamic Link")})):
+			fields_to_fetch = [
+					_df for _df in self.meta.get_fields_to_fetch(df.fieldname)
+					if
+						not _df.get('fetch_if_empty')
+						or (_df.get('fetch_if_empty') and not self.get(_df.fieldname))
+				]
+			if fields_to_fetch:
+				docname = self.get(df.fieldname)
+				if not docname:
+					continue
+				doctype = df.options
+				values_to_fetch = ['name'] + [_df.fetch_from.split('.')[-1]
+							for _df in fields_to_fetch]
+				values = frappe.db.get_value(doctype, docname,
+								values_to_fetch, as_dict=True)
+				if values:
+					for _df in fields_to_fetch:
+						if self.is_new() or self.docstatus != 1 or _df.allow_on_submit:
+							self.set_fetch_from_value(doctype, _df, values)
+
 
 	def set_fetch_from_value(self, doctype, df, values):
 		fetch_from_fieldname = df.fetch_from.split('.')[-1]
