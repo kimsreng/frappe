@@ -76,7 +76,7 @@ def application(request):
 
 		elif request.method in ('GET', 'HEAD', 'POST'):
 			
-			allowed_paths = ["/login", "app", "/printview", "/manifest", "/pwa"]
+			allowed_paths = ["/login", "app", "/printview", "/manifest", "/pwa", "/sw"]
 			in_path = False
 			for p in allowed_paths:
 				if p in request.path:
