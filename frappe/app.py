@@ -75,7 +75,14 @@ def application(request):
 			response = frappe.utils.response.download_private_file(request.path)
 
 		elif request.method in ('GET', 'HEAD', 'POST'):
-			if "/login" not in request.path and "/app"  not in request.path and "/printview" not in request.path:
+			
+			allowed_paths = ["/login", "app", "/printview", "/manifest", "/pwa"]
+			in_path = False
+			for p in allowed_paths:
+				if p in request.path:
+					in_path = True
+					break
+			if not in_path:
 				response = frappe.website.render.render("/login")
 			else:
 				response = frappe.website.render.render()
