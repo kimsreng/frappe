@@ -199,9 +199,9 @@ frappe.views.Workspace = class Workspace {
 			this.current_page.reset_customization();
 		}, 1);
 
-		this.page.add_menu_item(__('Toggle Sidebar'), () => {
-			this.toggle_side_bar();
-		}, 1);
+		// this.page.add_menu_item(__('Toggle Sidebar'), () => {
+		// 	this.toggle_side_bar();
+		// }, 1);
 	}
 
 	toggle_side_bar() {
