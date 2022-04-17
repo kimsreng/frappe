@@ -191,7 +191,7 @@ frappe.views.Workspace = class Workspace {
 	setup_dropdown() {
 		this.page.clear_menu();
 
-		if (frappe.is_mobile()) {
+		if (!frappe.is_mobile()) {
 			this.page.set_secondary_action(__('Customize'), () => {
 				this.customize();
 			});
