@@ -526,7 +526,7 @@ frappe.ui.Page = Class.extend({
 		var $group = this.inner_toolbar.find(`.inner-group-button[data-label="${encodeURIComponent(label)}"]`);
 		if (!$group.length) {
 			$group = $(
-				`<div class="inner-group-button" data-label="${encodeURIComponent(label)}">
+				`<div class="inner-group-button hidden-xs hidden-md" data-label="${encodeURIComponent(label)}">
 					<button type="button" class="btn btn-default ellipsis" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						${label}
 						${frappe.utils.icon('select', 'xs')}
