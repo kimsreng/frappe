@@ -589,9 +589,9 @@ frappe.ui.Page = Class.extend({
 		} else {
 			let button = this.inner_toolbar.find(`button[data-label="${encodeURIComponent(label)}"]`);
 			if (button.length == 0) {
-				button = $(`<button data-label="${encodeURIComponent(label)}" class="btn btn-${type} ellipsis">
+				button = $(`<span class="hidden-xs hidden-md"><button data-label="${encodeURIComponent(label)}" class="btn btn-${type} ellipsis">
 					${__(label)}
-				</button>`);
+				</button></span>`);
 				button.on("click", _action);
 				button.appendTo(this.inner_toolbar.removeClass("hide"));
 			}
