@@ -18,6 +18,7 @@
   "allowed_modules",
   "column_break_5",
   "user_email",
+  "mobile_phone",
   "first_name",
   "last_name",
   "user_password",
@@ -140,12 +141,17 @@
    "fieldname": "enabled",
    "fieldtype": "Check",
    "label": "Enabled"
+  },
+  {
+   "fieldname": "mobile_phone",
+   "fieldtype": "Data",
+   "label": "Mobile Phone"
   }
  ],
  "ignore_user_permissions": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-16 19:03:01.431641",
+ "modified": "2022-04-18 22:53:01.803595",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Agent",
