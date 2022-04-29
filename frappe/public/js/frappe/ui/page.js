@@ -160,8 +160,9 @@ frappe.ui.Page = Class.extend({
 		let sidebar_toggle = this.wrapper.find('.page-head').find('.sidebar-toggle-btn');
 		let sidebar_wrapper = this.wrapper.find('.layout-side-section');
 		if (this.disable_sidebar_toggle || !sidebar_wrapper.length) {
-			sidebar_toggle.remove();
+			sidebar_toggle.addClass("hide");
 		} else {
+			sidebar_toggle.removeClass("hide");
 			sidebar_toggle.attr("title", __("Toggle Sidebar")).tooltip({
 				delay: { "show": 600, "hide": 100 },
 				trigger: "hover",
