@@ -298,6 +298,9 @@ frappe.ui.form.Form = class FrappeForm {
 			this.show_conflict_message();
 
 			$(document).trigger("form-refresh", [this]);
+			// refresh sidebar toggle
+			this.page.disable_sidebar_toggle = this.is_new() && frappe.is_mobile()
+			this.page.setup_sidebar_toggle()
 		}
 	}
 
