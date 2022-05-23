@@ -143,6 +143,11 @@ frappe.ui.FieldSelect = Class.extend({
 		if (df.fieldname == 'docstatus' && !frappe.model.is_submittable(me.doctype))
 			return;
 
+		//skip hidden fields or only visible to System Manager
+		if(df.hidden && !frappe.user.has_role("System Manager")){
+			return;
+		}
+
 		if (frappe.model.table_fields.includes(df.fieldtype)) {
 			me.table_fields.push(df);
 			return;
