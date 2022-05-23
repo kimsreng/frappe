@@ -152,7 +152,7 @@ frappe.ui.FieldSelect = Class.extend({
 		let table = null;
 
 		if(me.doctype && df.parent==me.doctype) {
-			label = __(df.label);
+			label = __(df.label, null, df.translation_context);
 			table = me.doctype;
 		} else {
 			label = __(df.label) + ' (' + __(df.parent) + ')';
