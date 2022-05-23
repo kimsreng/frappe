@@ -93,6 +93,8 @@ frappe.ui.SortSelector = Class.extend({
 		var meta = frappe.get_meta(this.doctype);
 		if (!meta) return;
 
+		this.args.doctype = this.doctype;
+
 		var { meta_sort_field, meta_sort_order } = this.get_meta_sort_field();
 
 		if(!this.args.sort_by) {
@@ -116,15 +118,14 @@ frappe.ui.SortSelector = Class.extend({
 				{'fieldname': 'modified'}
 			]
 
-			// title field
-			if(meta.title_field) {
-				_options.push({'fieldname': meta.title_field});
-			}
-
-			// bold or mandatory
 			meta.fields.forEach(function(df) {
+				// bold or mandatory
 				if(df.mandatory || df.bold) {
-					_options.push({fieldname: df.fieldname, label: df.label});
+					_options.push({fieldname: df.fieldname, label: __(df.label, null, df.translation_context)});
+				}
+				// title field
+				else if(meta.title_field && df.fieldname==meta.title_field) {
+					_options.push({fieldname: df.fieldname, label: __(df.label, null, df.translation_context)});
 				}
 			});
 
