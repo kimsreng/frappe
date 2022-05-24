@@ -15,11 +15,11 @@ frappe.ui.Filter = class {
 		this.conditions = [
 			['=', __('Equals')],
 			['!=', __('Not Equals')],
-			['like', __('Like')],
-			['not like', __('Not Like')],
-			['in', __('In')],
-			['not in', __('Not In')],
-			['is', __('Is')],
+			['like', __('Like', null, "FilterOperator")],
+			['not like', __('Not Like', null, "FilterOperator")],
+			['in', __('In', null, "FilterOperator")],
+			['not in', __('Not In', null, "FilterOperator")],
+			['is', __('Is', null, "FilterOperator")],
 			['>', '>'],
 			['<', '<'],
 			['>=', '>='],
@@ -29,10 +29,10 @@ frappe.ui.Filter = class {
 		];
 
 		this.nested_set_conditions = [
-			['descendants of', __('Descendants Of')],
-			['not descendants of', __('Not Descendants Of')],
-			['ancestors of', __('Ancestors Of')],
-			['not ancestors of', __('Not Ancestors Of')],
+			['descendants of', __('Descendants Of', null, "FilterOperator")],
+			['not descendants of', __('Not Descendants Of', null, "FilterOperator")],
+			['ancestors of', __('Ancestors Of', null, "FilterOperator")],
+			['not ancestors of', __('Not Ancestors Of', null, "FilterOperator")],
 		];
 
 		this.conditions.push(...this.nested_set_conditions);
@@ -545,9 +545,9 @@ frappe.ui.filter_utils = {
 
 	get_timespan_options(periods) {
 		const period_map = {
-			Last: ['Week', 'Month', 'Quarter', '6 months', 'Year'],
+			Last: ['Week', 'Month', 'Quarter', '6 Months', 'Year'],
 			This: ['Week', 'Month', 'Quarter', 'Year'],
-			Next: ['Week', 'Month', 'Quarter', '6 months', 'Year'],
+			Next: ['Week', 'Month', 'Quarter', '6 Months', 'Year'],
 		};
 		let options = [];
 		periods.forEach((period) => {
