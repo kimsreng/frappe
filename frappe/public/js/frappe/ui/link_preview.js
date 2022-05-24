@@ -175,7 +175,7 @@ frappe.ui.LinkPreview = class {
 				<div class="preview-header">
 					${this.get_image_html(preview_data)}
 					<div class="preview-name">
-						<a href=${this.href}>${__(preview_data.preview_title)}</a>
+						<a href=${this.href}>${__(frappe.remove_abbr(preview_data.preview_title))}</a>
 					</div>
 					<div class="text-muted preview-title">${this.get_id_html(preview_data)}</div>
 				</div>
@@ -192,7 +192,7 @@ frappe.ui.LinkPreview = class {
 	get_id_html(preview_data) {
 		let id_html = '';
 		if (preview_data.preview_title !== preview_data.name) {
-			id_html = `<a class="text-muted" href=${this.href}>${preview_data.name}</a>`;
+			id_html = `<a class="text-muted" href=${this.href}>${frappe.remove_abbr(preview_data.name)}</a>`;
 		}
 
 		return id_html;
@@ -215,7 +215,7 @@ frappe.ui.LinkPreview = class {
 
 		Object.keys(preview_data).forEach(key => {
 			if (!['preview_image', 'preview_title', 'name'].includes(key)) {
-				let value = frappe.ellipsis(preview_data[key], 280);
+				let value = frappe.ellipsis(frappe.remove_abbr(preview_data[key], 280));
 				let label = key;
 				content_html += `
 					<div class="preview-field">
