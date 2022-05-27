@@ -521,10 +521,10 @@ export default class GridRow {
 			let colsize = col[1];
 			let txt = this.doc ?
 				frappe.format(this.doc[df.fieldname], df, null, this.doc) :
-				__(df.label);
+				__(df.label, null, df.translation_context);
 
 			if (this.doc && df.fieldtype === "Select") {
-				txt = __(txt);
+				txt = __(txt, null, df.translation_context);
 			}
 			let column;
 			if (!this.columns[df.fieldname]) {
