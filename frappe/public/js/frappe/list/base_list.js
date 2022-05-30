@@ -746,6 +746,7 @@ class FilterArea {
 						fieldname: df.fieldname,
 						condition: condition,
 						default: default_value,
+						translation_context: df.translation_context,
 						onchange: () => this.refresh_list_view(),
 						ignore_link_validation: fieldtype === "Dynamic Link",
 						is_filter: 1,
