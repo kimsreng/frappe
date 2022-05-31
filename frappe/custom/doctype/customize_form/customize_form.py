@@ -231,12 +231,12 @@ class CustomizeForm(Document):
 		elif prop == "unique":
 			self.flags.update_db = True
 
-		elif (prop == "read_only" and cint(df.get("read_only"))==0
-				and frappe.db.get_value("DocField", {"parent": self.doc_type,
-				"fieldname": df.fieldname}, "read_only")==1):
-			# if docfield has read_only checked and user is trying to make it editable, don't allow it
-			frappe.msgprint(_("You cannot unset 'Read Only' for field {0}").format(df.label))
-			return False
+		# elif (prop == "read_only" and cint(df.get("read_only"))==0
+		# 		and frappe.db.get_value("DocField", {"parent": self.doc_type,
+		# 		"fieldname": df.fieldname}, "read_only")==1):
+		# 	# if docfield has read_only checked and user is trying to make it editable, don't allow it
+		# 	frappe.msgprint(_("You cannot unset 'Read Only' for field {0}").format(df.label))
+		# 	return False
 
 		elif prop == "options" and df.get("fieldtype") not in ALLOWED_OPTIONS_CHANGE:
 			frappe.msgprint(_("You can't set 'Options' for field {0}").format(df.label))
