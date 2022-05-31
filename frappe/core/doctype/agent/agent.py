@@ -1,11 +1,31 @@
 # Copyright (c) 2021, Kimsreng and contributors
 # For license information, please see license.txt
 
+from warnings import filters
 import frappe
 from frappe.model.document import Document
 
 class Agent(Document):
-	pass
+	def before_insert(self):
+		self._check_abbr()
+
+	def _check_abbr(self):
+		def exist(abbr):
+			return frappe.get_all("Agent", filters={"abbr": abbr}) != []
+		abbr = self.abbr
+		if not abbr:
+			parts = self.agent_name.split(" ")
+			abbr = ""
+			for p in parts:
+				abbr += p[0:1]
+			abbr = abbr.upper()
+			
+		n = 0
+		while exist(f"{abbr}{n or ''}"):
+			n += 1			
+		self.abbr =f"{abbr}{n or ''}"
+
+
 
 def remove_abbr(text):
 	agent = frappe.get_agent()

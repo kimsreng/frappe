@@ -46,15 +46,16 @@ frappe.ui.form.on('Agent', {
 				}
 			});
 		}
-	},
-	abbr: function(frm){
-		frappe.call({
-			method: "agent.agent.check_abbr_exist",
-			args:{
-				abbr: frm.doc.abbr
-			}
-		});
 	}
+	// ,
+	// abbr: function(frm){
+	// 	frappe.call({
+	// 		method: "agent.agent.check_abbr_exist",
+	// 		args:{
+	// 			abbr: frm.doc.abbr
+	// 		}
+	// 	});
+	// }
 });
 
 agent.registration.password = {
