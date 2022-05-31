@@ -552,7 +552,8 @@ docfield_properties = {
 	'hide_border': 'Check',
 	'hide_days': 'Check',
 	'hide_seconds': 'Check',
-	'translation_context': "Data"
+	'translation_context': 'Data',
+	'set_only_once': 'Check',
 }
 
 doctype_link_properties = {

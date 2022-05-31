@@ -34,6 +34,7 @@
   "permlevel",
   "hidden",
   "read_only",
+  "set_only_once",
   "collapsible",
   "allow_bulk_edit",
   "collapsible_depends_on",
@@ -428,13 +429,19 @@
    "fieldname": "translation_context",
    "fieldtype": "Data",
    "label": "Translation Context"
+  },
+  {
+   "default": "0",
+   "fieldname": "set_only_once",
+   "fieldtype": "Check",
+   "label": "Set Only Once"
   }
  ],
  "idx": 1,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-08-19 20:17:39.213037",
+ "modified": "2022-06-01 05:26:28.040175",
  "modified_by": "Administrator",
  "module": "Custom",
  "name": "Customize Form Field",
