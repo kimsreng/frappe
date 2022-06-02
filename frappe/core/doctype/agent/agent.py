@@ -21,9 +21,9 @@ class Agent(Document):
 			abbr = abbr.upper()
 			
 		n = 0
-		while exist(f"{abbr}{n or ''}"):
+		while exist(f"{abbr}{n}"):
 			n += 1			
-		self.abbr =f"{abbr}{n or ''}"
+		self.abbr =f"{abbr}{n}"
 
 
 
