@@ -19,6 +19,9 @@ frappe.form.formatters = {
 		if (df && df.options == "URL") {
 			return `<a href="${value}" title="Open Link" target="_blank">${value}</a>`;
 		}
+		if(value){
+			value = frappe.remove_abbr(value);
+		}
 		return value==null ? "" : value;
 	},
 	Select: function(value) {
