@@ -24,7 +24,6 @@
    "fieldname": "language",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Language",
    "options": "Language",
    "search_index": 1
@@ -70,12 +69,16 @@
    "read_only": 1
   },
   {
+   "columns": 4,
    "description": "If your data is in HTML, please copy paste the exact HTML code with the tags.",
    "fieldname": "source_text",
    "fieldtype": "Code",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Source Text"
   },
   {
+   "columns": 4,
    "fieldname": "translated_text",
    "fieldtype": "Code",
    "in_list_view": 1,
@@ -90,7 +93,7 @@
   }
  ],
  "links": [],
- "modified": "2022-06-03 01:02:07.611823",
+ "modified": "2022-06-03 02:48:16.111229",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Translation",
