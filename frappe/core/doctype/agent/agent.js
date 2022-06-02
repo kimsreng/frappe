@@ -60,7 +60,9 @@ frappe.ui.form.on('Agent', {
 
 agent.registration.password = {
 	refresh: function () {
-		this.indicator.html("").addClass("hidden");
+		if(this.indicator){
+			this.indicator.html("").addClass("hidden");
+		}
 	},
 	get_password_strength: function (value) {
 		var me = this;
