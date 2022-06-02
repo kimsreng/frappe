@@ -78,4 +78,6 @@ def create_translations(translation_map, language):
 		frappe.db.set_value('Translation', local_docname, 'contribution_docname', remote_docname)
 
 def clear_user_translation_cache(lang):
-	frappe.cache().hdel('lang_user_translations', lang)
+	agent = frappe.get_agent() or ""
+	key = f"{lang}{frappe.scrub(agent)}"
+	frappe.cache().hdel('lang_user_translations', key)

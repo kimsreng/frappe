@@ -1,6 +1,4 @@
 {
- "_comments": "[]",
- "_liked_by": "[]",
  "actions": [],
  "allow_import": 1,
  "autoname": "hash",
@@ -10,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "contributed",
+  "agent",
   "language",
   "section_break_4",
   "source_text",
@@ -24,6 +23,8 @@
   {
    "fieldname": "language",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Language",
    "options": "Language",
    "search_index": 1
@@ -43,8 +44,7 @@
   {
    "fieldname": "context",
    "fieldtype": "Data",
-   "label": "Context",
-   "read_only": 1
+   "label": "Context"
   },
   {
    "default": "0",
@@ -80,10 +80,17 @@
    "fieldtype": "Code",
    "in_list_view": 1,
    "label": "Translated Text"
+  },
+  {
+   "fieldname": "agent",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Agent",
+   "options": "Agent"
   }
  ],
  "links": [],
- "modified": "2020-03-12 13:28:48.223409",
+ "modified": "2022-06-03 01:02:07.611823",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Translation",

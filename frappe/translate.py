@@ -308,12 +308,15 @@ def get_translation_dict_from_file(path, lang, app):
 def get_user_translations(lang):
 	if not frappe.db:
 		frappe.connect()
-	out = frappe.cache().hget('lang_user_translations', lang)
+
+	agent = frappe.get_agent() or ""
+	key = f"{lang}{frappe.scrub(agent)}"
+	out = frappe.cache().hget('lang_user_translations', key)
 	if out is None:
 		out = {}
 		user_translations = frappe.get_all('Translation',
 			fields=["source_text", "translated_text", "context"],
-			filters={'language': lang})
+			filters={'language': lang, "agent": agent or ""})
 
 		for translation in user_translations:
 			key = translation.source_text
@@ -322,7 +325,7 @@ def get_user_translations(lang):
 				key += ':' + translation.context
 			out[key] = value
 
-		frappe.cache().hset('lang_user_translations', lang, out)
+		frappe.cache().hset('lang_user_translations', key, out)
 
 	return out
 
