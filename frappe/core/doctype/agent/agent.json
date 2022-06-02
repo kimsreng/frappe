@@ -9,6 +9,8 @@
   "agent_information_section",
   "enabled",
   "agent_name",
+  "customer",
+  "customer_name",
   "abbr",
   "allowed_number_of_users",
   "registrar",
@@ -45,7 +47,6 @@
    "fieldname": "abbr",
    "fieldtype": "Data",
    "hidden": 1,
-   "in_list_view": 1,
    "label": "Abbreviation",
    "set_only_once": 1,
    "unique": 1
@@ -151,13 +152,30 @@
   {
    "fieldname": "expiration_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Expiration Date"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "permlevel": 1
+  },
+  {
+   "fetch_from": "customer.customer_name",
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name",
+   "permlevel": 1,
+   "read_only": 1
   }
  ],
  "ignore_user_permissions": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-06-01 05:49:08.921496",
+ "modified": "2022-06-02 11:21:35.524779",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Agent",
@@ -186,6 +204,30 @@
    "delete": 1,
    "email": 1,
    "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Agent Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
    "print": 1,
    "read": 1,
    "report": 1,
