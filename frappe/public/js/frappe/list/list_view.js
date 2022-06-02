@@ -932,7 +932,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 		if (!value) {
 			value = doc.name;
 		}
-		let subject = __(frappe.remove_abbr(strip_html(value.toString())));
+		let subject = frappe.remove_abbr(strip_html(value.toString()));
 		let escaped_subject = frappe.utils.escape_html(subject);
 
 		const seen = this.get_seen_class(doc);
