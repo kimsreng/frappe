@@ -381,7 +381,7 @@ frappe.remove_abbr = function(text){
 	if(!text){
 		return "";
 	}
-	if(!abbr){
+	if(!abbr || typeof text != "string"){
 		return text;
 	}
 	//remove suffix
