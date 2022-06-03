@@ -765,7 +765,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 			}
 			
 			return `<span class="ellipsis"
-				title="${__(label)}: ${frappe.utils.escape_html(_value)}">
+				title="${__(label)}: ${frappe.utils.escape_html(frappe.remove_abbr(_value))}">
 				${html}
 			</span>`;
 		};
@@ -936,6 +936,21 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 		let escaped_subject = frappe.utils.escape_html(subject);
 
 		const seen = this.get_seen_class(doc);
+		
+		let fieldtype = subject_field.fieldtype;
+		let fieldname = subject_field.fieldname;
+		let context = null;
+		if(fieldname == "name" || ["Link", "Select"].includes(fieldtype)){
+			if(fieldname == "name"){
+				context = this.doctype;
+			}else if(fieldtype=="Link"){
+				context = subject_field.options;
+			}else{
+				context = subject_field.translation_context;
+			}
+			subject = __(subject, null, context);
+		}
+		
 
 		let subject_html = `
 			<span class="level-item select-like">
