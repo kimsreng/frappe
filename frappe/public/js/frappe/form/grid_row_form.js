@@ -26,7 +26,7 @@ export default class GridRowForm {
 		this.fields_dict = this.layout.fields_dict;
 
 		this.layout.refresh(this.row.doc);
-
+		$(document).trigger("child-form-render",[this]);
 		// copy get_query to fields
 		for(var fieldname in (this.row.grid.fieldinfo || {})) {
 			var fi = this.row.grid.fieldinfo[fieldname];
