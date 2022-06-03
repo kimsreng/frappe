@@ -378,6 +378,9 @@ frappe.utils.get_page_view_count = function (route) {
 };
 frappe.remove_abbr = function(text){
 	const abbr = frappe.boot.abbr;
+	if(!text){
+		return "";
+	}
 	if(!abbr){
 		return text;
 	}
