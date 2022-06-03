@@ -43,6 +43,7 @@
   {
    "fieldname": "context",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Context"
   },
   {
@@ -93,7 +94,7 @@
   }
  ],
  "links": [],
- "modified": "2022-06-03 02:48:16.111229",
+ "modified": "2022-06-04 04:09:47.269485",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Translation",
