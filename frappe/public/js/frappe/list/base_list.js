@@ -235,6 +235,27 @@ frappe.views.BaseList = class BaseList {
 			}
 		});
 	}
+	
+	add_custom_button(label, fn, group) {
+		// temp! old parameter used to be icon
+		if (group && group.indexOf("fa fa-") !== -1)
+			group = null;
+
+		let btn = this.page.add_inner_button(label, fn, group);
+
+		if (btn) {
+			// Add actions as menu item in Mobile View
+			let menu_item_label = group ? `${group} > ${label}` : label;
+			let menu_item = this.page.add_menu_item(menu_item_label, fn, false);
+			menu_item.parent().addClass("hidden-xl");
+		}
+		return btn;
+	}
+
+	//Remove specific custom button by button Label
+	remove_custom_button(label, group) {
+		this.page.remove_inner_button(label, group);
+	}
 
 	set_breadcrumbs() {
 		frappe.breadcrumbs.add(this.meta.module, this.doctype);
