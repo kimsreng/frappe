@@ -15,7 +15,7 @@
 							data-doctype="{{parent_doctype}}"
 							value="{{group_by_conditions[parent_doctype][val].fieldname}}"
 						>
-							{{ __(group_by_conditions[parent_doctype][val].label) }}
+							{{ __(group_by_conditions[parent_doctype][val].label, null, group_by_conditions[parent_doctype][val].translation_context) }}
 							({{ __(parent_doctype) }})
 						</option>
 						{% } else { %}
@@ -23,7 +23,7 @@
 							data-doctype="{{parent_doctype}}"
 							value="{{group_by_conditions[parent_doctype][val].fieldname}}"
 						>
-							{{ __(group_by_conditions[parent_doctype][val].label) }}
+							{{ __(group_by_conditions[parent_doctype][val].label, null, group_by_conditions[parent_doctype][val].translation_context) }}
 						</option>
 						{% } %}
 					{% } %}

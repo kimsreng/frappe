@@ -342,9 +342,9 @@ frappe.ui.GroupBy = class {
 			);
 
 			if (this.aggregate_function === 'sum') {
-				docfield.label = __('Sum of {0}', [docfield.label]);
+				docfield.label = __('Sum of {0}', [__(docfield.label, null, docfield.translation_context)]);
 			} else {
-				docfield.label = __('Average of {0}', [docfield.label]);
+				docfield.label = __('Average of {0}', [__(docfield.label, null, docfield.translation_context)]);
 			}
 		}
 
@@ -382,14 +382,14 @@ frappe.ui.GroupBy = class {
 		this.all_fields = {};
 
 		const fields = this.report_view.meta.fields.filter((f) =>
-			['Select', 'Link', 'Data', 'Int', 'Check'].includes(f.fieldtype)
+			['Select', 'Link', 'Data', 'Int', 'Check'].includes(f.fieldtype) && (!f.hidden || frappe.user.is_super_user())
 		);
 		const tag_field = {fieldname: '_user_tags', fieldtype: 'Data', label: __('Tags')};
 		this.group_by_fields[this.doctype] = fields.concat(tag_field);
 		this.all_fields[this.doctype] = this.report_view.meta.fields;
 
 		const standard_fields_filter = (df) =>
-			!in_list(frappe.model.no_value_type, df.fieldtype) && !df.report_hide;
+			!in_list(frappe.model.no_value_type, df.fieldtype) && !df.report_hide &&(!df.hidden || frappe.user.is_super_user());
 
 		const table_fields = frappe.meta
 			.get_table_fields(this.doctype)
@@ -425,8 +425,9 @@ frappe.ui.GroupBy = class {
 	}
 
 	get_group_by_field_label() {
-		return this.group_by_fields[this.group_by_doctype].find(
+		var field = this.group_by_fields[this.group_by_doctype].find(
 			field => field.fieldname == this.group_by_field
-		).label;
+		);
+		return __(field.label, null, field.translation_context);
 	}
 };
