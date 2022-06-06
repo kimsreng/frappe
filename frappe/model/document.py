@@ -310,7 +310,6 @@ class Document(BaseDocument):
 			self.insert()
 			return
 
-		self.check_permission("write", "save")
 
 		self.set_user_and_timestamp()
 		self.set_docstatus()
@@ -318,9 +317,10 @@ class Document(BaseDocument):
 		self.set_parent_in_children()
 		self.set_name_in_children()
 
+		self.run_before_save_methods()
+		self.check_permission("write", "save")
 		self.validate_higher_perm_levels()
 		self._validate_links()
-		self.run_before_save_methods()
 
 		if self._action != "cancel":
 			self._validate()
