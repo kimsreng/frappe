@@ -852,8 +852,8 @@ Object.assign(frappe.utils, {
 		let route = route_str.split('/');
 		let context;
 		if (route[2] === 'Report') {
-			context = frappe.trans_context("Report", route[3]);
-			return __('{0} Report', [__(route[3], null, context)]);
+			context = frappe.trans_context("Doctype", route[1]);
+			return __('{0} Report', [__(route[1], null, context)]);
 		}
 		if (route[0] === 'query-report') {
 			context = frappe.trans_context("Doctype", route[1]);
