@@ -53,19 +53,21 @@ frappe.search.utils = {
 			var out = {
 				route: match[1]
 			};
+			var context;
 			if (match[1][0]==='Form') {
+				context = frappe.trans_context("Doctype", match[1][1])
 				if (match[1].length > 2 && match[1][1] !== match[1][2]) {
-					out.label = __(match[1][1]) + " " + match[1][2].bold();
+					out.label = __(match[1][1], null, context) + " " + frappe.remove_abbr(match[1][2]).bold();
 					out.value = __(match[1][1]) + " " + match[1][2];
 				} else {
-					out.label = __(match[1][1]).bold();
+					out.label = __(match[1][1], null, context).bold();
 					out.value = __(match[1][1]);
 				}
 			} else if (['List', 'Tree', 'Workspaces', 'query-report'].includes(match[1][0]) && (match[1].length > 1)) {
 				var type = match[1][0], label = type;
 				if(type==='Workspaces') label = 'Workspace';
 				else if(type==='query-report' || match[1][2] ==='Report') label = 'Report';
-				var context;
+				
 				if (label=="Report" && type!=='query-report'){
 					context = frappe.trans_context("Report", match[1][1]);
 				}else if(label=="Workspaces"){
@@ -73,7 +75,7 @@ frappe.search.utils = {
 				}else{
 					context = frappe.trans_context("Doctype", match[1][1])
 				}
-				if(label == "Workspaces"){
+				if(label == "Workspace"){
 					out.label = __("Open {0}" ,[__(match[1][1], null, context).bold()], "Workspace");
 					out.value = __("Open {0}" ,[__(match[1][1], null, context)], "Workspace");
 				}else{
