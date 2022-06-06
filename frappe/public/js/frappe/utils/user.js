@@ -107,6 +107,10 @@ $.extend(frappe.user, {
 		return frappe.user.has_role(['Administrator', 'System Manager', 'Report Manager']);
 	},
 
+	is_super_user: function(){
+		return frappe.user.name == "Administrator" || frappe.user.has_role(['System Manager']);
+	},
+
 	get_formatted_email: function(email) {
 		var fullname = frappe.user.full_name(email);
 
