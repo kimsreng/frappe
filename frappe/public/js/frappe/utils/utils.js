@@ -850,18 +850,33 @@ Object.assign(frappe.utils, {
 	},
 	get_route_label(route_str) {
 		let route = route_str.split('/');
-
-		if (route[2] === 'Report' || route[0] === 'query-report') {
-			return __('{0} Report', [route[3] || route[1]]);
+		let context;
+		if (route[2] === 'Report') {
+			context = frappe.trans_context("Report", route[3]);
+			return __('{0} Report', [__(route[3], null, context)]);
+		}
+		if (route[0] === 'query-report') {
+			context = frappe.trans_context("Doctype", route[1]);
+			return __('{0} Report', [__(route[1], null, context)]);
 		}
 		if (route[0] === 'List') {
-			return __('{0} List', [route[1]]);
+			context = frappe.trans_context("Doctype", route[1]);
+			return __('{0} List', [__(route[1], null, context)]);
+		}
+		if (route[0] === 'Tree') {
+			context = frappe.trans_context("Doctype", route[1]);
+			return __('{0} Tree', [__(route[1], null, context)]);
 		}
 		if (route[0] === 'modules') {
 			return __('{0} Modules', [route[1]]);
 		}
 		if (route[0] === 'dashboard') {
-			return __('{0} Dashboard', [route[1]]);
+			context = frappe.trans_context("Dashboard", route[1]);
+			return __('{0} Dashboard', [__(route[1], null, context)]);
+		}
+		if (route[0] === 'Workspaces') {
+			context = frappe.trans_context("Workspace", route[1]);
+			return __('Open {0}', [__(route[1], null, context)], "Workspace");
 		}
 		return __(frappe.utils.to_title_case(route[0], true));
 	},
