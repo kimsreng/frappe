@@ -73,7 +73,9 @@ frappe.get_indicator = function(doc, doctype) {
 
 	// based on status
 	if(doc.status) {
-		return [__(doc.status), frappe.utils.guess_colour(doc.status)];
+		var field = frappe.meta.get_field(doctype, "status", doc.name);
+		var context = field ? field.translation_context: null;
+		return [__(doc.status, null, context), frappe.utils.guess_colour(doc.status)];
 	}
 
 	// based on enabled
