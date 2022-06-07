@@ -9,8 +9,7 @@
   "agent_information_section",
   "enabled",
   "agent_name",
-  "customer",
-  "customer_name",
+  "level",
   "abbr",
   "allowed_number_of_users",
   "registrar",
@@ -157,25 +156,18 @@
    "label": "Expiration Date"
   },
   {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Customer",
-   "permlevel": 1
-  },
-  {
-   "fetch_from": "customer.customer_name",
-   "fieldname": "customer_name",
-   "fieldtype": "Data",
-   "label": "Customer Name",
-   "permlevel": 1,
-   "read_only": 1
+   "default": "1",
+   "description": "1. Low (Easy features)<br>\n2. Medium (Some advanced features)<br>\n3. Advanced (Advanced Features) <br>",
+   "fieldname": "level",
+   "fieldtype": "Select",
+   "label": "Level",
+   "options": "1\n2\n3"
   }
  ],
  "ignore_user_permissions": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-06-02 11:21:35.524779",
+ "modified": "2022-06-07 13:28:56.626763",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Agent",
