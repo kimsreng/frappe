@@ -64,7 +64,6 @@ class WebsiteSettings(Document):
 
 	def on_update(self):
 		self.clear_cache()
-		frappe.cache().hdel("site_allowed_path", "site_allowed_path")
 
 	def clear_cache(self):
 		# make js and css
@@ -181,11 +180,3 @@ def get_items(parentfield):
 					t['child_items'].append(d)
 					break
 	return top_items
-
-def get_allowed_path():
-	cache = frappe.cache().hget("site_allowed_path", "site_allowed_path")
-	if cache:
-		return cache
-	paths = frappe.get_all("Allowed Path", pluck="path")
-	frappe.cache().hset("site_allowed_path", "site_allowed_path", paths)
-	return paths

@@ -64,6 +64,8 @@ website_redirects = [
 	{"source": r"/desk(.*)", "target": r"/app\1"},
 ]
 
+allowed_web_paths = ["/login", "/app", "/printview"]
+
 base_template = "templates/base.html"
 
 write_file_keys = ["file_url", "file_name"]

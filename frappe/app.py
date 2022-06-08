@@ -76,8 +76,7 @@ def application(request):
 
 		elif request.method in ('GET', 'HEAD', 'POST'):
 			
-			from frappe.website.doctype.website_settings.website_settings import get_allowed_path
-			allowed_paths = ["/login", "/app", "/printview"] + get_allowed_path()
+			allowed_paths = frappe.get_hooks("allowed_web_paths", [])
 
 			in_path = False
 			for p in allowed_paths:

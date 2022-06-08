@@ -36,7 +36,6 @@
   "call_to_action",
   "call_to_action_url",
   "allowed_path_section",
-  "allowed_path",
   "banner",
   "banner_html",
   "footer",
@@ -445,12 +444,6 @@
    "fieldname": "allowed_path_section",
    "fieldtype": "Section Break",
    "label": "Allowed Path"
-  },
-  {
-   "fieldname": "allowed_path",
-   "fieldtype": "Table",
-   "label": "Paths",
-   "options": "Allowed Path"
   }
  ],
  "icon": "fa fa-cog",
@@ -459,7 +452,7 @@
  "issingle": 1,
  "links": [],
  "max_attachments": 10,
- "modified": "2022-06-07 22:12:35.273923",
+ "modified": "2022-06-08 20:31:54.011056",
  "modified_by": "Administrator",
  "module": "Website",
  "name": "Website Settings",
