@@ -35,7 +35,6 @@
   "edit_navbar_template_values",
   "call_to_action",
   "call_to_action_url",
-  "allowed_path_section",
   "banner",
   "banner_html",
   "footer",
@@ -439,11 +438,6 @@
    "fieldname": "app_logo",
    "fieldtype": "Attach Image",
    "label": "App Logo"
-  },
-  {
-   "fieldname": "allowed_path_section",
-   "fieldtype": "Section Break",
-   "label": "Allowed Path"
   }
  ],
  "icon": "fa fa-cog",
@@ -452,7 +446,7 @@
  "issingle": 1,
  "links": [],
  "max_attachments": 10,
- "modified": "2022-06-08 20:31:54.011056",
+ "modified": "2022-06-08 21:25:24.143554",
  "modified_by": "Administrator",
  "module": "Website",
  "name": "Website Settings",
