@@ -30,6 +30,7 @@ frappe.ui.form.Form = class FrappeForm {
 		this.refresh_if_stale_for = 120;
 		this.opendocs = {};
 		this.custom_buttons = {};
+		this.custom_buttons_as_menu = {}
 		this.sections = [];
 		this.grids = [];
 		this.cscript = new frappe.ui.form.Controller({ frm: this });
@@ -1147,6 +1148,7 @@ frappe.ui.form.Form = class FrappeForm {
 			menu_item.parent().addClass("hidden-xl");
 
 			this.custom_buttons[label] = btn;
+			this.custom_buttons_as_menu[`${label}${group || ""}`] = menu_item;
 		}
 		return btn;
 	}
@@ -1159,11 +1161,20 @@ frappe.ui.form.Form = class FrappeForm {
 		this.page.clear_inner_toolbar();
 		this.page.clear_user_actions();
 		this.custom_buttons = {};
+		for(var label in this.custom_buttons_as_menu){
+			this.custom_buttons_as_menu[label].remove();
+		}
+		this.custom_buttons_as_menu = {};
 	}
 
 	//Remove specific custom button by button Label
 	remove_custom_button(label, group) {
 		this.page.remove_inner_button(label, group);
+		// remove from menu as well in case of mobile view
+		label = `${label}${group || ""}`;
+		if(this.custom_buttons_as_menu[label]){
+			this.custom_buttons_as_menu[label].remove();
+		}
 	}
 
 	scroll_to_element() {
