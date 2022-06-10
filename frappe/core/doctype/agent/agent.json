@@ -61,6 +61,7 @@
   {
    "fieldname": "registrar",
    "fieldtype": "Link",
+   "ignore_user_permissions": 1,
    "label": "Registrar",
    "options": "User",
    "read_only": 1,
@@ -165,9 +166,8 @@
   }
  ],
  "ignore_user_permissions": 1,
- "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-06-07 13:28:56.626763",
+ "modified": "2022-06-10 11:44:53.619914",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Agent",
