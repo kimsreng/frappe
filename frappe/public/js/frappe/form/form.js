@@ -1135,6 +1135,9 @@ frappe.ui.form.Form = class FrappeForm {
 	}
 
 	add_custom_button(label, fn, group) {
+		if(frappe.is_form_button_to_hide(this.doctype, label, group)){
+			return;
+		}
 		// temp! old parameter used to be icon
 		if (group && group.indexOf("fa fa-") !== -1)
 			group = null;
