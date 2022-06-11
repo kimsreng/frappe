@@ -722,11 +722,13 @@ frappe.ui.Page = Class.extend({
 	},
 
 	add_custom_button_group: function(label, icon, parent) {
-		let dropdown_label = `<span class="hidden-xs hidden-md">
-			<span class="custom-btn-group-label">${__(label)}</span>
-			${frappe.utils.icon('select', 'xs')}
-		</span>`;
-
+		let dropdown_label =`<span>
+		<span class="hidden-xl">${frappe.utils.icon("select")}</span>
+		<span class="hidden-xs hidden-md"><span class="custom-btn-group-label">${__(label)}</span>
+		${frappe.utils.icon('select', 'xs')}
+		</span>
+	</span>`;
+	
 		if (icon) {
 			dropdown_label = `<span>
 				${frappe.utils.icon(icon)}
