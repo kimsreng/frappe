@@ -144,7 +144,7 @@ frappe.ui.FieldSelect = Class.extend({
 			return;
 
 		//skip hidden fields or only visible to System Manager
-		if(df.hidden && !frappe.user.has_role("System Manager")){
+		if(frappe.is_hidden_field(df.parent, df)){
 			return;
 		}
 
@@ -160,7 +160,7 @@ frappe.ui.FieldSelect = Class.extend({
 			label = __(df.label, null, df.translation_context);
 			table = me.doctype;
 		} else {
-			label = __(df.label) + ' (' + __(df.parent) + ')';
+			label = __(df.label) + ' (' + __(df.parent, null, df.parenttype) + ')';
 			table = df.parent;
 		}
 
