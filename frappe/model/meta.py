@@ -493,6 +493,9 @@ class Meta(Document):
 		if not self.custom:
 			for hook in frappe.get_hooks("override_doctype_dashboards", {}).get(self.name, []):
 				data = frappe._dict(frappe.get_attr(hook)(data=data))
+			## allow wildcard option	
+			for hook in frappe.get_hooks("override_doctype_dashboards", {}).get("*", []):
+				data = frappe._dict(frappe.get_attr(hook)(self.name, data=data))
 
 		return data
 
