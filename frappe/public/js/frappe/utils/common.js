@@ -400,3 +400,15 @@ frappe.append_abbr = function(text){
 frappe.is_doctype_agent_readonly = function(doctype){
 	return frappe.boot.agent && frappe.boot.agent_readonly_doctypes.includes(doctype);
 };
+
+frappe.is_form_button_to_hide = function(doctype, label, group){
+	return false;
+};
+
+frappe.get_fields_to_hide = function(doctype){
+	return [];
+};
+
+frappe.is_hidden_field = function(doctype, df){
+	return !(frappe.user.is_super_user() || (!df.hidden && !frappe.get_fields_to_hide(doctype).includes(df.fieldname)));
+};
