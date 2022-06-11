@@ -412,3 +412,10 @@ frappe.get_fields_to_hide = function(doctype){
 frappe.is_hidden_field = function(doctype, df){
 	return !(frappe.user.is_super_user() || (!df.hidden && !frappe.get_fields_to_hide(doctype).includes(df.fieldname)));
 };
+
+frappe.hide_fields_to_be_hidden = function(frm){
+	var fields = frappe.get_fields_to_hide(frm.doctype);
+	for(var i in fields){
+		frm.fields_dict[fields[i]].df.hidden = 1;
+	}
+};

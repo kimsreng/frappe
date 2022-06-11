@@ -24,7 +24,8 @@ export default class GridRowForm {
 
 		this.fields = this.layout.fields;
 		this.fields_dict = this.layout.fields_dict;
-
+		//hide intended hidden fields
+		frappe.hide_fields_to_be_hidden(this);
 		this.layout.refresh(this.row.doc);
 		$(document).trigger("child-form-render",[this]);
 		// copy get_query to fields

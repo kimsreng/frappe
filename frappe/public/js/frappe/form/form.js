@@ -429,6 +429,9 @@ frappe.ui.form.Form = class FrappeForm {
 			this.layout.doc = this.doc;
 			this.layout.attach_doc_and_docfields();
 
+			// hide inteded hidden fields
+			frappe.hide_fields_to_be_hidden(this);
+			
 			if (frappe.boot.desk_settings.form_sidebar && !frappe.is_doctype_agent_readonly(this.doctype)) {
 				this.sidebar = new frappe.ui.form.Sidebar({
 					frm: this,
@@ -451,6 +454,8 @@ frappe.ui.form.Form = class FrappeForm {
 				() => this.refresh_fields(),
 				// call trigger
 				() => this.script_manager.trigger("refresh"),
+				// Allow after refresh global hook
+				() => $(document).trigger('after-form-refresh', [this]),
 				// call onload post render for callbacks to be fired
 				() => {
 					if(this.cscript.is_onload) {
@@ -1273,6 +1278,11 @@ frappe.ui.form.Form = class FrappeForm {
 	}
 
 	set_df_property(fieldname, property, value, docname, table_field, table_row_name=null) {
+		//ignore changing property to show intended hidden field
+		if(property == "hidden" && frappe.get_fields_to_hide(this.doctype).includes(fieldname)){
+			return;
+		};
+
 		let df;
 		if (!docname || !table_field) {
 			df = this.get_docfield(fieldname);
