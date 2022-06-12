@@ -182,6 +182,12 @@ class FormMeta(Meta):
 			self.default_print_format = print_formats[0].name
 		self.set("__print_formats", print_formats, as_value=True)
 
+	def set_print_formats(self, print_formats):
+		self.set("__print_formats", print_formats, as_value=True)
+
+	def get_print_formats(self):
+		return self.get("__print_formats")
+
 	def load_workflows(self):
 		# get active workflow
 		workflow_name = self.get_workflow()
@@ -220,6 +226,12 @@ class FormMeta(Meta):
 
 	def load_dashboard(self):
 		self.set('__dashboard', self.get_dashboard_data())
+
+	def set_dashboard(self, dashboard):
+		self.set('__dashboard', dashboard)
+	
+	def get_dashboard(self):
+		return self.get("__dashboard")
 
 	def load_kanban_meta(self):
 		self.load_kanban_column_fields()
