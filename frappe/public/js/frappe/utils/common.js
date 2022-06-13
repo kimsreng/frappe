@@ -413,6 +413,22 @@ frappe.is_hidden_field = function(doctype, df){
 	return !(frappe.user.is_super_user() || (!df.hidden && !frappe.get_fields_to_hide(doctype).includes(df.fieldname)));
 };
 
+frappe.is_hidden_page_field = function(page, df){
+	return false;
+}
+
+frappe.is_hidden_custom_button = function(page, btn_label, group_label){
+	return false;
+}
+
+frappe.is_hidden_action_button = function(page, btn_label){
+	return false;
+}
+
+frappe.is_hidden_menu_item = function(page, menu_label){
+	return false;
+}
+
 frappe.hide_fields_to_be_hidden = function(frm){
 	var fields = frappe.get_fields_to_hide(frm.doctype);
 	for(var i in fields){
