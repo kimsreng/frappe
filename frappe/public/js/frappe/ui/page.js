@@ -318,6 +318,9 @@ frappe.ui.Page = Class.extend({
 	//--- Menu --//
 
 	add_menu_item: function(label, click, standard, shortcut) {
+		if(frappe.is_hidden_menu_item(this, label)){
+			return null;
+		};
 		return this.add_dropdown_item({
 			label,
 			click,
@@ -328,6 +331,9 @@ frappe.ui.Page = Class.extend({
 	},
 
 	add_custom_menu_item: function(parent, label, click, standard, shortcut, icon=null) {
+		if(frappe.is_hidden_custom_button(this, label)){
+			return null;
+		};
 		return this.add_dropdown_item({
 			label,
 			click,
@@ -379,6 +385,9 @@ frappe.ui.Page = Class.extend({
 	},
 
 	add_actions_menu_item: function(label, click, standard) {
+		if(frappe.is_hidden_action_button(this, label)){
+			return null;
+		};
 		return this.add_dropdown_item({
 			label,
 			click,
@@ -785,6 +794,9 @@ frappe.ui.Page = Class.extend({
 		this.page_form.append('<div class="clearfix invisible-xs"></div>');
 	},
 	add_field: function(df, parent) {
+		if(frappe.is_hidden_page_field(this, df)){
+			df.hidden=1;
+		}
 		this.show_form();
 
 		if (!df.placeholder) {
