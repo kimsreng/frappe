@@ -127,6 +127,7 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 		this.route = frappe.get_route();
 		this.page_name = frappe.get_route_str();
 		this.report_name = this.route[1];
+		this.page.report = this.report_name;
 		this.page_title = __(this.report_name);
 		this.show_save = false;
 		this.menu_items = this.get_menu_items();

@@ -73,6 +73,7 @@ frappe.ui.form.Form = class FrappeForm {
 			single_column: this.meta.hide_toolbar
 		});
 		this.page = this.wrapper.page;
+		this.page.doctype = this.doctype;
 		this.layout_main = this.page.main.get(0);
 
 		this.toolbar = new frappe.ui.form.Toolbar({
