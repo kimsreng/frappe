@@ -331,7 +331,7 @@ frappe.ui.Page = Class.extend({
 	},
 
 	add_custom_menu_item: function(parent, label, click, standard, shortcut, icon=null) {
-		if(frappe.is_hidden_custom_button(this, label)){
+		if(frappe.is_hidden_custom_button(this, label, parent)){
 			return null;
 		};
 		return this.add_dropdown_item({
@@ -376,6 +376,9 @@ frappe.ui.Page = Class.extend({
 
 
 	add_action_item: function(label, click, standard) {
+		if(frappe.is_hidden_action_button(this, label)){
+			return null;
+		};
 		return this.add_dropdown_item({
 			label,
 			click,
@@ -580,6 +583,9 @@ frappe.ui.Page = Class.extend({
 	* @param {string} group - Label of the group button
 	*/
 	add_inner_button: function(label, action, group, type="default") {
+		if(frappe.is_hidden_custom_button(this, label, group)){
+			return;
+		}
 		var me = this;
 		let _action = function() {
 			let btn = $(this);
@@ -717,6 +723,9 @@ frappe.ui.Page = Class.extend({
 	},
 
 	add_button: function(label, click, opts) {
+		if(frappe.is_hidden_custom_button(this, label)){
+			return;
+		}
 		if (!opts) opts = {};
 		let button = $(`<button
 			class="btn ${opts.btn_class || 'btn-default'} ${opts.btn_size || 'btn-sm'} ellipsis">
