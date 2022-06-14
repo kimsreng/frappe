@@ -20,7 +20,8 @@ export default class ShortcutWidget extends Widget {
 			color: this.color,
 			restrict_to_domain: this.restrict_to_domain,
 			stats_filter: this.stats_filter,
-			type: this.type
+			type: this.type,
+			select_color: this.select_color
 		};
 	}
 
