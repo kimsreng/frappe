@@ -70,10 +70,10 @@ frappe.search.utils = {
 				
 				if (label=="Report" && type!=='query-report'){
 					context = frappe.trans_context("Report", match[1][1]);
-				}else if(label=="Workspaces"){
-					context = frappe.trans_context("Workspace", match[1][1])
+				}else if(label=="Workspace"){
+					context = frappe.trans_context("Workspace", match[1][1]);
 				}else{
-					context = frappe.trans_context("Doctype", match[1][1])
+					context = frappe.trans_context("Doctype", match[1][1]);
 				}
 				if(label == "Workspace"){
 					out.label = __("Open {0}" ,[__(match[1][1], null, context).bold()], "Workspace");
@@ -325,8 +325,8 @@ frappe.search.utils = {
 			if (level > 0) {
 				var ret = {
 					type: "Workspace",
-					label: __("Open {0}", [me.bolden_match_part(__(item.name), keywords)], "Workspace"),
-					value: __("Open {0}", [__(item.name)]),
+					label: __("Open {0}", [me.bolden_match_part(__(item.name, null, item.translation_context), keywords)], "Workspace"),
+					value: __("Open {0}", [__(item.name, null, item.translation_context)], "Workspace"),
 					index: level,
 					route: [frappe.router.slug(item.name)]
 				};
