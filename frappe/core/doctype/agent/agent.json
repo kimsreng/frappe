@@ -8,6 +8,7 @@
  "field_order": [
   "agent_information_section",
   "enabled",
+  "is_template",
   "agent_name",
   "level",
   "abbr",
@@ -18,6 +19,8 @@
   "currency",
   "country",
   "allowed_modules",
+  "agent_to_copy_default_data",
+  "default_workspace",
   "column_break_5",
   "user_email",
   "mobile_phone",
@@ -163,11 +166,32 @@
    "fieldtype": "Select",
    "label": "Level",
    "options": "1\n2\n3\n4\n5"
+  },
+  {
+   "fieldname": "agent_to_copy_default_data",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Copy Default Data fromAgent",
+   "options": "Agent",
+   "read_only_depends_on": "eval:!doc.__islocal",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "default_workspace",
+   "fieldtype": "Link",
+   "label": "Default Favorite Workspace",
+   "options": "Workspace"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_template",
+   "fieldtype": "Check",
+   "label": "Is Template"
   }
  ],
  "ignore_user_permissions": 1,
  "links": [],
- "modified": "2022-06-12 18:25:41.624333",
+ "modified": "2022-06-15 21:38:55.578818",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Agent",
