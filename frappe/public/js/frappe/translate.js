@@ -45,7 +45,7 @@ frappe.get_languages = function() {
 frappe.trans_context = function(type, name) {
     var contexts = frappe.boot.trans_context;
     for (var i = 0; i < contexts.length; i++) {
-        if (contexts[i].type == type && contexts[i].item_name == name) {
+        if (contexts[i].type.toLowerCase() == type.toLowerCase() && contexts[i].item_name == name) {
             return contexts[i].context;
         }
     }
