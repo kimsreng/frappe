@@ -27,8 +27,8 @@ class Agent(Document):
 
 
 
-def remove_abbr(text):
-	agent = frappe.get_agent()
+def remove_abbr(text, agent = None):
+	agent = agent or frappe.get_agent()
 	return remove_abbr_from_text(remove_abbr_from_code(text, agent), agent)
 	
 def get_name_with_abbr(name, agent):
