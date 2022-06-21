@@ -8,7 +8,8 @@
  "field_order": [
   "module_name",
   "roles",
-  "app_name"
+  "app_name",
+  "enabled"
  ],
  "fields": [
   {
@@ -31,11 +32,17 @@
    "fieldtype": "Select",
    "label": "App",
    "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-06-15 19:42:42.734742",
+ "modified": "2022-06-16 18:49:04.739278",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Agent Module",
@@ -70,6 +77,15 @@
    "read": 1,
    "report": 1,
    "role": "Agent Manager",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "report": 1,
+   "role": "Agent Controller",
    "select": 1,
    "share": 1
   }
