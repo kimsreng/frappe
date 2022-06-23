@@ -85,8 +85,8 @@ class DatabaseQuery(object):
 		self.as_list = as_list
 		self.ignore_ifnull = ignore_ifnull
 		self.flags.ignore_permissions = ignore_permissions
-		self.flags.ignore_user_permissions = ignore_user_permissions
-		self.flags.apply_only_user_permission = apply_only_user_permission
+		self.flags.ignore_user_permissions = True if frappe.flags.not_apply_user_permissions else ignore_user_permissions
+		self.flags.apply_only_user_permission = False if frappe.flags.not_apply_user_permissions else apply_only_user_permission
 		self.user = user or frappe.session.user
 		self.update = update
 		self.user_settings_fields = copy.deepcopy(self.fields)
