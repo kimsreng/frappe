@@ -191,7 +191,8 @@ class Document(BaseDocument):
 		is not set.
 
 		:param permtype: one of `read`, `write`, `submit`, `cancel`, `delete`"""
-		if self.flags.ignore_permissions:
+		# Allow global ignore_permissions flags
+		if self.flags.ignore_permissions or frappe.flags.ignore_permissions:
 			return True
 		return frappe.has_permission(self.doctype, permtype, self, verbose=verbose)
 
