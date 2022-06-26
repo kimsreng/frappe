@@ -223,7 +223,7 @@ def make_dict_from_messages(messages, full_dict=None, load_user_translation=True
 		if m[1] in full_dict:
 			out[m[1]] = full_dict[m[1]]
 		# check if msg with context as key exist eg. msg:context
-		if len(m) > 2 and m[2]:
+		if len(m) > 2 and m[1] and m[2]:
 			key = m[1] + ':' + m[2]
 			if full_dict.get(key):
 				out[key] = full_dict[key]
