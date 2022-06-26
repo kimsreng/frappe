@@ -230,7 +230,7 @@ def load_translations(bootinfo):
 	bootinfo.trans_context = doctype_context
 
 def get_user_info():
-	user_info = frappe.db.get_all('User', fields=['`name`', 'full_name as fullname', 'user_image as image',
+	user_info = frappe.get_all_with_user_permissions('User', fields=['`name`', 'full_name as fullname', 'user_image as image',
 		'gender', 'email', 'username', 'bio', 'location', 'interest', 'banner_image', 'allowed_in_mentions', 'user_type'],
 		filters=dict(enabled=1))
 
