@@ -58,8 +58,9 @@ frappe.RoleEditor = class {
 			.then(permissions => {
 				const $body = $(this.perm_dialog.body);
 				if (!permissions.length) {
+					let title = frappe.boot.agent?role.replace("Agent ", "") : role;
 					$body.append(`<div class="text-muted text-center padding">
-						${__('{0} role does not have permission on any doctype', [role])}
+						${__('{0} role does not have permission on any doctype', [__(title, null, "Role")])}
 					</div>`);
 				} else {
 					$body.append(`
@@ -68,7 +69,7 @@ frappe.RoleEditor = class {
 								<tr>
 									<th> ${__('Document Type')} </th>
 									<th> ${__('Level')} </th>
-									${frappe.perm.rights.map(p => `<th> ${frappe.unscrub(p)}</th>`).join("")}
+									${frappe.perm.rights.map(p => `<th> ${__(frappe.unscrub(p), null, "Permission")}</th>`).join("")}
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -77,14 +78,15 @@ frappe.RoleEditor = class {
 					permissions.forEach(perm => {
 						$body.find('tbody').append(`
 							<tr>
-								<td>${perm.parent}</td>
+								<td>${__(perm.parent, null, "Doctype")}</td>
 								<td>${perm.permlevel}</td>
 								${frappe.perm.rights.map(p => `<td class="text-muted bold">${perm[p] ? frappe.utils.icon('check', 'xs') : '-'}</td>`).join("")}
 							</tr>
 						`);
 					});
 				}
-				this.perm_dialog.set_title(role);
+				let title = frappe.boot.agent?role.replace("Agent ", "") : role;
+				this.perm_dialog.set_title(__(title, null, "Role"));
 				this.perm_dialog.show();
 			});
 	}
