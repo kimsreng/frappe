@@ -20,7 +20,7 @@ frappe.RoleEditor = class {
 
 							}
 							return {
-								label: __(label),
+								label: __(label, null, "Role"),
 								value: role,
 								checked: user_roles.includes(role)
 							};
