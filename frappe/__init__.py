@@ -213,6 +213,12 @@ def init(site, sites_path=None, new_site=False):
 	patch_query_execute()
 
 	local.initialised = True
+	
+	## Allow monkey patch
+	patches = get_hooks("monkey_patch",[])
+	for p in patches:
+		f = get_attr(p)
+		f()
 
 def connect(site=None, db_name=None, set_admin_as_user=True):
 	"""Connect to site database instance.
