@@ -213,12 +213,6 @@ def init(site, sites_path=None, new_site=False):
 	patch_query_execute()
 
 	local.initialised = True
-	
-	## Allow monkey patch
-	patches = get_hooks("monkey_patch",[])
-	for p in patches:
-		f = get_attr(p)
-		f()
 
 def connect(site=None, db_name=None, set_admin_as_user=True):
 	"""Connect to site database instance.
@@ -234,6 +228,13 @@ def connect(site=None, db_name=None, set_admin_as_user=True):
 	local.db = get_db(user=db_name or local.conf.db_name)
 	if set_admin_as_user:
 		set_user("Administrator")
+
+	
+	## Allow monkey patch
+	patches = get_hooks("monkey_patch",[])
+	for p in patches:
+		f = get_attr(p)
+		f()
 
 def connect_replica():
 	from frappe.database import get_db
