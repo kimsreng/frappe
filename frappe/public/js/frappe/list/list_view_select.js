@@ -233,9 +233,11 @@ frappe.views.ListViewSelect = class ListViewSelect {
 
 					if (added.indexOf(route) === -1) {
 						// don't repeat
+						let report_name =frappe.remove_abbr(r.title) || frappe.remove_abbr(r.name)
+						let context = frappe.trans_context("Report", report_name)
 						added.push(route);
 						reports_to_add.push({
-							name: r.title || r.name,
+							name: __(report_name, null, context),
 							route: route
 						});
 					}
