@@ -44,6 +44,8 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 		} else {
 			this.add_totals_row = this.view_user_settings.add_totals_row || 0;
 			this.chart_args = this.view_user_settings.chart_args;
+			this.fields = this.view_user_settings.fields;
+			this.column_widths = this.view_user_settings.column_widths;
 		}
 	}
 
