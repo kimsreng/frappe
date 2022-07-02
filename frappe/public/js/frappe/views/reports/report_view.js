@@ -38,6 +38,8 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 					this.page_length = this.report_doc.json.page_length || 20;
 					this.order_by = this.report_doc.json.order_by || 'modified desc';
 					this.chart_args = this.report_doc.json.chart_args;
+					this.fields = this.report_doc.json.fields;
+					this.column_widths = this.report_doc.json.column_widths;
 				});
 		} else {
 			this.add_totals_row = this.view_user_settings.add_totals_row || 0;
@@ -170,6 +172,7 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 				filters: this.filter_area.get(),
 				order_by: this.sort_selector.get_sql_string(),
 				group_by: this.group_by_control.get_settings(),
+				column_widths: this.get_column_widths(),
 				chart_args: this.get_chart_settings(),
 				add_totals_row: this.add_totals_row
 			});
@@ -942,7 +945,7 @@ frappe.views.ReportView = class ReportView extends frappe.views.ListView {
 		// apply previous column width
 		let column_widths = null;
 		if (this.columns) {
-			column_widths = this.get_column_widths();
+			column_widths = this.column_widths || this.get_column_widths();
 		}
 
 		this.columns = [];
