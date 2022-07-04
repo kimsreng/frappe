@@ -654,7 +654,7 @@ frappe.ui.form.Form = class FrappeForm {
 		var me = this;
 		return new Promise(resolve => {
 			this.validate_form_action("Submit");
-			frappe.confirm(__("Permanently Submit {0}?", [this.docname]), function() {
+			frappe.confirm(__("Permanently Submit {0}?", [frappe.remove_abbr(this.docname)]), function() {
 				frappe.validated = true;
 				me.script_manager.trigger("before_submit").then(function() {
 					if(!frappe.validated) {
