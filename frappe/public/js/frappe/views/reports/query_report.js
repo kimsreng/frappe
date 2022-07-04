@@ -1476,13 +1476,13 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 								fieldtype: 'Select',
 								fieldname: 'doctype',
 								label: __('From Document Type'),
-								options: this.linked_doctypes.map(df => ({ label: df.doctype, value: df.doctype })),
+								options: this.linked_doctypes.map(df => ({ label: __(df.doctype, null, "Doctype"), value: df.doctype })),
 								change: () => {
 									let doctype = d.get_value('doctype');
 									frappe.model.with_doctype(doctype, () => {
 										let options = frappe.meta.get_docfields(doctype)
-											.filter(frappe.model.is_value_type)
-											.map(df => ({ label: df.label, value: df.fieldname }));
+											.filter((f) => frappe.model.is_value_type(f) &&!frappe.is_hidden_field(doctype, f))
+											.map(df => ({ label: __(df.label, null, df.translation_context), value: df.fieldname }));
 
 										d.set_df_property('field', 'options', options.sort(function(a, b) {
 											if (a.label < b.label) {
