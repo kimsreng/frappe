@@ -95,7 +95,7 @@ frappe.ui.Scanner = class Scanner {
 
 	load_lib() {
 		return frappe.require(
-			"/assets/frappe/node_modules/html5-qrcode/dist/html5-qrcode.min.js"
+			"/assets/frappe/node_modules/html5-qrcode/html5-qrcode.min.js"
 		);
 	}
 };
