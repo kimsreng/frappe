@@ -26,12 +26,16 @@ frappe.ui.Scanner = class Scanner {
 
 	start_scan() {
 		if (!this.handler) {
-			this.handler = new Html5Qrcode(this.scan_area_id); // eslint-disable-line
+			this.handler = new Html5Qrcode(this.scan_area_id, {
+				experimentalFeatures: {
+					useBarCodeDetectorIfSupported: true
+				}
+			}); // eslint-disable-line
 		}
 		this.handler
 			.start(
 				{ facingMode: "environment" },
-				{ fps: 10, qrbox: 250 },
+				{ fps: this.options.fps || 10, qrbox: 250 },
 				(decodedText, decodedResult) => {
 					if (this.options.on_scan) {
 						try {
