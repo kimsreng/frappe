@@ -4,7 +4,7 @@
 frappe.ui.form.on('Data Export', {
 	refresh: frm => {
 		frm.disable_save();
-		frm.page.set_primary_action('Export', () => {
+		frm.page.set_primary_action(__('Export'), () => {
 			can_export(frm) ? export_data(frm) : null;
 		});
 	},
@@ -144,7 +144,7 @@ const add_doctype_field_multicheck_control = (doctype, parent_wrapper) => {
 	const options = fields
 		.map(df => {
 			return {
-				label: df.label,
+				label: __(df.label, null, df.translation_context),
 				value: df.fieldname,
 				danger: df.reqd,
 				checked: 1
@@ -154,7 +154,7 @@ const add_doctype_field_multicheck_control = (doctype, parent_wrapper) => {
 	const multicheck_control = frappe.ui.form.make_control({
 		parent: parent_wrapper,
 		df: {
-			"label": doctype,
+			"label": __(doctype, null, "Doctype"),
 			"fieldname": doctype + '_fields',
 			"fieldtype": "MultiCheck",
 			"options": options,
