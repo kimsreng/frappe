@@ -41,7 +41,7 @@ export default {
 		return {
 			node: {
 				label: __("Home"),
-				value: "Home",
+				value: frappe.append_abbr("Home"),
 				children: [],
 				children_start: 0,
 				children_loading: false,
