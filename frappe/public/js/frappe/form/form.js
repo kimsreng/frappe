@@ -1059,7 +1059,7 @@ frappe.ui.form.Form = class FrappeForm {
 		new frappe.views.CommunicationComposer({
 			doc: this.doc,
 			frm: this,
-			subject: __(this.meta.name) + ': ' + this.docname,
+			subject: __(this.meta.name, null, "Doctype") + ': ' + frappe.remove_abbr(this.docname),
 			recipients: this.doc.email || this.doc.email_id || this.doc.contact_email,
 			attach_document_print: true,
 			message: message,
