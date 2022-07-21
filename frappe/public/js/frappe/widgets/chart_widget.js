@@ -328,7 +328,7 @@ export default class ChartWidget extends Widget {
 
 		if (this.chart_doc.document_type) {
 			actions.push({
-				label: __("{0} List", [this.chart_doc.document_type]),
+				label: __("{0} List", [__(this.chart_doc.document_type, null, "Doctype")]),
 				action: "action-list",
 				handler: () => {
 					frappe.set_route("List", this.chart_doc.document_type);
