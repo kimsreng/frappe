@@ -28,9 +28,16 @@ export default class ChartWidget extends Widget {
 		this.make_chart();
 	}
 
+	after_render_chart(){
+		//append moible class to title if in mobile mode
+		//for chart with timeseries
+		if(frappe.is_mobile() && this.chart_doc.timeseries){
+			this.title_field.addClass("mobile");
+		}
+	}
+
 	set_chart_title() {
-		const max_chars = this.widget.width() < 600 ? 20 : 60;
-		this.set_title(max_chars);
+		this.set_title();
 	}
 
 	set_body() {
@@ -115,6 +122,7 @@ export default class ChartWidget extends Widget {
 				() => this.prepare_chart_object(),
 				() => this.setup_filter_button(),
 				() => this.fetch_and_update_chart(),
+				() => this.after_render_chart(),
 			]);
 		});
 	}
