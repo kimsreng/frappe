@@ -116,10 +116,10 @@ frappe.ui.form.ControlSelect = frappe.ui.form.ControlData.extend({
 
 				if (is_value_null && is_label_null) {
 					value = v;
-					label = __(v, null, df?df.translation_context:null);
+					label = __(frappe.remove_abbr(v), null, df?df.translation_context:null);
 				} else {
 					value = is_value_null ? "" : v.value;
-					label = is_label_null ? __(value, null, df?df.translation_context:null) : __(v.label, null, df?df.translation_context:null);
+					label = is_label_null ? __(frappe.remove_abbr(value), null, df?df.translation_context:null) : __(v.label, null, df?df.translation_context:null);
 				}
 			}
 
