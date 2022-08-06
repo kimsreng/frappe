@@ -542,6 +542,9 @@ export default class ChartWidget extends Widget {
 			this.$summary && this.$summary.hide();
 			this.empty.show();
 		} else {
+			for(let i = 0; i < this.data.labels.length; i++) {
+				this.data.labels[i] = frappe.remove_abbr(this.data.labels[i]);
+			}
 			this.loading.hide();
 			this.empty.hide();
 			this.chart_wrapper.show();
